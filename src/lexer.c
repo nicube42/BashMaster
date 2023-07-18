@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:27:27 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/18 18:42:39 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/18 19:31:50 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ char	**lexer(char *input)
 		else
 		{
 			printf("%c", input[i]);
+		}
+		if ((input[i + 1] == '|' || input[i + 1] == '<'
+				|| input[i + 1] == '>') && input[i] != ' '
+			&& input[i] != '<' && input[i] != '>')
+		{
+			j++;
+			k = 0;
+			printf("\n");
 		}
 		k++;
 		i++;
