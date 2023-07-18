@@ -1,21 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/18 18:39:52 by ndiamant         ###   ########.fr       */
+/*   Created: 2023/07/18 18:27:27 by ndiamant          #+#    #+#             */
+/*   Updated: 2023/07/18 18:42:39 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/bashmaster.h"
 
-int	main(void)
+char	**lexer(char *input)
 {
-	char	*line;
+	int		i;
+	int		j;
+	int		k;
+	char	**parsed;
 
-	line = "ls -a | base64 $USR";
-	lexer(line);
+	i = 0;
+	j = 0;
+	k = 0;
+	parsed = 0;
+	while (input[i])
+	{
+		if (input[i] == ' ')
+		{
+			j++;
+			k = 0;
+			printf("\n");
+		}
+		else
+		{
+			printf("%c", input[i]);
+		}
+		k++;
+		i++;
+	}
+	return (parsed);
 }
