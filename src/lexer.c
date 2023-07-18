@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:27:27 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/18 19:31:50 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/18 19:46:59 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ char	**lexer(char *input)
 	parsed = 0;
 	while (input[i])
 	{
+		if (input[i -  1] == '|')
+		{
+			j++;
+			k = 0;
+			printf("\n");
+		}
 		if (input[i] == ' ')
 		{
 			j++;
