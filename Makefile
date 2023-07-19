@@ -3,7 +3,7 @@ NAME = minishell
 CC = cc
 CFLAGS = #-Wall -Wextra -Werror
 
-SRC = main.c lexer.c
+SRC = main.c lexer.c lexer_utils.c
 DIRS	= .
 
 

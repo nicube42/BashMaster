@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/20 00:18:47 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/20 00:57:30 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,5 +35,11 @@ typedef struct s_bash
 
 char	**lexer(char *input, t_bash	*sh);
 void	lexer_size(char *input, t_bash *sh);
+
+int		ft_is_blank(char c);
+int		ft_skip_blank(char *line, int i);
+int		redirection_to_char(char *input, int i, t_bash *sh, int only_count);
+int		pipe_to_char(char *input, int i, t_bash *sh, int only_count);
+int		word_to_char(char *input, int i, t_bash *sh, int only_count);
 
 #endif
