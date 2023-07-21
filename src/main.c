@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/21 10:43:03 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/21 11:55:10 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,4 @@ int	main(int ac, char **av, char **envp)
 	lexer(line, &sh);
 	expander(&sh, envp);
 	parser(&sh);
-	//while (sh.lexed[++i])
-	//	printf("%s\n", sh.lexed[i]);
 }
