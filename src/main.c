@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/20 01:44:07 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/21 10:43:03 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ int	main(int ac, char **av, char **envp)
 	sh.lexed = malloc(sizeof(char *) * sh.lexed_size + 1);
 	lexer(line, &sh);
 	expander(&sh, envp);
-	while (sh.lexed[++i])
-		printf("%s\n", sh.lexed[i]);
+	parser(&sh);
+	//while (sh.lexed[++i])
+	//	printf("%s\n", sh.lexed[i]);
 }

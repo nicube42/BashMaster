@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/20 01:31:15 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/21 10:53:10 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,23 @@
 # include "../libft/includes/libft.h"
 # include "../libft/includes/ft_printf.h"
 
-typedef struct s_command
+typedef struct s_list
 {
-
-}	t_command;
+	char			*value;
+	char			**arguments;
+	int				id;
+	int				fd_in;
+	int				fd_out;
+	struct s_list	*next;
+	struct s_list	*prev;
+}	t_list;
 
 typedef struct s_bash
 {
-	char	**lexed;
-	int		lexed_size;
-	int		lexed_current;
+	char			**lexed;
+	int				lexed_size;
+	int				lexed_current;
+	struct s_list	*first;
 }	t_bash;
 
 char	**lexer(char *input, t_bash	*sh);
@@ -43,5 +50,12 @@ int		pipe_to_char(char *input, int i, t_bash *sh, int only_count);
 int		word_to_char(char *input, int i, t_bash *sh, int only_count);
 
 void	expander(t_bash *sh, char **envp);
+
+void	parser(t_bash *sh);
+
+t_list	*ft_init_token(void);
+void	ft_add_token(t_bash *sh, t_list *to_add);
+void	ft_connect_token(t_list *list, t_list *to_add);
+void	ft_print_tokens(t_bash *sh);
 
 #endif
