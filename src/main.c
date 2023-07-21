@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/21 11:55:10 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/21 15:38:23 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ char	**ft_parsing_execve(char **envp)
 	return (splitted_path);
 }
 
-int	main(int ac, char **av, char **envp)
+/*int	main(int ac, char **av, char **envp)
 {
 	char	*line;
 	t_bash	sh;
 	int		i;
 
-	i = -1;
 	sh.lexed_size = 0;
 	sh.lexed_current = 0;
 	line = "<redir   $test   ls    -a|base64|$USER>redir |ls -la <<    redir";
@@ -46,4 +45,33 @@ int	main(int ac, char **av, char **envp)
 	lexer(line, &sh);
 	expander(&sh, envp);
 	parser(&sh);
+}*/
+
+int	main(int ac, char *av[], char *envp[])
+{
+	t_bash	sh;
+	int		i;
+	char	*input;
+
+	(void) ac;
+	(void) av;
+	using_history();
+	write(1, "\n", 1);
+	while (1)
+	{
+		input = 0;
+		sh.lexed = NULL;
+		sh.lexed_size = 0;
+		sh.lexed_current = 0;
+		input = readline(GREEN "[ 🎓 BashMaster 🎓 ] > " RESET);
+		if (input[0] == '\0')
+			continue ;
+		add_history(input);
+		lexer_size(input, &sh);
+		sh.lexed = malloc(sizeof(char *) * sh.lexed_size + 1);
+		lexer(input, &sh);
+		expander(&sh, envp);
+		parser(&sh);
+	}
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/21 11:49:35 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/21 13:51:15 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,16 @@
 
 # include <stdio.h>
 # include <sys/wait.h>
+#include <readline/history.h>
 # include <fcntl.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include "../libft/includes/libft.h"
 # include "../libft/includes/ft_printf.h"
+
+# define GREEN	"\033[0;32m"
+# define RED	"\033[0;31m"
+# define RESET	"\033[0m"
 
 # define CMD_TOK 1
 # define PIPE_TOK 2
