@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:34:40 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/21 11:08:50 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/21 11:49:11 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,13 @@ void	ft_print_tokens(t_bash *sh)
 		{
 			while (list->arguments[j])
 			{
-				printf("    arguments %d : %s\n", j, list->arguments[j]);
+				printf("      arguments %d : %s\n", j + 1, list->arguments[j]);
 				j++;
 			}
 		}
+		printf("id = %d\n", list->id);
 		i++;
+		printf("\n");
 		list = list->next;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 03:55:50 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/21 11:10:34 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/21 11:48:02 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,20 @@ void	parser(t_bash *sh)
 			to_add->fd_in = 0;
 			to_add->fd_out = 0;
 			to_add->arguments = 0;
-			to_add->id = 0;
+			if (sh->lexed[i][0] == '<')
+			{
+				if (sh->lexed[i][1] == '<')
+					to_add->id = HERE_DOC_TOKEN;
+				else
+					to_add->id = RED_ENTRY_TOKEN;
+			}
+			else
+			{
+				if (sh->lexed[i][1] == '>')
+					to_add->id = APPEND_TOKEN;
+				else
+					to_add->id = RED_EXIT_TOKEN;
+			}
 			ft_add_token(sh, to_add);
 			i++;
 		}
@@ -40,7 +53,7 @@ void	parser(t_bash *sh)
 			to_add->fd_in = 0;
 			to_add->fd_out = 0;
 			to_add->arguments = 0;
-			to_add->id = 0;
+			to_add->id = PIPE_TOK;
 			ft_add_token(sh, to_add);
 			i++;
 		}
@@ -65,7 +78,7 @@ void	parser(t_bash *sh)
 				j++;
 			}
 			to_add->arguments[j] = 0;
-			to_add->id = 0;
+			to_add->id = CMD_TOK;
 			ft_add_token(sh, to_add);
 		}
 	}

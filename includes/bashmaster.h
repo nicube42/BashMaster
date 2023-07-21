@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/21 10:53:10 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/21 11:49:35 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,13 @@
 # include <stdlib.h>
 # include "../libft/includes/libft.h"
 # include "../libft/includes/ft_printf.h"
+
+# define CMD_TOK 1
+# define PIPE_TOK 2
+# define RED_ENTRY_TOKEN 3
+# define HERE_DOC_TOKEN 4
+# define RED_EXIT_TOKEN 5
+# define APPEND_TOKEN 6
 
 typedef struct s_list
 {
