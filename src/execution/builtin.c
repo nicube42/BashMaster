@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:54:37 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 19:31:37 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 19:48:16 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,11 @@ void	execute_echo(t_list *list)
 
 	i = -1;
 	while (list->arguments[++i])
-		ft_printf("%s ", list->arguments[i]);
-	ft_printf("\n");
+		if (ft_strncmp(list->arguments[i], "-n", 2) || i != 0)
+			ft_printf("%s ", list->arguments[i]);
+	if (list->arguments)
+		if (ft_strncmp(list->arguments[0], "-n", 2))
+			ft_printf("\n");
 }
 
 void	execute_pwd(t_bash *sh)
