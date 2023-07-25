@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 16:15:17 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 17:54:18 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,8 @@ int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
 	int		i_save;
 
 	j = 0;
-	if (ft_is_quote(input[i]) == 2 && only_count != 1)
-		sh->is_quote[i] = 1;
+	if (ft_is_quote(input[i]) == 2 && only_count == 0)
+		sh->is_quote[sh->lexed_current] = 1;
 	i++;
 	i_save = i;
 	while (!ft_is_quote(input[i]) && input[i])

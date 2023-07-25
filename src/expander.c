@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 16:22:07 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 17:27:17 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	replace_substring(char **str, int start, int end, char *replacement)
 
 	prefix = ft_substr(*str, 0, start);
 	suffix = ft_substr(*str, end, ft_strlen(*str) - end);
+	ft_printf("%s\n", suffix);
 	new_str = ft_strjoin(ft_strjoin(prefix, replacement), suffix);
 	free(prefix);
 	free(suffix);
