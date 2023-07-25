@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 17:54:18 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 18:04:56 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,9 @@ int	redirection_to_char(char *input, int i, t_bash *sh, int only_count)
 	while ((input[i] == '<' || input[i] == '>') && input[i])
 		word[j++] = input[i++];
 	i = ft_skip_blank(input, i);
-	while (!ft_is_blank(input[i]) && input[i])
+	while (!ft_is_blank(input[i]) && input[i] != '|'
+		&& input[i] != '<' && input[i] != '>' && input[i] != '"'
+		&& input[i] != '\'' && input[i])
 		word[j++] = input[i++];
 	word[j] = '\0';
 	if (only_count == 1)
