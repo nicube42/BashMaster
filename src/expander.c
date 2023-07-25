@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/21 16:22:36 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 11:10:17 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	expander(t_bash *sh, char **envp)
 
 	i = -1;
 	j = -1;
-	sh->lexed[sh->lexed_size + 1] = 0;
+	sh->lexed[sh->lexed_size] = 0;
 	while (sh->lexed[++i])
 	{
 		if (sh->lexed[i][0] == '$')

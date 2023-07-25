@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/21 15:38:23 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 11:09:56 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	main(int ac, char *av[], char *envp[])
 			continue ;
 		add_history(input);
 		lexer_size(input, &sh);
-		sh.lexed = malloc(sizeof(char *) * sh.lexed_size + 1);
+		sh.lexed = malloc(sizeof(char *) * (sh.lexed_size + 1));
 		lexer(input, &sh);
 		expander(&sh, envp);
 		parser(&sh);

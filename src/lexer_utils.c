@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/21 16:21:37 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 11:08:32 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,17 @@ int	calculate_redir_to_char(char *input, int i, t_bash *sh)
 	int	j;
 
 	j = 0;
-	while (input[i++] == '<' || input[i] == '>')
+	while ((input[i] == '<' || input[i] == '>') && input[i])
+	{
+		i++;
 		j++;
+	}
 	i = ft_skip_blank(input, i);
-	while (!ft_is_blank(input[i]) && input[i++])
+	while (!ft_is_blank(input[i]) && input[i])
+	{
 		j++;
+		i++;
+	}
 	return (j);
 }
 
@@ -49,7 +55,7 @@ int	redirection_to_char(char *input, int i, t_bash *sh, int only_count)
 	//if (!word)
 	//	clean_exit();
 	j = 0;
-	while (input[i] == '<' || input[i] == '>')
+	while ((input[i] == '<' || input[i] == '>') && input[i])
 		word[j++] = input[i++];
 	i = ft_skip_blank(input, i);
 	while (!ft_is_blank(input[i]) && input[i])
@@ -60,6 +66,7 @@ int	redirection_to_char(char *input, int i, t_bash *sh, int only_count)
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
+		sh->lexed[sh->lexed_current][j] = 0;
 		sh->lexed_current++;
 	}
 	return (i);
@@ -77,6 +84,7 @@ int	pipe_to_char(char *input, int i, t_bash *sh, int only_count)
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
+		sh->lexed[sh->lexed_current][1] = 0;
 		sh->lexed_current++;
 	}
 	return (i);
@@ -93,7 +101,7 @@ int	word_to_char(char *input, int i, t_bash *sh, int only_count)
 	while (input[i] != '|' && input[i] != '<' && input[i] != '>'
 		&& !ft_is_blank(input[i]) && input[i])
 		i++;
-	word = malloc (sizeof(char) * (i + 1));
+	word = malloc (sizeof(char) * ((i - i_save) + 1));
 	//if (!word)
 	//	clean_exit();
 	i = i_save;
@@ -105,6 +113,7 @@ int	word_to_char(char *input, int i, t_bash *sh, int only_count)
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
+		sh->lexed[sh->lexed_current][i - i_save] = 0;
 		sh->lexed_current++;
 	}
 	return (i);
