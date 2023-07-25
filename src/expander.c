@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 15:04:18 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:22:07 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void	expander(t_bash *sh, char **envp)
 
 	i = -1;
 	j = -1;
-	k = -1;
 	sh->lexed[sh->lexed_size] = 0;
 	while (sh->lexed[++i])
 	{
-		while (sh->lexed[i][++k] && sh->lexed[i][k])
+		k = -1;
+		while (sh->lexed[i][++k])
 		{
-			if (sh->lexed[i][k] == '$')
+			if (sh->lexed[i][k] == '$' && sh->is_quote[i] == 0)
 			{
 				l = k;
 				while (!ft_is_blank(sh->lexed[i][l]) && sh->lexed[i][l])

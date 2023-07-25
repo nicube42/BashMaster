@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/25 13:35:07 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 15:47:34 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	main(int ac, char *av[], char *envp[])
 		sh.splitted_path = ft_parsing_execve(envp);
 		lexer_size(input, &sh);
 		sh.lexed = malloc(sizeof(char *) * (sh.lexed_size + 1));
+		sh.is_quote = malloc(sizeof(int) * (sh.lexed_size + 1));
+		ft_memset(sh.is_quote, 0, sizeof(int) * sh.lexed_size);
 		lexer(input, &sh);
 		expander(&sh, envp);
 		parser(&sh);

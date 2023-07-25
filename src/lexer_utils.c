@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 12:23:34 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:15:17 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	redirection_to_char(char *input, int i, t_bash *sh, int only_count)
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
-		sh->lexed[sh->lexed_current][j] = 0;
+		sh->lexed[sh->lexed_current][j] = '\0';
 		sh->lexed_current++;
 	}
 	return (i);
@@ -84,7 +84,7 @@ int	pipe_to_char(char *input, int i, t_bash *sh, int only_count)
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
-		sh->lexed[sh->lexed_current][1] = 0;
+		sh->lexed[sh->lexed_current][1] = '\0';
 		sh->lexed_current++;
 	}
 	return (i);
@@ -113,7 +113,7 @@ int	word_to_char(char *input, int i, t_bash *sh, int only_count)
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
-		sh->lexed[sh->lexed_current][i - i_save] = 0;
+		sh->lexed[sh->lexed_current][i - i_save] = '\0';
 		sh->lexed_current++;
 	}
 	return (i);
@@ -126,6 +126,8 @@ int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
 	int		i_save;
 
 	j = 0;
+	if (ft_is_quote(input[i]) == 2 && only_count != 1)
+		sh->is_quote[i] = 1;
 	i++;
 	i_save = i;
 	while (!ft_is_quote(input[i]) && input[i])
@@ -145,7 +147,7 @@ int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
-		sh->lexed[sh->lexed_current][i - i_save] = 0;
+		sh->lexed[sh->lexed_current][i - i_save] = '\0';
 		i++;
 		sh->lexed_current++;
 	}

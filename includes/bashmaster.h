@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/25 13:38:26 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 15:13:03 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct s_bash
 	char			**lexed;
 	int				lexed_size;
 	int				lexed_current;
+	int				*is_quote;
 	int				quote_count;
 	int				dquote_count;
 	char			**splitted_path;
