@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:54:37 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 19:27:09 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 19:31:37 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ void	execute_buildin(t_list *list, t_bash *sh)
 		execute_echo(list);
 	if (!ft_strncmp(list->value, "env", 4))
 		execute_env(sh);
+	if (!ft_strncmp(list->value, "exit", 5))
+		execute_exit(sh);
+}
+
+void	execute_exit(t_bash *sh)
+{
+	//free all
+	exit(0);
 }
 
 void	execute_env(t_bash *sh)
