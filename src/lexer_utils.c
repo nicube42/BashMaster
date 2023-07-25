@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 11:08:32 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 12:19:51 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,39 @@ int	word_to_char(char *input, int i, t_bash *sh, int only_count)
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
 		sh->lexed[sh->lexed_current][i - i_save] = 0;
+		sh->lexed_current++;
+	}
+	return (i);
+}
+
+int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
+{
+	char	*word;
+	int		j;
+	int		i_save;
+
+	j = 0;
+	i++;
+	i_save = i;
+	while (!ft_is_quote(input[i]) && input[i])
+		i++;
+	word = malloc (sizeof(char) * ((i - i_save) + 1));
+	//if (!word)
+	//	clean_exit();
+	i = i_save;
+	while (!ft_is_quote(input[i]) && input[i])
+		word[j++] = input[i++];
+	word[j] = 0;
+	if (only_count == 1)
+	{
+		sh->lexed_size++;
+		i++;
+	}
+	else
+	{
+		sh->lexed[sh->lexed_current] = ft_strdup(word);
+		sh->lexed[sh->lexed_current][i - i_save] = 0;
+		i++;
 		sh->lexed_current++;
 	}
 	return (i);

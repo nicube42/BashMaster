@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/21 16:30:23 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 11:53:42 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,8 @@ t_list	*ft_init_token(void);
 void	ft_add_token(t_bash *sh, t_list *to_add);
 void	ft_connect_token(t_list *list, t_list *to_add);
 void	ft_print_tokens(t_bash *sh);
+
+int		quote_to_char(char *input, int i, t_bash *sh, int only_count);
+int		ft_is_quote(char c);
 
 #endif
