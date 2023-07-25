@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:54:37 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 19:18:39 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 19:23:25 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,18 @@ void	execute_buildin(t_list *list, t_bash *sh)
 {
 	if (!ft_strncmp(list->value, "pwd", 4))
 		execute_pwd(sh);
+	if (!ft_strncmp(list->value, "echo", 5))
+		execute_echo(list);
+}
+
+void	execute_echo(t_list *list)
+{
+	int	i;
+
+	i = -1;
+	while (list->arguments[++i])
+		ft_printf("%s ", list->arguments[i]);
+	ft_printf("\n");
 }
 
 void	execute_pwd(t_bash *sh)
