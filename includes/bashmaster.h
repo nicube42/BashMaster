@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/25 18:48:35 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 19:17:06 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_bash
 	int				*is_quote;
 	int				quote_count;
 	int				dquote_count;
+	char			**envp;
 	char			**splitted_path;
 	struct s_list	*first;
 }	t_bash;
@@ -86,5 +87,10 @@ int		wrong_cmd_error(t_bash *sh);
 int		ft_check_cmd(char *tok, t_bash *sh);
 
 int		is_builtin(char *tmp);
+
+void	execute(t_bash *sh);
+
+void	execute_pwd(t_bash *sh);
+void	execute_buildin(t_list *list, t_bash *sh);
 
 #endif

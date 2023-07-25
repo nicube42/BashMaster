@@ -3,7 +3,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -fsanitize=address #-Wall -Wextra -Werror
 
-SRC = main.c lexer.c lexer_utils.c expander.c parser.c token_creator.c check_syntax.c
+SRC = main.c lexer.c lexer_utils.c expander.c parser.c token_creator.c check_syntax.c execution/builtin.c execution/execution.c
 DIRS	= .
 
 
@@ -20,6 +20,7 @@ $(LIBFT):
 
 create_dirs:
 	mkdir -p obj/
+	mkdir -p obj/execution
 	mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJS)

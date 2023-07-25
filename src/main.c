@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/25 17:51:01 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 19:15:49 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ int	main(int ac, char *av[], char *envp[])
 
 	(void) ac;
 	(void) av;
+	sh.envp = envp;
 	using_history();
 	write(1, "\n", 1);
 	while (1)
@@ -94,6 +95,7 @@ int	main(int ac, char *av[], char *envp[])
 		expander(&sh, envp);
 		parser(&sh);
 		check_syntax(&sh);
+		execute(&sh);
 	}
 	return (0);
 }
