@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:54:37 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 19:48:16 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 20:16:04 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,52 @@ void	execute_buildin(t_list *list, t_bash *sh)
 		execute_env(sh);
 	if (!ft_strncmp(list->value, "exit", 5))
 		execute_exit(sh);
+	if (!ft_strncmp(list->value, "export", 5))
+		execute_export(sh);
+}
+
+void	sort_environ(char **environ)
+{
+	char	**i;
+	char	**j;
+	char	*tmp;
+
+	i = environ;
+	while (*i)
+	{
+		j = i + 1;
+		while (*j)
+		{
+			if (ft_strncmp(*i, *j, 1) > 0)
+			{
+				tmp = *i;
+				*i = *j;
+				*j = tmp;
+			}
+			j++;
+		}
+	i++;
+	}
+}
+
+void	execute_export(t_bash *sh)
+{
+	char	**export;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = 0;
+	while (sh->envp[j])
+		j++;
+	export = malloc (sizeof(char *) * (j + 1));
+	while (sh->envp[++i])
+		export[i] = ft_strdup(sh->envp[i]);
+	export[i] = 0;
+	i = -1;
+	sort_environ(export);
+	while (export[++i])
+		printf("%s\n", export[i]);
 }
 
 void	execute_exit(t_bash *sh)
@@ -32,7 +78,7 @@ void	execute_exit(t_bash *sh)
 
 void	execute_env(t_bash *sh)
 {
-	int		i;
+	int	i;
 
 	i = -1;
 	while (sh->envp[++i])
