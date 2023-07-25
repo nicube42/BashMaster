@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:54:37 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 20:26:21 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 21:43:12 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	execute_pwd(t_bash *sh)
 			&& sh->envp[i][3] == '=')
 		{
 			pwd = ft_substr(sh->envp[i],
-					ft_strlen("pwd"), ft_strlen(sh->envp[i]));
+					ft_strlen("pwd") + 1, ft_strlen(sh->envp[i]));
 			break ;
 		}
 	}
