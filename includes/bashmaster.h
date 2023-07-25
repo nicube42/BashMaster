@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/25 15:13:03 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 18:48:35 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@
 # define HERE_DOC_TOKEN 4
 # define RED_EXIT_TOKEN 5
 # define APPEND_TOKEN 6
+# define BUILTIN_TOK 7
 
 typedef struct s_list
 {
@@ -83,5 +84,7 @@ int		pipe_syntax_error_2(t_bash *sh);
 int		unclosed_quote_error(t_bash *sh);
 int		wrong_cmd_error(t_bash *sh);
 int		ft_check_cmd(char *tok, t_bash *sh);
+
+int		is_builtin(char *tmp);
 
 #endif

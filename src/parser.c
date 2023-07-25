@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 03:55:50 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 15:07:34 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 18:48:46 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,25 @@ static int	create_pipe_token(t_bash *sh, t_list *to_add, int i)
 	return (i);
 }
 
+int	is_builtin(char *tmp)
+{
+	if (!ft_strncmp(tmp, "echo", 5))
+		return (1);
+	if (!ft_strncmp(tmp, "cd", 3))
+		return (1);
+	if (!ft_strncmp(tmp, "pwd", 4))
+		return (1);
+	if (!ft_strncmp(tmp, "export", 5))
+		return (1);
+	if (!ft_strncmp(tmp, "unset", 6))
+		return (1);
+	if (!ft_strncmp(tmp, "env", 4))
+		return (1);
+	if (!ft_strncmp(tmp, "exit", 5))
+		return (1);
+	return (0);
+}
+
 static int	create_cmd_token(t_bash *sh, t_list *to_add, int i)
 {
 	int	j;
@@ -75,6 +94,8 @@ static int	create_cmd_token(t_bash *sh, t_list *to_add, int i)
 	}
 	to_add->arguments[j] = 0;
 	to_add->id = CMD_TOK;
+	if (is_builtin(to_add->value))
+		to_add->id = BUILTIN_TOK;
 	ft_add_token(sh, to_add);
 	return (i);
 }
