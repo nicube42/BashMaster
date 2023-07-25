@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:54:37 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 20:16:04 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 20:23:52 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,15 @@ void	execute_buildin(t_list *list, t_bash *sh)
 	if (!ft_strncmp(list->value, "exit", 5))
 		execute_exit(sh);
 	if (!ft_strncmp(list->value, "export", 5))
-		execute_export(sh);
+		execute_export(sh, list);
+	if (!ft_strncmp(list->value, "unset", 6))
+		execute_unset(list);
+}
+
+void	execute_unset(t_list *list)
+{
+	if (!list->arguments[0])
+		ft_printf("unset: not enough arguments\n");
 }
 
 void	sort_environ(char **environ)
@@ -50,7 +58,7 @@ void	sort_environ(char **environ)
 	}
 }
 
-void	execute_export(t_bash *sh)
+void	execute_export(t_bash *sh, t_list *list)
 {
 	char	**export;
 	int		i;
@@ -66,8 +74,9 @@ void	execute_export(t_bash *sh)
 	export[i] = 0;
 	i = -1;
 	sort_environ(export);
-	while (export[++i])
-		printf("%s\n", export[i]);
+	if (!list->arguments[0])
+		while (export[++i])
+			printf("%s\n", export[i]);
 }
 
 void	execute_exit(t_bash *sh)
