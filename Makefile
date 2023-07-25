@@ -3,7 +3,7 @@ NAME = minishell
 CC = cc
 CFLAGS = -fsanitize=address #-Wall -Wextra -Werror
 
-SRC = main.c lexer.c lexer_utils.c expander.c parser.c token_creator.c
+SRC = main.c lexer.c lexer_utils.c expander.c parser.c token_creator.c check_syntax.c
 DIRS	= .
 
 

@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/25 12:07:25 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:35:07 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,21 @@ char	**ft_parsing_execve(char **envp)
 	parser(&sh);
 }*/
 
+void	count_quote(char *input, t_bash *sh)
+{
+	int	i;
+
+	i = 0;
+	while (input[i])
+	{
+		if (ft_is_quote(input[i]) == 1)
+			sh->dquote_count ++;
+		if (ft_is_quote(input[i]) == 2)
+			sh->quote_count++;
+		i++;
+	}
+}
+
 int	main(int ac, char *av[], char *envp[])
 {
 	t_bash	sh;
@@ -63,15 +78,20 @@ int	main(int ac, char *av[], char *envp[])
 		sh.lexed = NULL;
 		sh.lexed_size = 0;
 		sh.lexed_current = 0;
+		sh.dquote_count = 0;
+		sh.quote_count = 0;
 		input = readline(GREEN "[ 🎓 BashMaster 🎓 ] > " RESET);
 		if (input[0] == '\0')
 			continue ;
 		add_history(input);
+		count_quote(input, &sh);
+		sh.splitted_path = ft_parsing_execve(envp);
 		lexer_size(input, &sh);
 		sh.lexed = malloc(sizeof(char *) * (sh.lexed_size + 1));
 		lexer(input, &sh);
 		expander(&sh, envp);
 		parser(&sh);
+		check_syntax(&sh);
 	}
 	return (0);
 }

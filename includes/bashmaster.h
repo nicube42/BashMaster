@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/25 11:53:42 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:38:26 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,9 @@ typedef struct s_bash
 	char			**lexed;
 	int				lexed_size;
 	int				lexed_current;
+	int				quote_count;
+	int				dquote_count;
+	char			**splitted_path;
 	struct s_list	*first;
 }	t_bash;
 
@@ -72,5 +75,12 @@ void	ft_print_tokens(t_bash *sh);
 
 int		quote_to_char(char *input, int i, t_bash *sh, int only_count);
 int		ft_is_quote(char c);
+
+int		check_syntax(t_bash *sh);
+int		pipe_syntax_error(t_bash *sh);
+int		pipe_syntax_error_2(t_bash *sh);
+int		unclosed_quote_error(t_bash *sh);
+int		wrong_cmd_error(t_bash *sh);
+int		ft_check_cmd(char *tok, t_bash *sh);
 
 #endif
