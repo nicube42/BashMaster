@@ -6,11 +6,11 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 19:07:10 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 22:14:35 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/bashmaster.h"
+#include "../../includes/bashmaster.h"
 
 void	replace_substring(char **str, int start, int end, char *replacement)
 {

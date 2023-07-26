@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:54:37 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 21:43:12 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 21:45:34 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	execute_buildin(t_list *list, t_bash *sh)
 void	execute_unset(t_list *list)
 {
 	if (!list->arguments[0])
-		ft_printf("unset: not enough arguments\n");
+		ft_printf(RED"unset: not enough arguments\n"RESET);
 }
 
 void	sort_environ(char **environ)

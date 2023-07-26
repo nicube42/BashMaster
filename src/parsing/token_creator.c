@@ -6,11 +6,11 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:34:40 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/21 11:49:11 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 22:14:13 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/bashmaster.h"
+#include "../../includes/bashmaster.h"
 
 t_list	*ft_init_token(void)
 {

@@ -6,11 +6,11 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 18:04:56 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 22:14:29 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/bashmaster.h"
+#include "../../includes/bashmaster.h"
 
 int	ft_is_blank(char c)
 {

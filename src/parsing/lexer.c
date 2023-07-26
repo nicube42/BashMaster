@@ -6,11 +6,11 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:27:27 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 18:46:42 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 22:14:25 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/bashmaster.h"
+#include "../../includes/bashmaster.h"
 
 int	ft_is_quote(char c)
 {

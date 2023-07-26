@@ -6,11 +6,11 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 03:55:50 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 18:48:46 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 22:15:24 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/bashmaster.h"
+#include "../../includes/bashmaster.h"
 
 static int	create_redirection_token(t_bash *sh, t_list *to_add, int i)
 {
@@ -106,7 +106,7 @@ void	parser(t_bash *sh)
 	t_list	*to_add;
 
 	i = 0;
-	sh->first = NULL;
+	sh->first = 0;
 	while (sh->lexed[i])
 	{
 		if (sh->lexed[i][0] == '<' || sh->lexed[i][0] == '>')

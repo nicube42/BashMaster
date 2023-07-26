@@ -6,11 +6,11 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:27:44 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 13:39:03 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/25 22:14:41 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/bashmaster.h"
+#include "../../includes/bashmaster.h"
 
 int	check_syntax(t_bash *sh)
 {	
@@ -37,7 +37,7 @@ int	pipe_syntax_error(t_bash *sh)
 	}
 	while (list)
 	{
-		if (list->id != CMD_TOK)
+		if (list->id != CMD_TOK && list->id != BUILTIN_TOK)
 		{
 			if (list->next)
 			{
@@ -64,7 +64,7 @@ int	pipe_syntax_error_2(t_bash *sh)
 		if (list->id == PIPE_TOK && list->next)
 		{
 			list = list->next;
-			if (list->id != CMD_TOK)
+			if (list->id != CMD_TOK && list->id != BUILTIN_TOK)
 			{
 				printf(RED "No command after pipe\n"RESET);
 				return (1);
