@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/27 13:30:40 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 14:01:39 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,27 +30,11 @@ char	**ft_parsing_execve(char **envp)
 	while (splitted_path[++i])
 	{
 		tmp = ft_strjoin(splitted_path[i], "/");
-		free (splitted_path[i]);
+		free(splitted_path[i]);
 		splitted_path[i] = tmp;
 	}
 	return (splitted_path);
 }
-
-/*int	main(int ac, char **av, char **envp)
-{
-	char	*line;
-	t_bash	sh;
-	int		i;
-
-	sh.lexed_size = 0;
-	sh.lexed_current = 0;
-	line = "<redir   $test   ls    -a|base64|$USER>redir |ls -la <<    redir";
-	lexer_size(line, &sh);
-	sh.lexed = malloc(sizeof(char *) * sh.lexed_size + 1);
-	lexer(line, &sh);
-	expander(&sh, envp);
-	parser(&sh);
-}*/
 
 void	count_quote(char *input, t_bash *sh)
 {
@@ -102,7 +86,6 @@ int	main(int ac, char *av[], char *envp[])
 			continue ;
 		add_history(input);
 		count_quote(input, &sh);
-		//free (input);
 		sh.splitted_path = ft_parsing_execve(envp);
 		lexer_size(input, &sh);
 		sh.lexed = malloc(sizeof(char *) * (sh.lexed_size + 1));
@@ -114,8 +97,8 @@ int	main(int ac, char *av[], char *envp[])
 		set_last_of_list(&sh);
 		check_syntax(&sh);
 		execute(&sh);
-		destroy_tokens(&sh);
 		free (input);
+		destroy_tokens(&sh);
 	}
 	return (0);
 }

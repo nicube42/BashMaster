@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 03:55:50 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/27 10:51:36 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 13:58:46 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,10 +106,7 @@ void	free_lexed(t_bash *sh)
 
 	i = -1;
 	while (sh->lexed[++i])
-	{
 		free (sh->lexed[i]);
-		sh->lexed[i] = 0;
-	}
 	free (sh->lexed);
 }
 
