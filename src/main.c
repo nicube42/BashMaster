@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/27 14:01:39 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:24:55 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ char	**ft_parsing_execve(char **envp)
 	while (splitted_path[++i])
 	{
 		tmp = ft_strjoin(splitted_path[i], "/");
-		free(splitted_path[i]);
+		if (splitted_path[i])
+			free(splitted_path[i]);
 		splitted_path[i] = tmp;
 	}
 	return (splitted_path);
@@ -95,8 +96,8 @@ int	main(int ac, char *av[], char *envp[])
 		expander(&sh, envp);
 		parser(&sh);
 		set_last_of_list(&sh);
-		check_syntax(&sh);
-		execute(&sh);
+		if (!check_syntax(&sh))
+			execute(&sh);
 		free (input);
 		destroy_tokens(&sh);
 	}

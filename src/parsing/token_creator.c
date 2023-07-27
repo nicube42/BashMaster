@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:34:40 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/27 14:03:18 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:24:39 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,24 +76,31 @@ void	ft_print_tokens(t_bash *sh)
 void	destroy_tokens(t_bash *sh)
 {
 	t_list	*list;
+	t_list	*temp;
+	char	**args;
 	int		i;
 
-	list = sh->last;
-	while (list)
+	list = sh->first;
+
+	while (list != NULL)
 	{
-		if (list->arguments != 0)
+		temp = list;
+		list = list->next;
+		if (temp->value != NULL)
+			free(temp->value);
+		if (temp->arguments != NULL) 
 		{
-			i = -1;
-			while (list->arguments[++i])
-				free (list->arguments[i]);
-			free (list->arguments);
+			args = temp->arguments;
+			while (*args != NULL)
+			{
+				free(*args);
+				args++;
+			}
+			free(temp->arguments);
 		}
-		free (list->value);
-		if (list->next)
-			free (list->next);
-		list = list->prev;
+		free(temp);
 	}
-	free (sh->first);
+	free_lexed(sh);
 	i = -1;
 	while (sh->splitted_path[++i])
 		free (sh->splitted_path[i]);

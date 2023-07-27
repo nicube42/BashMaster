@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/27 13:29:01 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 17:43:00 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ int	redirection_to_char(char *input, int i, t_bash *sh, int only_count)
 		word[j++] = input[i++];
 	word[j] = '\0';
 	if (only_count == 1)
+	{
+		free (word);
 		sh->lexed_size++;
+	}
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
@@ -112,7 +115,10 @@ int	word_to_char(char *input, int i, t_bash *sh, int only_count)
 		&& !ft_is_blank(input[i]) && input[i])
 		word[j++] = input[i++];
 	if (only_count == 1)
+	{
+		free (word);
 		sh->lexed_size++;
+	}
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
@@ -146,6 +152,7 @@ int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
 	if (only_count == 1)
 	{
 		sh->lexed_size++;
+		free (word);
 		i++;
 	}
 	else

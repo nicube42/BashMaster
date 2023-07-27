@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 03:55:50 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/27 13:58:46 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 17:45:42 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,5 @@ void	parser(t_bash *sh)
 		else
 			i = create_cmd_token(sh, to_add, i);
 	}
-	free_lexed(sh);
 	ft_print_tokens(sh);
 }

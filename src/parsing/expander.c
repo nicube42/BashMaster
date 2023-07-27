@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/27 13:30:13 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 18:24:28 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,15 @@ void	replace_substring(char **str, int start, int end, char *replacement)
 	char	*new_str;
 	char	*prefix;
 	char	*suffix;
+	char	*temp_str;
 
 	prefix = ft_substr(*str, 0, start);
 	suffix = ft_substr(*str, end, ft_strlen(*str) - end);
-	new_str = ft_strjoin(ft_strjoin(prefix, replacement), suffix);
+	temp_str = ft_strjoin(prefix, replacement);
+	new_str = ft_strjoin(temp_str, suffix);
 	free(prefix);
 	free(suffix);
+	free(temp_str);
 	free(*str);
 	*str = new_str;
 }
@@ -59,10 +62,10 @@ void	expander(t_bash *sh, char **envp)
 						tmp = ft_substr(envp[j],
 								ft_strlen(tmp) + 1, ft_strlen(envp[j]));
 						replace_substring(&sh->lexed[i], k, l, tmp);
-						free (tmp);
 						break ;
 					}
 				}
+				free (tmp);
 			}
 		}
 	}
