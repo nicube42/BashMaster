@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/25 20:23:27 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 10:30:42 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_bash
 	char			**envp;
 	char			**splitted_path;
 	struct s_list	*first;
+	struct s_list	*last;
 }	t_bash;
 
 char	**lexer(char *input, t_bash	*sh);
@@ -75,6 +76,7 @@ t_list	*ft_init_token(void);
 void	ft_add_token(t_bash *sh, t_list *to_add);
 void	ft_connect_token(t_list *list, t_list *to_add);
 void	ft_print_tokens(t_bash *sh);
+void	destroy_tokens(t_bash *sh);
 
 int		quote_to_char(char *input, int i, t_bash *sh, int only_count);
 int		ft_is_quote(char c);

@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/25 19:15:49 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 10:33:16 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,16 @@ void	count_quote(char *input, t_bash *sh)
 	}
 }
 
+void	set_last_of_list(t_bash *sh)
+{
+	t_list	*list;
+
+	list = sh->first;
+	while (list)
+		list = list->next;
+	sh->last = list;
+}
+
 int	main(int ac, char *av[], char *envp[])
 {
 	t_bash	sh;
@@ -94,8 +104,10 @@ int	main(int ac, char *av[], char *envp[])
 		lexer(input, &sh);
 		expander(&sh, envp);
 		parser(&sh);
+		set_last_of_list(&sh);
 		check_syntax(&sh);
 		execute(&sh);
+		destroy_tokens(&sh);
 	}
 	return (0);
 }

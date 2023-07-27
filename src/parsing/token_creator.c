@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:34:40 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 22:14:13 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 10:34:19 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,5 +70,28 @@ void	ft_print_tokens(t_bash *sh)
 		i++;
 		printf("\n");
 		list = list->next;
+	}
+}
+
+void	destroy_tokens(t_bash *sh)
+{
+	t_list	*list;
+	int		i;
+
+	i = -1;
+	list = sh->last;
+	while (list)
+	{
+		if (list->arguments != 0)
+		{
+			while (list->arguments[++i])
+			{
+				free (list->arguments[i]);
+				list->arguments = 0;
+			}
+		}
+		free (list->value);
+		free (list);
+		list = list->prev;
 	}
 }
