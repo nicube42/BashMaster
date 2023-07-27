@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 22:14:35 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 10:40:37 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,11 @@ void	expander(t_bash *sh, char **envp)
 					if (!ft_strncmp(tmp, envp[j], ft_strlen(tmp))
 						&& envp[j][ft_strlen(tmp)] == '=')
 					{
+						free (tmp);
 						tmp = ft_substr(envp[j],
 								ft_strlen(tmp) + 1, ft_strlen(envp[j]));
 						replace_substring(&sh->lexed[i], k, l, tmp);
+						free (tmp);
 						break ;
 					}
 				}
@@ -65,4 +67,3 @@ void	expander(t_bash *sh, char **envp)
 		}
 	}
 }
-

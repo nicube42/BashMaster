@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 03:55:50 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 22:15:24 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 10:51:36 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,19 @@ static int	create_cmd_token(t_bash *sh, t_list *to_add, int i)
 	return (i);
 }
 
+void	free_lexed(t_bash *sh)
+{
+	int	i;
+
+	i = -1;
+	while (sh->lexed[++i])
+	{
+		free (sh->lexed[i]);
+		sh->lexed[i] = 0;
+	}
+	free (sh->lexed);
+}
+
 void	parser(t_bash *sh)
 {
 	int		i;
@@ -116,5 +129,6 @@ void	parser(t_bash *sh)
 		else
 			i = create_cmd_token(sh, to_add, i);
 	}
+	free_lexed(sh);
 	ft_print_tokens(sh);
 }

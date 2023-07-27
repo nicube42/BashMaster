@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:34:40 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/27 10:34:19 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 11:31:22 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,4 +94,9 @@ void	destroy_tokens(t_bash *sh)
 		free (list);
 		list = list->prev;
 	}
+	i = -1;
+	while (sh->splitted_path[++i])
+		free (sh->splitted_path[i]);
+	free (sh->splitted_path);
+	free (sh->is_quote);
 }

@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/27 10:33:16 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 11:27:14 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ char	**ft_parsing_execve(char **envp)
 	int		i;
 	char	*full_path;
 	char	**splitted_path;
+	char	*tmp;
 
 	i = 0;
 	while (envp[++i])
@@ -27,7 +28,11 @@ char	**ft_parsing_execve(char **envp)
 	splitted_path = ft_split(full_path, ':');
 	i = -1;
 	while (splitted_path[++i])
-		splitted_path[i] = ft_strjoin(splitted_path[i], "/");
+	{
+		tmp = ft_strjoin(splitted_path[i], "/");
+		free (splitted_path[i]);
+		splitted_path[i] = tmp;
+	}
 	return (splitted_path);
 }
 
@@ -77,13 +82,14 @@ int	main(int ac, char *av[], char *envp[])
 	t_bash	sh;
 	int		i;
 	char	*input;
+	int		j = -1;
 
 	(void) ac;
 	(void) av;
 	sh.envp = envp;
 	using_history();
 	write(1, "\n", 1);
-	while (1)
+	while (++j < 1)
 	{
 		input = 0;
 		sh.lexed = NULL;
@@ -96,6 +102,7 @@ int	main(int ac, char *av[], char *envp[])
 			continue ;
 		add_history(input);
 		count_quote(input, &sh);
+		free (input);
 		sh.splitted_path = ft_parsing_execve(envp);
 		lexer_size(input, &sh);
 		sh.lexed = malloc(sizeof(char *) * (sh.lexed_size + 1));
