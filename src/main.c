@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/27 11:27:14 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 13:30:40 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ int	main(int ac, char *av[], char *envp[])
 			continue ;
 		add_history(input);
 		count_quote(input, &sh);
-		free (input);
+		//free (input);
 		sh.splitted_path = ft_parsing_execve(envp);
 		lexer_size(input, &sh);
 		sh.lexed = malloc(sizeof(char *) * (sh.lexed_size + 1));
@@ -115,6 +115,7 @@ int	main(int ac, char *av[], char *envp[])
 		check_syntax(&sh);
 		execute(&sh);
 		destroy_tokens(&sh);
+		free (input);
 	}
 	return (0);
 }

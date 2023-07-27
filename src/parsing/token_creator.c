@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:34:40 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/27 11:31:22 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/27 13:20:11 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	destroy_tokens(t_bash *sh)
 			}
 		}
 		free (list->value);
-		free (list);
+		if (list->next)
+			free (list->next);
 		list = list->prev;
 	}
 	i = -1;
