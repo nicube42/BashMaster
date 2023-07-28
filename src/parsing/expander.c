@@ -6,13 +6,14 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/28 09:55:50 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 10:19:40 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bashmaster.h"
 
-void	replace_substring(char **str, int start, int end, char *replacement, t_bash *sh)
+void	replace_substring(char **str, int start, int end, char *replacement
+	, t_bash *sh)
 {
 	char	*new_str;
 	char	*prefix;

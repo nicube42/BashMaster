@@ -6,25 +6,11 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/28 09:53:29 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 10:19:44 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bashmaster.h"
-
-int	ft_is_blank(char c)
-{
-	if (c == ' ' || c == '\n' || c == '\t')
-		return (1);
-	return (0);
-}
-
-int	ft_skip_blank(char *line, int i)
-{
-	while (ft_is_blank(line[i]) && line[i])
-		i++;
-	return (i);
-}
 
 int	calculate_redir_to_char(char *input, int i, t_bash *sh)
 {

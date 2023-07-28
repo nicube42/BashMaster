@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:27:44 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/27 13:58:47 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 10:19:41 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,21 +118,3 @@ int	wrong_cmd_error(t_bash *sh)
 	return (0);
 }
 
-int	ft_check_cmd(char *tok, t_bash *sh)
-{
-	int		i;
-	char	*cmd;
-
-	i = -1;
-	while (sh->splitted_path[++i])
-	{
-		cmd = ft_strjoin(sh->splitted_path[i], tok);
-		if (access(cmd, F_OK) == 0)
-		{
-			free(cmd);
-			return (0);
-		}
-		free(cmd);
-	}
-	return (1);
-}
