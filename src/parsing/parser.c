@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 03:55:50 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/28 10:19:46 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 11:03:11 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,24 @@ static int	create_pipe_token(t_bash *sh, t_list *to_add, int i)
 	return (i);
 }
 
+static int	create_cmd_token_2(t_bash *sh, int i, t_list *to_add)
+{
+	int	j;
+
+	j = 0;
+	while (i < sh->lexed_size && sh->lexed[i][0] != '<'
+		&& sh->lexed[i][0] != '>' && sh->lexed[i][0] != '|' && sh->lexed[i])
+	{
+		to_add->arguments[j] = ft_strdup(sh->lexed[i]);
+		if (!to_add->arguments[j])
+			clean_exit("Malloc error", sh);
+		i++;
+		j++;
+	}
+	to_add->arguments[j] = 0;
+	return (i);
+}
+
 static int	create_cmd_token(t_bash *sh, t_list *to_add, int i)
 {
 	int	j;
@@ -73,17 +91,7 @@ static int	create_cmd_token(t_bash *sh, t_list *to_add, int i)
 	to_add->arguments = malloc (sizeof(char *) * (j + 1));
 	if (!to_add->arguments)
 		clean_exit("Malloc error", sh);
-	j = 0;
-	while (i < sh->lexed_size && sh->lexed[i][0] != '<'
-		&& sh->lexed[i][0] != '>' && sh->lexed[i][0] != '|' && sh->lexed[i])
-	{
-		to_add->arguments[j] = ft_strdup(sh->lexed[i]);
-		if (!to_add->arguments[j])
-			clean_exit("Malloc error", sh);
-		i++;
-		j++;
-	}
-	to_add->arguments[j] = 0;
+	i = create_cmd_token_2(sh, i, to_add);
 	to_add->id = CMD_TOK;
 	if (is_builtin(to_add->value))
 		to_add->id = BUILTIN_TOK;

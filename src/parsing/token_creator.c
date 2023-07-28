@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:34:40 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/28 10:00:58 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 11:06:38 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,39 +46,11 @@ void	ft_connect_token(t_list *list, t_list *to_add)
 	to_add->prev = list;
 }
 
-void	ft_print_tokens(t_bash *sh)
-{
-	t_list	*list;
-	int		i;
-	int		j;
-
-	i = 1;
-	list = sh->first;
-	while (list)
-	{
-		j = 0;
-		printf("value number %d : %s\n", i, list->value);
-		if (list->arguments != 0)
-		{
-			while (list->arguments[j])
-			{
-				printf("      arguments %d : %s\n", j + 1, list->arguments[j]);
-				j++;
-			}
-		}
-		printf("id = %d\n", list->id);
-		i++;
-		printf("\n");
-		list = list->next;
-	}
-}
-
-void	destroy_tokens(t_bash *sh)
+static void	destroy_tokens_2(t_bash *sh)
 {
 	t_list	*list;
 	t_list	*temp;
 	char	**args;
-	int		i;
 
 	list = sh->first;
 	while (list)
@@ -87,7 +59,7 @@ void	destroy_tokens(t_bash *sh)
 		list = list->next;
 		if (temp->value != 0)
 			free(temp->value);
-		if (temp->arguments != 0) 
+		if (temp->arguments != 0)
 		{
 			args = temp->arguments;
 			while (*args != 0)
@@ -99,6 +71,13 @@ void	destroy_tokens(t_bash *sh)
 		}
 		free(temp);
 	}
+}
+
+void	destroy_tokens(t_bash *sh)
+{
+	int		i;
+
+	destroy_tokens_2(sh);
 	free_lexed(sh);
 	i = -1;
 	while (sh->splitted_path[++i])

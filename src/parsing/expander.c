@@ -6,27 +6,26 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/28 10:19:40 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 11:36:32 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bashmaster.h"
 
-void	replace_substring(char **str, int start, int end, char *replacement
-	, t_bash *sh)
+void	replace_substring(char **str, t_exp *exp, t_bash *sh)
 {
 	char	*new_str;
 	char	*prefix;
 	char	*suffix;
 	char	*temp_str;
 
-	prefix = ft_substr(*str, 0, start);
+	prefix = ft_substr(*str, 0, exp->k);
 	if (!prefix)
 		clean_exit("Malloc error", sh);
-	suffix = ft_substr(*str, end, ft_strlen(*str) - end);
+	suffix = ft_substr(*str, exp->l, ft_strlen(*str) - exp->l);
 	if (!suffix)
 		clean_exit("Malloc error", sh);
-	temp_str = ft_strjoin(prefix, replacement);
+	temp_str = ft_strjoin(prefix, exp->tmp);
 	if (!temp_str)
 		clean_exit("Malloc error", sh);
 	new_str = ft_strjoin(temp_str, suffix);
@@ -41,45 +40,53 @@ void	replace_substring(char **str, int start, int end, char *replacement
 
 void	expander(t_bash *sh, char **envp)
 {
-	int		i;
 	int		j;
-	int		k;
-	int		l;
-	char	*tmp;
+	t_exp	*exp;
 
-	i = -1;
+	exp = malloc(sizeof(exp));
+	exp->i = -1;
 	j = -1;
 	sh->lexed[sh->lexed_size] = 0;
-	while (sh->lexed[++i])
+	while (sh->lexed[++exp->i])
 	{
-		k = -1;
-		while (sh->lexed[i][++k])
+		exp->k = -1;
+		while (sh->lexed[exp->i][++exp->k])
 		{
-			if (sh->lexed[i][k] == '$' && sh->is_quote[i] == 0)
+			if (sh->lexed[exp->i][exp->k] == '$' && sh->is_quote[exp->i] == 0)
 			{
-				l = k;
-				while (!ft_is_blank(sh->lexed[i][l]) && sh->lexed[i][l])
-					l++;
-				tmp = ft_substr(sh->lexed[i], k + 1, ft_strlen(sh->lexed[i]));
-				if (!tmp)
-					clean_exit("Malloc error", sh);
-				j = -1;
-				while (envp[++j])
-				{
-					if (!ft_strncmp(tmp, envp[j], ft_strlen(tmp))
-						&& envp[j][ft_strlen(tmp)] == '=')
-					{
-						free (tmp);
-						tmp = ft_substr(envp[j],
-								ft_strlen(tmp) + 1, ft_strlen(envp[j]));
-						if (!tmp)
-							clean_exit("Malloc error", sh);
-						replace_substring(&sh->lexed[i], k, l, tmp, sh);
-						break ;
-					}
-				}
-				free (tmp);
+				exp->l = exp->k;
+				while (!ft_is_blank(sh->lexed[exp->i][exp->l])
+					&& sh->lexed[exp->i][exp->l])
+					exp->l++;
+				expander_2(sh, exp);
+				free (exp->tmp);
+				free (exp);
 			}
+		}
+	}
+}
+
+void	expander_2(t_bash *sh, t_exp *exp)
+{
+	int	j;
+
+	exp->tmp = ft_substr(sh->lexed[exp->i], exp->k + 1,
+			ft_strlen(sh->lexed[exp->i]));
+	if (!exp->tmp)
+		clean_exit("Malloc error", sh);
+	j = -1;
+	while (sh->envp[++j])
+	{
+		if (!ft_strncmp(exp->tmp, sh->envp[j], ft_strlen(exp->tmp))
+			&& sh->envp[j][ft_strlen(exp->tmp)] == '=')
+		{
+			free (exp->tmp);
+			exp->tmp = ft_substr(sh->envp[j],
+					ft_strlen(exp->tmp) + 1, ft_strlen(sh->envp[j]));
+			if (!exp->tmp)
+				clean_exit("Malloc error", sh);
+			replace_substring(&sh->lexed[exp->i], exp, sh);
+			break ;
 		}
 	}
 }
