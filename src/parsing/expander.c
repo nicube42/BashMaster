@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/28 14:03:22 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 14:21:39 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	replace_substring(char **str, t_exp *exp, t_bash *sh)
 	new_str = ft_strjoin(temp_str, suffix);
 	if (!new_str)
 		clean_exit("Malloc error", sh);
-	free(prefix);
+	if (prefix)
+		free(prefix);
 	free(suffix);
 	free(temp_str);
 	free(*str);
@@ -60,10 +61,10 @@ void	expander(t_bash *sh, char **envp)
 					exp->l++;
 				expander_2(sh, exp);
 				free (exp->tmp);
-				free (exp);
 			}
 		}
 	}
+	free (exp);
 }
 
 void	expander_2(t_bash *sh, t_exp *exp)

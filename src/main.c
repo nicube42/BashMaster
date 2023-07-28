@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/28 11:10:44 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 14:27:00 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ void	ft_print_tokens(t_bash *sh)
 
 void	repete_prompt(t_bash *sh, char **envp)
 {
-	while (1)
+	int	i = -1;
+	while (++i < 1)
 	{
 		init_struct(sh, envp);
 		sh->input = readline(GREEN "[ 🎓 BashMaster 🎓 ] > " RESET);
@@ -53,11 +54,11 @@ void	repete_prompt(t_bash *sh, char **envp)
 		lexer_size(sh->input, sh);
 		ft_memset(sh->is_quote, 0, sizeof(int) * sh->lexed_size);
 		lexer(sh->input, sh);
-		expander(sh, envp);
+		//expander(sh, envp);
 		parser(sh);
 		set_last_of_list(sh);
-		if (check_syntax(sh))
-			execute(sh);
+		//if (check_syntax(sh))
+		//	execute(sh);
 		destroy_tokens(sh);
 	}
 }
