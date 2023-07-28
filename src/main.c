@@ -6,13 +6,13 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/27 18:24:55 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 10:02:50 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/bashmaster.h"
 
-char	**ft_parsing_execve(char **envp)
+char	**ft_parsing_execve(char **envp, t_bash *sh)
 {
 	int		i;
 	char	*full_path;
@@ -26,10 +26,14 @@ char	**ft_parsing_execve(char **envp)
 			full_path = envp[i] + 5;
 	}
 	splitted_path = ft_split(full_path, ':');
+	if (!splitted_path)
+		clean_exit("Malloc error", sh);
 	i = -1;
 	while (splitted_path[++i])
 	{
 		tmp = ft_strjoin(splitted_path[i], "/");
+		if (!tmp)
+			clean_exit("Malloc error", sh);
 		if (splitted_path[i])
 			free(splitted_path[i]);
 		splitted_path[i] = tmp;
@@ -62,43 +66,50 @@ void	set_last_of_list(t_bash *sh)
 	sh->last = list;
 }
 
+void	init_struct(t_bash *sh, char **envp)
+{
+	sh->lexed = NULL;
+	sh->lexed_size = 0;
+	sh->lexed_current = 0;
+	sh->dquote_count = 0;
+	sh->quote_count = 0;
+	sh->envp = envp;
+	sh->splitted_path = ft_parsing_execve(envp, sh);
+	sh->input = 0;
+}
+
+void	clean_exit(char *msg, t_bash *sh)
+{
+	ft_printf("%s\n", msg);
+	destroy_tokens(sh);
+	exit(1);
+}
+
 int	main(int ac, char *av[], char *envp[])
 {
 	t_bash	sh;
-	int		i;
 	char	*input;
-	int		j = -1;
 
 	(void) ac;
 	(void) av;
-	sh.envp = envp;
 	using_history();
 	write(1, "\n", 1);
-	while (++j < 1)
+	while (1)
 	{
-		input = 0;
-		sh.lexed = NULL;
-		sh.lexed_size = 0;
-		sh.lexed_current = 0;
-		sh.dquote_count = 0;
-		sh.quote_count = 0;
-		input = readline(GREEN "[ 🎓 BashMaster 🎓 ] > " RESET);
-		if (input[0] == '\0')
+		init_struct(&sh, envp);
+		sh.input = readline(GREEN "[ 🎓 BashMaster 🎓 ] > " RESET);
+		if (sh.input[0] == '\0')
 			continue ;
-		add_history(input);
-		count_quote(input, &sh);
-		sh.splitted_path = ft_parsing_execve(envp);
-		lexer_size(input, &sh);
-		sh.lexed = malloc(sizeof(char *) * (sh.lexed_size + 1));
-		sh.is_quote = malloc(sizeof(int) * (sh.lexed_size));
+		add_history(sh.input);
+		count_quote(sh.input, &sh);
+		lexer_size(sh.input, &sh);
 		ft_memset(sh.is_quote, 0, sizeof(int) * sh.lexed_size);
-		lexer(input, &sh);
+		lexer(sh.input, &sh);
 		expander(&sh, envp);
 		parser(&sh);
 		set_last_of_list(&sh);
 		if (!check_syntax(&sh))
 			execute(&sh);
-		free (input);
 		destroy_tokens(&sh);
 	}
 	return (0);

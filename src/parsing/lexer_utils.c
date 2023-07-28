@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/27 17:43:00 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 09:53:29 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@ int	redirection_to_char(char *input, int i, t_bash *sh, int only_count)
 
 	j = calculate_redir_to_char(input, i, sh);
 	word = malloc (sizeof(char) * (j + 1));
-	//if (!word)
-	//	clean_exit();
+	if (!word)
+		clean_exit("Malloc error", sh);
 	j = 0;
 	while ((input[i] == '<' || input[i] == '>') && input[i])
 		word[j++] = input[i++];
@@ -71,6 +71,8 @@ int	redirection_to_char(char *input, int i, t_bash *sh, int only_count)
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
+		if (!sh->lexed[sh->lexed_current])
+			clean_exit("Malloc error", sh);
 		free (word);
 		sh->lexed[sh->lexed_current][j] = '\0';
 		sh->lexed_current++;
@@ -90,6 +92,8 @@ int	pipe_to_char(char *input, int i, t_bash *sh, int only_count)
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
+		if (!sh->lexed[sh->lexed_current])
+			clean_exit("Malloc error", sh);
 		sh->lexed[sh->lexed_current][1] = '\0';
 		sh->lexed_current++;
 	}
@@ -108,8 +112,8 @@ int	word_to_char(char *input, int i, t_bash *sh, int only_count)
 		&& !ft_is_blank(input[i]) && input[i])
 		i++;
 	word = malloc (sizeof(char) * ((i - i_save) + 1));
-	//if (!word)
-	//	clean_exit();
+	if (!word)
+		clean_exit("Malloc error", sh);
 	i = i_save;
 	while (input[i] != '|' && input[i] != '<' && input[i] != '>'
 		&& !ft_is_blank(input[i]) && input[i])
@@ -122,6 +126,8 @@ int	word_to_char(char *input, int i, t_bash *sh, int only_count)
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
+		if (!sh->lexed[sh->lexed_current])
+			clean_exit("Malloc error", sh);
 		free (word);
 		sh->lexed[sh->lexed_current][i - i_save] = '\0';
 		sh->lexed_current++;
@@ -143,8 +149,8 @@ int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
 	while (!ft_is_quote(input[i]) && input[i])
 		i++;
 	word = malloc (sizeof(char) * ((i - i_save) + 1));
-	//if (!word)
-	//	clean_exit();
+	if (!word)
+		clean_exit("Malloc error", sh);
 	i = i_save;
 	while (!ft_is_quote(input[i]) && input[i])
 		word[j++] = input[i++];
@@ -158,6 +164,8 @@ int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
 	else
 	{
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
+		if (!sh->lexed[sh->lexed_current])
+			clean_exit("Malloc error", sh);
 		free (word);
 		sh->lexed[sh->lexed_current][i - i_save] = '\0';
 		i++;

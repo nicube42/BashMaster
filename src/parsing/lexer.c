@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:27:27 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/27 13:58:48 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 09:50:58 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,16 @@ int	ft_is_quote(char c)
 	if (c == '\'')
 		return (2);
 	return (0);
+}
+
+void	init_lexed_malloc(t_bash *sh)
+{
+	sh->lexed = malloc(sizeof(char *) * (sh->lexed_size + 1));
+	if (!sh->lexed)
+		clean_exit("Malloc error", sh);
+	sh->is_quote = malloc(sizeof(int) * (sh->lexed_size));
+	if (!sh->is_quote)
+		clean_exit("Malloc error", sh);
 }
 
 void	lexer_size(char *input, t_bash *sh)
@@ -39,6 +49,7 @@ void	lexer_size(char *input, t_bash *sh)
 		else
 			i = word_to_char(input, i, sh, 1);
 	}
+	init_lexed_malloc(sh);
 }
 
 char	**lexer(char *input, t_bash *sh)

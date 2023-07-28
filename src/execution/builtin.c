@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/25 18:54:37 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/25 21:45:34 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 10:06:01 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,14 @@ void	execute_export(t_bash *sh, t_list *list)
 	while (sh->envp[j])
 		j++;
 	export = malloc (sizeof(char *) * (j + 1));
+	if (!export)
+		clean_exit("Malloc error", sh);
 	while (sh->envp[++i])
+	{
 		export[i] = ft_strdup(sh->envp[i]);
+		if (!export[i])
+			clean_exit("Malloc error", sh);
+	}
 	export[i] = 0;
 	i = -1;
 	sort_environ(export);
@@ -81,8 +87,8 @@ void	execute_export(t_bash *sh, t_list *list)
 
 void	execute_exit(t_bash *sh)
 {
-	//free all
-	exit(0);
+	destroy_tokens(sh);
+	exit (0);
 }
 
 void	execute_env(t_bash *sh)
@@ -120,6 +126,8 @@ void	execute_pwd(t_bash *sh)
 		{
 			pwd = ft_substr(sh->envp[i],
 					ft_strlen("pwd") + 1, ft_strlen(sh->envp[i]));
+			if (!pwd)
+				clean_exit("Malloc error", sh);
 			break ;
 		}
 	}

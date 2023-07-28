@@ -6,19 +6,19 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:34:40 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/27 18:24:39 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 10:00:58 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bashmaster.h"
 
-t_list	*ft_init_token(void)
+t_list	*ft_init_token(t_bash *sh)
 {
 	t_list	*token;
 
 	token = (t_list *)malloc(sizeof(t_list));
 	if (!token)
-		return (0);
+		clean_exit("Malloc error", sh);
 	token->prev = 0;
 	token->next = 0;
 	token->id = 0;
@@ -81,17 +81,16 @@ void	destroy_tokens(t_bash *sh)
 	int		i;
 
 	list = sh->first;
-
-	while (list != NULL)
+	while (list)
 	{
 		temp = list;
 		list = list->next;
-		if (temp->value != NULL)
+		if (temp->value != 0)
 			free(temp->value);
-		if (temp->arguments != NULL) 
+		if (temp->arguments != 0) 
 		{
 			args = temp->arguments;
-			while (*args != NULL)
+			while (*args != 0)
 			{
 				free(*args);
 				args++;
@@ -107,4 +106,5 @@ void	destroy_tokens(t_bash *sh)
 	free (sh->splitted_path);
 	if (sh->is_quote)
 		free (sh->is_quote);
+	free (sh->input);
 }
