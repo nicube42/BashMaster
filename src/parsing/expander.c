@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/28 11:36:32 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/28 14:03:22 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,12 +68,16 @@ void	expander(t_bash *sh, char **envp)
 
 void	expander_2(t_bash *sh, t_exp *exp)
 {
-	int	j;
+	int		j;
+	char	*tmp;
 
+	tmp = ft_strdup(sh->lexed[exp->i]);
 	exp->tmp = ft_substr(sh->lexed[exp->i], exp->k + 1,
 			ft_strlen(sh->lexed[exp->i]));
-	if (!exp->tmp)
+	if (!exp->tmp || !tmp)
 		clean_exit("Malloc error", sh);
+	sh->lexed[exp->i] = ft_strdup(tmp);
+	free (tmp);
 	j = -1;
 	while (sh->envp[++j])
 	{
