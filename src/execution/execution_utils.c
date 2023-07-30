@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asouchet <asouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 08:45:22 by asouchet          #+#    #+#             */
-/*   Updated: 2023/07/27 14:53:22 by asouchet         ###   ########.fr       */
+/*   Updated: 2023/07/30 11:40:41 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/bashmaster.h"
 
 int	cmd_nb(t_exec *lst)
 {

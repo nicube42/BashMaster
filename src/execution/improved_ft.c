@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   improved_ft.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asouchet <asouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 08:42:35 by asouchet          #+#    #+#             */
-/*   Updated: 2023/05/29 11:47:30 by asouchet         ###   ########.fr       */
+/*   Updated: 2023/07/30 11:40:31 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/bashmaster.h"
 
 int	improved_dup2(int fildes, int fildes2, t_shell *shell)
 {

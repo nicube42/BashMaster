@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 15:23:10 by lcamilo-          #+#    #+#             */
-/*   Updated: 2023/06/09 09:56:55 by marvin           ###   ########.fr       */
+/*   Updated: 2023/07/30 11:40:37 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/bashmaster.h"
 
 void	ft_inside_mid_fork(t_shell *shell, t_exec *exec, t_fd *fd, char *path)
 {

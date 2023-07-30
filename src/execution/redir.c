@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redir.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asouchet <asouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 08:47:37 by asouchet          #+#    #+#             */
-/*   Updated: 2023/06/08 16:48:08 by asouchet         ###   ########.fr       */
+/*   Updated: 2023/07/30 11:40:22 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/bashmaster.h"
 
 void	land_here_doc(t_shell *shell, char *heredoc)
 {

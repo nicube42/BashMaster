@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   redir_2.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asouchet <asouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 08:49:54 by asouchet          #+#    #+#             */
-/*   Updated: 2023/05/30 09:48:15 by asouchet         ###   ########.fr       */
+/*   Updated: 2023/07/30 11:40:27 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/bashmaster.h"
 
 void	t_redir_exec(t_shell *shell, t_exec *exec)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   exec_setup.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: asouchet <asouchet@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 08:51:59 by asouchet          #+#    #+#             */
-/*   Updated: 2023/06/08 08:45:33 by asouchet         ###   ########.fr       */
+/*   Updated: 2023/07/30 11:40:46 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../includes/bashmaster.h"
 
 void	declare_var(t_shell *shell, t_fd *fd, t_file *file, t_error *error)
 {
