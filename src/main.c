@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/31 10:04:07 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/31 11:13:28 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ void	ft_print_tokens(t_bash *sh)
 			}
 		}
 		printf("id = %d\n", list->id);
+		printf("fdin = %d\n", list->fd_in);
+		printf("fdout = %d\n", list->fd_out);
 		i++;
 		printf("\n");
 		list = list->next;

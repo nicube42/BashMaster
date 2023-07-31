@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:34:40 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/28 11:06:38 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/31 11:04:46 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_list	*ft_init_token(t_bash *sh)
 	token->prev = 0;
 	token->next = 0;
 	token->id = 0;
+	token->fd_in = -1;
 	return (token);
 }
 
