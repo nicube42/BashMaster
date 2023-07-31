@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/31 11:04:32 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:05:20 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,5 +111,7 @@ void	init_lexed_malloc(t_bash *sh);
 void	expander_2(t_bash *sh, t_exp *exp);
 int		calculate_redir_to_char(char *input, int i, t_bash *sh);
 void	stock_in_struct(t_bash *sh, char *word, int j, int only_count);
+
+void	set_fd(t_bash *sh);
 
 #endif
