@@ -5,103 +5,97 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/28 15:23:10 by lcamilo-          #+#    #+#             */
-/*   Updated: 2023/07/30 11:40:37 by ndiamant         ###   ########.fr       */
+/*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
+/*   Updated: 2023/07/31 10:15:16 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bashmaster.h"
 
-void	ft_inside_mid_fork(t_shell *shell, t_exec *exec, t_fd *fd, char *path)
+char	*add_path(t_bash *sh, t_list *list)
 {
-	dup_case(shell, fd);
-	_close(fd->tmp[1]);
-	_close(fd->tmp[0]);
-	_close(fd->fd[0]);
-	_close(fd->fd[1]);
-	if (!builtin_in_fork(shell, exec->cmd_args[0], exec))
-		exit(0);
-	path = ft_get_path(exec->cmd_args[0], shell);
-	if (!path)
-		cmd_not_found(exec->cmd_args[0]);
-	if (execve(path, exec->cmd_args, ft_sett(shell->env)) == -1)
-		parse_error(exec->cmd_args[0]);
+	char	*cmd;
+	int		i;
+
+	i = -1;
+	while (sh->splitted_path[++i])
+	{
+		cmd = ft_strjoin(sh->splitted_path[i], list->value);
+		if (access(cmd, F_OK) == 0)
+			break ;
+		free(cmd);
+		cmd = 0;
+	}
+	return (cmd);
 }
 
-void	minishell_fork(t_shell *shell, t_exec *exec, t_fd *fd)
+void	execute_cmd(t_list *list, t_bash *sh)
 {
-	char	*path;
-	int		pid;
+	int		i;
+	char	**args;
+	char	*cmd;
+	pid_t	pid;
 
-	path = NULL;
-	if (!builtin_out_fork(shell, exec->cmd_args[0], exec))
+	if (!list || !list->value)
 		return ;
-	pid = improved_fork(shell);
-	if (shell->error->error != 0)
-		return ;
+	cmd = add_path(sh, list);
+	if (list->fd_in != -1)
+		dup2(list->fd_in, STDIN_FILENO);
+	if (list->fd_out != -1)
+		dup2(list->fd_out, STDOUT_FILENO);
+	i = 0;
+	while (list->arguments && list->arguments[i])
+		i++;
+	args = (char **)malloc((i + 2) * sizeof(char *));
+	args[0] = list->value;
+	i = -1;
+	while (list->arguments && list->arguments[++i])
+		args[i + 1] = list->arguments[i];
+	args[i + 1] = 0;
+	pid = fork();
 	if (pid == 0)
-		ft_inside_mid_fork(shell, exec, fd, path);
-	_close(fd->tmp[0]);
-	_close(fd->tmp[1]);
-	_close(shell->fd->input);
-	shell->fd->input = 0;
-	_close(shell->fd->output);
-	shell->fd->output = 1;
-}
-
-void	multiple_cmd(t_shell *shell, t_exec *exec, t_fd *fd)
-{
-	if (exec->cmd_args == NULL)
-		return ;
-	if (fd->fd[1] != 1)
-		fd->tmp[1] = fd->fd[1];
-	if (fd->fd[0] != 0)
-		fd->tmp[0] = fd->fd[0];
-	improved_pipe(fd->fd, shell);
-	minishell_fork(shell, exec, fd);
-}
-
-void	last_cmd_in_file(t_shell *shell, t_exec *exec, t_fd *fd)
-{
-	char	*path;
-	int		pid;
-
-	if (exec->cmd_args == NULL)
-		return ;
-	if (!builtin_out_fork(shell, exec->cmd_args[0], exec))
-		return ;
-	if (fd->fd[1] != 1)
-		fd->tmp[1] = fd->fd[1];
-	if (fd->fd[0] != 0)
-		fd->tmp[0] = fd->fd[0];
-	improved_pipe(fd->fd, shell);
-	path = NULL;
-	pid = improved_fork(shell);
-	if (pid == 0)
-		inside_last_fork(shell, exec, fd, path);
-	_close(fd->tmp[0]);
-	_close(fd->tmp[1]);
-	_close(shell->fd->input);
-	shell->fd->input = 0;
-	_close(shell->fd->output);
-	shell->fd->output = 1;
-}
-
-// Execute une commande
-void	execution(t_shell *shell)
-{
-	t_exec	*tmp;
-	t_fd	fd;
-	t_file	file;
-	t_error	error;
-	int		cmd_count;
-
-	tmp = shell->exec;
-	declare_var(shell, &fd, &file, &error);
-	cmd_count = cmd_nb(tmp);
-	if (cmd_count == 1)
-		one_cmd(shell, tmp, &fd);
+	{
+		if (list->fd_in != -1)
+			dup2(list->fd_in, STDIN_FILENO);
+		if (list->fd_out != -1)
+			dup2(list->fd_out, STDOUT_FILENO);
+		execve(cmd, args, 0);
+		perror("execve");
+	}
+	else if (pid < 0)
+	{
+		perror("fork");
+	}
 	else
-		middle_execution(shell, tmp, &fd);
-	minishell_wait(cmd_count);
+	{
+		waitpid(pid, 0, 0);
+	}
+	free(args);
+	free(cmd);
+}
+
+
+void	execution(t_bash *sh)
+{
+	t_list	*list;
+
+	list = sh->first;
+	while (list)
+	{
+		if (list->id == CMD_TOK)
+			execute_cmd(list, sh);
+		else if (list->id == PIPE_TOK)
+		{
+
+		}
+		else if (list->id == BUILTIN_TOK)
+		{
+
+		}
+		else
+		{
+
+		}
+		list = list->next;
+	}
 }

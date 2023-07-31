@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/28 11:10:44 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/31 10:04:07 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	repete_prompt(t_bash *sh, char **envp)
 		parser(sh);
 		set_last_of_list(sh);
 		if (check_syntax(sh))
-			execute(sh);
+			execution(sh);
 		destroy_tokens(sh);
 	}
 }

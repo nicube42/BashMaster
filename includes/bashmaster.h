@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/28 11:30:13 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/31 10:03:44 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,16 +99,7 @@ int		ft_check_cmd(char *tok, t_bash *sh);
 
 int		is_builtin(char *tmp);
 
-void	execute(t_bash *sh);
-
-void	execute_pwd(t_bash *sh);
-void	execute_buildin(t_list *list, t_bash *sh);
-void	execute_echo(t_list *list);
-void	execute_env(t_bash *sh);
-void	execute_exit(t_bash *sh);
-void	sort_environ(char **env);
-void	execute_export(t_bash *sh, t_list *list);
-void	execute_unset(t_list *list);
+void	execution(t_bash *sh);
 
 void	free_lexed(t_bash *sh);
 void	clean_exit(char *msg, t_bash *sh);
