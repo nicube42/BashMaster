@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:17:10 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/31 10:20:42 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/31 20:57:10 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ void	free_lexed(t_bash *sh)
 
 void	clean_exit(char *msg, t_bash *sh)
 {
-	ft_printf("%s\n", msg);
+	perror(msg);
 	destroy_tokens(sh);
-	exit(1);
+	exit (1);
 }
 
 void	init_struct(t_bash *sh, char **envp)

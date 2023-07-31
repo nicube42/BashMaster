@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/31 11:13:28 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/31 21:56:52 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,34 @@ void	ft_print_tokens(t_bash *sh)
 	}
 }
 
+char	*prompt_content(t_bash *sh)
+{
+	int		i;
+	char	*pwd;
+
+	i = -1;
+	while (sh->envp[++i])
+	{
+		if (!ft_strncmp("PWD", sh->envp[i], 3)
+			&& sh->envp[i][3] == '=')
+		{
+			pwd = ft_substr(sh->envp[i],
+					ft_strlen("pwd") + 1, ft_strlen(sh->envp[i]));
+			if (!pwd)
+				clean_exit("Malloc error", sh);
+			break ;
+		}
+	}
+	pwd = ft_strjoin(ft_strjoin("\033[0;32m[", pwd), "] > \033[0m");
+	return (pwd);
+}
+
 void	repete_prompt(t_bash *sh, char **envp)
 {
 	while (1)
 	{
 		init_struct(sh, envp);
-		sh->input = readline(GREEN "[ 🎓 BashMaster 🎓 ] > " RESET);
+		sh->input = readline(prompt_content(sh));
 		if (sh->input[0] == '\0')
 			continue ;
 		add_history(sh->input);
