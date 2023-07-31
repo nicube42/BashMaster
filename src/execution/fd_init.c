@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:58:58 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/31 14:05:33 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/31 14:47:29 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void	set_fd(t_bash *sh)
 			list->fd_in = current_fd_in;
 			list->fd_out = current_fd_out;
 		}
+		set_here_doc_fd(list, &current_fd_in, sh);
 		set_red_exit_fd(list, &current_fd_out);
 		set_append_fd(list, &current_fd_out);
 		set_red_entry_fd(list, &current_fd_in);

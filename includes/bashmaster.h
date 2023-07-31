@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/31 14:05:20 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/31 20:23:04 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,5 +113,15 @@ int		calculate_redir_to_char(char *input, int i, t_bash *sh);
 void	stock_in_struct(t_bash *sh, char *word, int j, int only_count);
 
 void	set_fd(t_bash *sh);
+void	set_here_doc_fd(t_list *list, int *current_fd_in, t_bash *sh);
+
+void	execute_export(t_bash *sh, t_list *list);
+void	sort_environ(char **environ);
+void	execute_unset(t_list *list);
+void	execute_exit(t_bash *sh);
+void	execute_buildin(t_list *list, t_bash *sh);
+void	execute_env(t_bash *sh);
+void	execute_echo(t_list *list);
+void	execute_pwd(t_bash *sh);
 
 #endif
