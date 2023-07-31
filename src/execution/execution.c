@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/31 20:26:41 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/31 20:49:00 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,9 @@ void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
 	}
 	if (list->id == CMD_TOK)
 	{
-		// execve(cmd, args, 0);
-		// perror("execve");
-		// exit(EXIT_FAILURE);
+		execve(cmd, args, 0);
+		perror("execve");
+		exit(EXIT_FAILURE);
 	}
 	else
 		execute_buildin(list, sh);
@@ -79,7 +79,10 @@ void	execute_cmd(t_list *list, t_bash *sh)
 	prepare_cmd(sh, list, &cmd, &args);
 	pid = fork();
 	if (pid == 0)
+	{
 		pipe_and_execute(list, sh, cmd, args);
+		exit(0);
+	}
 	else if (pid < 0)
 		perror("fork");
 	else
@@ -104,10 +107,6 @@ void	execution(t_bash *sh)
 	{
 		if (list->id == CMD_TOK || list->id == BUILTIN_TOK)
 			execute_cmd(list, sh);
-		else if (list->id == BUILTIN_TOK)
-		{
-
-		}
 		list = list->next;
 	}
 }

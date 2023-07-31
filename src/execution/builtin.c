@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:05:08 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/31 20:20:13 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/31 20:33:24 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	execute_env(t_bash *sh)
 
 	i = -1;
 	while (sh->envp[++i])
-		ft_printf("%s\n", sh->envp[i]);
+		printf("%s\n", sh->envp[i]);
 }
 
 void	execute_echo(t_list *list)
