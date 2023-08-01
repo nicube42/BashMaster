@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/07/31 21:56:52 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/01 11:35:55 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,30 @@ void	ft_print_tokens(t_bash *sh)
 	}
 }
 
+int	ft_random(void)
+{
+	static unsigned int	seed = 42;
+
+	seed = seed * 1664525 + 1013904223;
+	return (seed % 4);
+}
+
+char	*select_color_prompt(char *pwd)
+{
+	int	random;
+
+	random = ft_random();
+	if (random == 0)
+		pwd = ft_strjoin(ft_strjoin("\033[0;32m[", pwd), "] > \033[0m");
+	else if (random == 1)
+		pwd = ft_strjoin(ft_strjoin("\033[0;36m[", pwd), "] > \033[0m");
+	else if (random == 2)
+		pwd = ft_strjoin(ft_strjoin("\033[0;34m[", pwd), "] > \033[0m");
+	else
+		pwd = ft_strjoin(ft_strjoin("\033[0;35m[", pwd), "] > \033[0m");
+	return (pwd);
+}
+
 char	*prompt_content(t_bash *sh)
 {
 	int		i;
@@ -60,7 +84,7 @@ char	*prompt_content(t_bash *sh)
 			break ;
 		}
 	}
-	pwd = ft_strjoin(ft_strjoin("\033[0;32m[", pwd), "] > \033[0m");
+	pwd = select_color_prompt(pwd);
 	return (pwd);
 }
 

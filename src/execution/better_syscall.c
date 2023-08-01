@@ -6,9 +6,8 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:44:50 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/31 14:44:59 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/07/31 22:07:50 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bashmaster.h"
-
