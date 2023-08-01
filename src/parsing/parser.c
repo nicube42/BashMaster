@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 03:55:50 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/31 11:11:54 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/01 14:19:19 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,42 @@ static int	create_cmd_token(t_bash *sh, t_list *to_add, int i)
 	return (i);
 }
 
+void	correct_redir(t_bash *sh)
+{
+	t_list	*list;
+	char	*tmp;
+
+	list = sh->first;
+	while (list)
+	{
+		if (list->id == HERE_DOC_TOKEN)
+		{
+			tmp = ft_substr(list->value, 2, ft_strlen(list->value));
+			free(list->value);
+			list->value = tmp;
+		}
+		if (list->id == RED_ENTRY_TOKEN)
+		{
+			tmp = ft_substr(list->value, 1, ft_strlen(list->value));
+			free(list->value);
+			list->value = tmp;
+		}
+		if (list->id == RED_EXIT_TOKEN)
+		{
+			tmp = ft_substr(list->value, 1, ft_strlen(list->value));
+			free(list->value);
+			list->value = tmp;
+		}
+		if (list->id == APPEND_TOKEN)
+		{
+			tmp = ft_substr(list->value, 2, ft_strlen(list->value));
+			free(list->value);
+			list->value = tmp;
+		}
+		list = list->next;
+	}
+}
+
 void	parser(t_bash *sh)
 {
 	int		i;
@@ -115,4 +151,5 @@ void	parser(t_bash *sh)
 		else
 			i = create_cmd_token(sh, to_add, i);
 	}
+	correct_redir(sh);
 }
