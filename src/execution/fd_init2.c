@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:42:02 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/01 14:58:05 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/01 15:22:01 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	set_here_doc_fd(t_list *list, int *current_fd_in, t_bash *sh)
 
 	if (list->id == HERE_DOC_TOKEN && list->value)
 	{
-		tmp_file_name = "/tmp/here_doc_XXXXXX";
+		tmp_file_name = "./here_doc";
 		tmp_fd = open(tmp_file_name, O_RDWR | O_CREAT, 0600);
 		if (tmp_fd == -1)
 		{
@@ -37,6 +37,7 @@ void	set_here_doc_fd(t_list *list, int *current_fd_in, t_bash *sh)
 				break ;
 			}
 			better_write(tmp_fd, line, ft_strlen(line));
+			better_write(tmp_fd, "\n", 1);
 			free(line);
 		}
 		better_close(tmp_fd);
@@ -46,10 +47,11 @@ void	set_here_doc_fd(t_list *list, int *current_fd_in, t_bash *sh)
 			perror("Error opening file");
 			exit(EXIT_FAILURE);
 		}
+		lseek(tmp_fd, 0, SEEK_SET);
 		*current_fd_in = tmp_fd;
 		if (list->next)
 			list->next->fd_in = tmp_fd;
-		//better_unlink(tmp_file_name);
+		better_unlink(tmp_file_name);
 		sh->heredoc = 1;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:58:58 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/01 14:33:38 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/01 15:22:42 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,5 +101,5 @@ void	set_fd(t_bash *sh)
 		set_pipe_fd(list, &current_fd_in, &current_fd_out);
 		list = list->next;
 	}
-	ft_print_tokens(sh);
+	//ft_print_tokens(sh);
 }

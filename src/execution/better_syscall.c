@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:44:50 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/01 12:15:57 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/01 15:21:25 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	better_close(int to_close)
 
 void	better_write(int fd, char *value, size_t size)
 {
-	if (write(fd, value, size == -1))
+	if (write(fd, value, size) == -1)
 	{
 		perror("Error during write");
 		exit(EXIT_FAILURE);
