@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/01 11:58:47 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/01 12:19:26 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,6 @@ void	execute_cmd(t_list *list, t_bash *sh)
 	char	*cmd;
 	pid_t	pid;
 
-	if (!list || !list->value)
-		return ;
 	prepare_cmd(sh, list, &cmd, &args);
 	pid = fork();
 	if (pid == 0)
