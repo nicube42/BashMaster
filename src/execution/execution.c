@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/01 12:19:26 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/01 16:12:36 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,21 @@ void	execute_cmd(t_list *list, t_bash *sh)
 	char	**args;
 	char	*cmd;
 	pid_t	pid;
+	int		heredoc_fd;
 
+	heredoc_fd = -1;
 	prepare_cmd(sh, list, &cmd, &args);
+	if (list->next)
+		if (list->next->id == HERE_DOC_TOKEN)
+			set_here_doc_fd(list->next, &heredoc_fd, sh);
 	pid = fork();
 	if (pid == 0)
 	{
+		if (heredoc_fd != -1)
+		{
+			better_dup2(heredoc_fd, STDIN_FILENO);
+			better_close(heredoc_fd);
+		}
 		pipe_and_execute(list, sh, cmd, args);
 		exit(0);
 	}
@@ -93,6 +103,9 @@ void	execute_cmd(t_list *list, t_bash *sh)
 	}
 	free(args);
 	free(cmd);
+	better_dup2(STDIN_FILENO, 0);
+    better_dup2(STDOUT_FILENO, 1);
+    better_dup2(STDERR_FILENO, 2);
 }
 
 void	execution(t_bash *sh)
