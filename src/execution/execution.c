@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/31 20:49:00 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/01 11:58:47 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,13 @@ void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
 {
 	if (list->fd_in != -1 && list->fd_in != STDIN_FILENO)
 	{
-		dup2(list->fd_in, STDIN_FILENO);
-		close(list->fd_in);
+		better_dup2(list->fd_in, STDIN_FILENO);
+		better_close(list->fd_in);
 	}
 	if (list->fd_out != STDOUT_FILENO && list->fd_out > 1)
 	{
-		dup2(list->fd_out, STDOUT_FILENO);
-		close(list->fd_out);
+		better_dup2(list->fd_out, STDOUT_FILENO);
+		better_close(list->fd_out);
 	}
 	if (list->id == CMD_TOK)
 	{
@@ -88,9 +88,9 @@ void	execute_cmd(t_list *list, t_bash *sh)
 	else
 	{
 		if (list->fd_in != -1 && list->fd_in != STDIN_FILENO)
-			close(list->fd_in);
+			better_close(list->fd_in);
 		if (list->fd_out != STDOUT_FILENO && list->fd_out > 1)
-			close(list->fd_out);
+			better_close(list->fd_out);
 		waitpid(pid, 0, 0);
 	}
 	free(args);

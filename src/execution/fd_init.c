@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:58:58 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/31 20:49:40 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/01 12:14:40 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@ void	set_red_exit_fd(t_list *list, int *current_fd_out)
 	if (list->id == RED_EXIT_TOKEN && list->value)
 	{
 		*current_fd_out = open(list->value, O_WRONLY | O_CREAT | O_TRUNC, 0666);
+		if (*current_fd_out == -1)
+		{
+			perror("Error opening file");
+			exit(EXIT_FAILURE);
+		}
 		if (list->prev)
 			list->prev->fd_out = *current_fd_out;
 	}
@@ -28,6 +33,11 @@ void	set_append_fd(t_list *list, int *current_fd_out)
 	{
 		*current_fd_out = open(list->value, O_WRONLY
 				| O_CREAT | O_APPEND, 0666);
+		if (*current_fd_out == -1)
+		{
+			perror("Error opening file");
+			exit(EXIT_FAILURE);
+		}
 		if (list->prev)
 			list->prev->fd_out = *current_fd_out;
 	}
@@ -38,6 +48,11 @@ void	set_red_entry_fd(t_list *list, int *current_fd_in)
 	if (list->id == RED_ENTRY_TOKEN && list->value)
 	{
 		*current_fd_in = open(list->value, O_RDONLY);
+		if (*current_fd_in == -1)
+		{
+			perror("Error opening file");
+			exit(EXIT_FAILURE);
+		}
 		if (list->next)
 			list->next->fd_in = *current_fd_in;
 	}
