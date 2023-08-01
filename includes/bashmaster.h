@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/01 12:11:11 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/01 14:25:11 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_bash
 	int				dquote_count;
 	char			**envp;
 	char			**splitted_path;
+	int				heredoc;
 	struct s_list	*first;
 	struct s_list	*last;
 }	t_bash;
