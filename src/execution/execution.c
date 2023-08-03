@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 11:30:33 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:20:50 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,11 @@ void	execution(t_bash *sh)
 	{
 		if (list->id == CMD_TOK || list->id == BUILTIN_TOK)
 			execute_cmd(list, sh);
-		if (/*list->next && */list->id == HERE_DOC_TOKEN)
+		if (list->id == HERE_DOC_TOKEN && list->prev)
 		{
 			line = copy_fd_to_str(sh->tmp_fd);
-        	better_close(sh->tmp_fd);
-        	better_unlink(sh->tmp_filename);
+			better_close(sh->tmp_fd);
+			better_unlink(sh->tmp_filename);
 			ft_putstr_fd(line, list->prev->fd_out);
 			if (list->prev->fd_out != STDOUT_FILENO && list->prev->fd_out > 1)
 				close(list->prev->fd_out);
