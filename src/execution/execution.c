@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 13:35:51 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 19:49:05 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	execute_cmd(t_list *list, t_bash *sh)
 	char	**args;
 	char	*cmd;
 	pid_t	pid;
+	int		status;
 
 	prepare_cmd(sh, list, &cmd, &args);
 	pid = fork();
@@ -60,7 +61,9 @@ void	execute_cmd(t_list *list, t_bash *sh)
 		if (list->fd_out != STDOUT_FILENO && list->fd_out > 1
 			&& list->next->id != HERE_DOC_TOKEN)
 			better_close(list->fd_out);
-		waitpid(pid, 0, 0);
+		waitpid(pid, &status, 0);
+		if (WIFEXITED(status))
+			sh->last_exit_status = WEXITSTATUS(status);
 	}
 	free(args);
 	free(cmd);
@@ -92,6 +95,4 @@ void	execution(t_bash *sh)
 		}
 		list = list->next;
 	}
-	//ft_print_tokens(sh);
-	//printf("%d, %d \n", sh->heredoc_pipe[1], sh->heredoc_pipe[0]);
 }

@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/03 14:55:39 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 19:26:34 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ char	*prompt_content(t_bash *sh)
 
 void	repete_prompt(t_bash *sh, char **envp)
 {
+	sh->last_exit_status = -1;
 	while (1)
 	{
 		init_struct(sh, envp);
@@ -103,6 +104,7 @@ void	repete_prompt(t_bash *sh, char **envp)
 		lexer(sh->input, sh);
 		expander(sh, envp);
 		parser(sh);
+		ft_print_tokens(sh);
 		set_last_of_list(sh);
 		if (check_syntax(sh))
 			execution(sh);

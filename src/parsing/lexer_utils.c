@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/28 10:51:47 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 19:54:13 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,6 @@ int	pipe_to_char(char *input, int i, t_bash *sh, int only_count)
 		sh->lexed[sh->lexed_current] = ft_strdup(word);
 		if (!sh->lexed[sh->lexed_current])
 			clean_exit("Malloc error", sh);
-		sh->lexed[sh->lexed_current][1] = '\0';
 		sh->lexed_current++;
 	}
 	return (i);
@@ -64,14 +63,19 @@ int	word_to_char(char *input, int i, t_bash *sh, int only_count)
 	i_save = i;
 	while (input[i] != '|' && input[i] != '<' && input[i] != '>'
 		&& !ft_is_blank(input[i]) && input[i])
+	{
 		i++;
-	word = malloc (sizeof(char) * ((i - i_save) + 1));
+	}
+	word = malloc(sizeof(char) * ((i - i_save) + 1));
 	if (!word)
 		clean_exit("Malloc error", sh);
 	i = i_save;
 	while (input[i] != '|' && input[i] != '<' && input[i] != '>'
 		&& !ft_is_blank(input[i]) && input[i])
+	{
 		word[j++] = input[i++];
+	}
+	word[j] = '\0';
 	stock_in_struct(sh, word, j, only_count);
 	return (i);
 }

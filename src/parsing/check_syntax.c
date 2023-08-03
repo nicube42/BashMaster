@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:27:44 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 13:58:46 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 19:51:19 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	pipe_syntax_error_2(t_bash *sh)
 		{
 			list = list->next;
 			if (list->id != CMD_TOK && list->id != BUILTIN_TOK
-				&& list->id != HERE_DOC_TOKEN)
+				&& list->id != PIPE_ERROR && list->id != HERE_DOC_TOKEN)
 			{
 				printf(RED "No command after pipe\n"RESET);
 				return (1);
@@ -105,6 +105,7 @@ int	wrong_cmd_error(t_bash *sh)
 	t_list	*list;
 
 	list = sh->first;
+	sh->last_exit_status = 127;
 	while (list)
 	{
 		if (list->id == CMD_TOK)

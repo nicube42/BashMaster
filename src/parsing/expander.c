@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/31 11:04:34 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 20:07:26 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,12 +38,26 @@ void	replace_substring(char **str, t_exp *exp, t_bash *sh)
 	*str = new_str;
 }
 
+void	expand_last_exit_status(t_bash *sh, t_exp *exp)
+{
+	char	*tmp;
+
+	tmp = ft_itoa(sh->last_exit_status);
+	if (!tmp)
+		clean_exit("Malloc error", sh);
+	free(exp->tmp);
+	exp->tmp = tmp;
+	replace_substring(&sh->lexed[exp->i], exp, sh);
+}
+
 void	expander(t_bash *sh, char **envp)
 {
 	int		j;
 	t_exp	*exp;
 
-	exp = malloc(sizeof(exp));
+	exp = malloc(sizeof(t_exp));
+	if (!exp)
+		clean_exit("Malloc error", sh);
 	exp->i = -1;
 	j = -1;
 	sh->lexed[sh->lexed_size] = 0;
@@ -54,16 +68,23 @@ void	expander(t_bash *sh, char **envp)
 		{
 			if (sh->lexed[exp->i][exp->k] == '$' && sh->is_quote[exp->i] == 0)
 			{
+				if (sh->lexed[exp->i][exp->k + 1] == '?')
+				{
+					exp->l = exp->k + 1;
+					expand_last_exit_status(sh, exp);
+					continue ;
+				}
+
 				exp->l = exp->k;
 				while (!ft_is_blank(sh->lexed[exp->i][exp->l])
 					&& sh->lexed[exp->i][exp->l])
 					exp->l++;
 				expander_2(sh, exp);
-				free (exp->tmp);
-				free (exp);
 			}
 		}
 	}
+	if (exp)
+		free(exp);
 }
 
 void	expander_2(t_bash *sh, t_exp *exp)

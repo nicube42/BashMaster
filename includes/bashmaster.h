@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/03 14:49:04 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 15:37:42 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define RED_EXIT_TOKEN 5
 # define APPEND_TOKEN 6
 # define BUILTIN_TOK 7
+# define PIPE_ERROR 8
 
 typedef struct s_list
 {
@@ -60,6 +61,7 @@ typedef struct s_bash
 	int				heredoc;
 	char			*tmp_filename;
 	char			tmp_fd;
+	int				last_exit_status;
 	struct s_list	*first;
 	struct s_list	*last;
 }	t_bash;
@@ -78,6 +80,7 @@ void	lexer_size(char *input, t_bash *sh);
 int		ft_is_blank(char c);
 int		ft_skip_blank(char *line, int i);
 int		redirection_to_char(char *input, int i, t_bash *sh, int only_count);
+int		pipe_error_to_char(char *input, int i, t_bash *sh, int only_count);
 int		pipe_to_char(char *input, int i, t_bash *sh, int only_count);
 int		word_to_char(char *input, int i, t_bash *sh, int only_count);
 
