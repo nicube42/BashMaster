@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/01 11:35:55 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 14:55:39 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,15 +110,17 @@ void	repete_prompt(t_bash *sh, char **envp)
 	}
 }
 
-int	main(int ac, char *av[], char *envp[])
+int	main(int ac, char **av, char *envp[])
 {
 	t_bash	sh;
 	char	*input;
 
-	(void) ac;
 	(void) av;
 	using_history();
 	write(1, "\n", 1);
-	repete_prompt(&sh, envp);
+	if (ac == 1)
+		repete_prompt(&sh, envp);
+	else
+		printf("No args accepted in minishell.\n");
 	return (0);
 }
