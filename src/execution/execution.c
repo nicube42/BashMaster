@@ -6,44 +6,11 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 13:20:50 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:35:51 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bashmaster.h"
-
-char	*add_path(t_bash *sh, t_list *list)
-{
-	char	*cmd;
-	int		i;
-
-	i = -1;
-	while (sh->splitted_path[++i])
-	{
-		cmd = ft_strjoin(sh->splitted_path[i], list->value);
-		if (access(cmd, F_OK) == 0)
-			break ;
-		free(cmd);
-		cmd = 0;
-	}
-	return (cmd);
-}
-
-void	prepare_cmd(t_bash *sh, t_list *list, char **cmd, char ***args)
-{
-	int	i;
-
-	*cmd = add_path(sh, list);
-	i = 0;
-	while (list->arguments && list->arguments[i])
-		i++;
-	*args = (char **)malloc((i + 2) * sizeof(char *));
-	(*args)[0] = list->value;
-	i = -1;
-	while (list->arguments && list->arguments[++i])
-		(*args)[i + 1] = list->arguments[i];
-	(*args)[i + 1] = 0;
-}
 
 void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
 {
@@ -68,9 +35,14 @@ void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
 		execute_buildin(list, sh);
 }
 
+void	child_process(t_list *list, t_bash *sh, char *cmd, char **args)
+{
+	pipe_and_execute(list, sh, cmd, args);
+	exit(0);
+}
+
 void	execute_cmd(t_list *list, t_bash *sh)
 {
-	int		i;
 	char	**args;
 	char	*cmd;
 	pid_t	pid;
@@ -78,10 +50,7 @@ void	execute_cmd(t_list *list, t_bash *sh)
 	prepare_cmd(sh, list, &cmd, &args);
 	pid = fork();
 	if (pid == 0)
-	{
-		pipe_and_execute(list, sh, cmd, args);
-		exit(0);
-	}
+		child_process(list, sh, cmd, args);
 	else if (pid < 0)
 		perror("fork");
 	else

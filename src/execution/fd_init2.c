@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:42:02 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 11:45:59 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:40:23 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,48 +79,4 @@ int	heredoc_fd_2(t_list *list, t_bash *sh)
 	sh->heredoc = 1;
 	sh->tmp_filename = tmp_file_name;
 	return (open(tmp_file_name, O_RDONLY, 0600));
-}
-
-char	*append_buffer(char *result, char *buffer, size_t bytes_read,
-		size_t *total_bytes)
-{
-	char	*new_result;
-
-	new_result = (char *)malloc(*total_bytes + bytes_read + 1);
-	if (!new_result)
-		return (NULL);
-	if (result)
-	{
-		ft_memcpy(new_result, result, *total_bytes);
-		free(result);
-	}
-	ft_memcpy(new_result + *total_bytes, buffer, bytes_read);
-	*total_bytes += bytes_read;
-	return (new_result);
-}
-
-char	*copy_fd_to_str(int fd)
-{
-	char	buffer[4096];
-	char	*result;
-	ssize_t	bytes_read;
-	size_t	total_bytes;
-
-	total_bytes = 0;
-	result = NULL;
-	bytes_read = read(fd, buffer, sizeof(buffer));
-	while (bytes_read > 0)
-	{
-		result = append_buffer(result, buffer, bytes_read, &total_bytes);
-		if (!result)
-			return (NULL);
-		bytes_read = read(fd, buffer, sizeof(buffer));
-	}
-	if (bytes_read == -1 || !result)
-	{
-		free(result);
-		return (NULL);
-	}
-	result[total_bytes] = '\0';
-	return (result);
 }

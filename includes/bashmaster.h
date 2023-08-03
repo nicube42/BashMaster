@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/03 11:31:21 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:36:37 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ int		ft_check_cmd(char *tok, t_bash *sh);
 int		is_builtin(char *tmp);
 
 void	execution(t_bash *sh);
+void	correct_redir(t_bash *sh);
 
 void	free_lexed(t_bash *sh);
 void	clean_exit(char *msg, t_bash *sh);
@@ -118,6 +119,7 @@ void	stock_in_struct(t_bash *sh, char *word, int j, int only_count);
 
 void	set_fd(t_bash *sh);
 void	set_here_doc_fd(t_list *list, int *current_fd_in, t_bash *sh);
+void	prepare_cmd(t_bash *sh, t_list *list, char **cmd, char ***args);
 
 void	execute_export(t_bash *sh, t_list *list);
 void	sort_environ(char **environ);
