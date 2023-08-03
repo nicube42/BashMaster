@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 20:07:26 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 20:15:21 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	expand_last_exit_status(t_bash *sh, t_exp *exp)
 	tmp = ft_itoa(sh->last_exit_status);
 	if (!tmp)
 		clean_exit("Malloc error", sh);
-	free(exp->tmp);
+	//free(exp->tmp);
 	exp->tmp = tmp;
 	replace_substring(&sh->lexed[exp->i], exp, sh);
 }
