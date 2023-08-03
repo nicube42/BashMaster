@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:27:44 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 13:38:15 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 13:58:46 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,9 +109,18 @@ int	wrong_cmd_error(t_bash *sh)
 	{
 		if (list->id == CMD_TOK)
 		{
-			if (ft_check_cmd(list->value, sh))
+			if (list->value[0] == '/' || (list->value[0] == '.'
+					&& list->value[1] == '/'))
 			{
-				printf(RED "Unrecognised command : %s\n"RESET, list->value);
+				if (access(list->value, F_OK | X_OK) != 0)
+				{
+					printf(RED "Unrecognized command : %s\n" RESET, list->value);
+					return (1);
+				}
+			}
+			else if (ft_check_cmd(list->value, sh))
+			{
+				printf(RED "Unrecognized command : %s\n" RESET, list->value);
 				return (1);
 			}
 		}
