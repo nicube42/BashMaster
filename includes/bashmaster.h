@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/01 14:25:11 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/03 11:31:21 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,10 @@ typedef struct s_bash
 	int				dquote_count;
 	char			**envp;
 	char			**splitted_path;
+	int				heredoc_pipe[2];
 	int				heredoc;
+	char			*tmp_filename;
+	char			tmp_fd;
 	struct s_list	*first;
 	struct s_list	*last;
 }	t_bash;
@@ -129,5 +132,7 @@ void	better_dup2(int to_change, int new);
 void	better_close(int to_close);
 void	better_write(int fd, char *value, size_t size);
 void	better_unlink(char *name);
+int		heredoc_fd_2(t_list *list, t_bash *sh);
+char	*copy_fd_to_str(int fd);
 
 #endif
