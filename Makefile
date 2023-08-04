@@ -3,7 +3,7 @@ NAME = minishell
 CC = cc
 CFLAGS = #-fsanitize=address #-Wall -Wextra -Werror
 
-SRC = main.c parsing/lexer.c parsing/lexer_utils.c parsing/expander.c parsing/parser.c parsing/parser2.c parsing/token_creator.c parsing/check_syntax.c parsing/utils_parsing.c parsing/utils_parsing_2.c parsing/init_and_exit.c execution/execution.c execution/execution_utils.c execution/fd_init.c execution/fd_init2.c execution/builtin.c execution/builtin2.c execution/better_syscall.c
+SRC = main.c signals.c parsing/lexer.c parsing/lexer_utils.c parsing/expander.c parsing/parser.c parsing/parser2.c parsing/token_creator.c parsing/check_syntax.c parsing/utils_parsing.c parsing/utils_parsing_2.c parsing/init_and_exit.c execution/execution.c execution/execution_utils.c execution/fd_init.c execution/fd_init2.c execution/builtin.c execution/builtin2.c execution/better_syscall.c
 DIRS	= .
 
 
@@ -25,7 +25,7 @@ create_dirs:
 	mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJS)
-	$(CC)  $(CFLAGS) $(OBJS) -o $(NAME) -lreadline -Llibft/ -lftprintf
+	$(CC)  $(CFLAGS) $(OBJS) -o $(NAME) -lreadline -L /opt/homebrew/opt/readline/lib -I /opt/homebrew/opt/readline/include/readline -Llibft/ -lftprintf
 
 obj/%.o: src/%.c
 	$(CC) $(CFLAGS) -c -o $@ $< -I ./includes

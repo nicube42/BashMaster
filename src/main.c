@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/03 20:18:16 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/04 11:17:43 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,11 @@ void	repete_prompt(t_bash *sh, char **envp)
 	sh->last_exit_status = -1;
 	while (1)
 	{
+		setup_signals();
 		init_struct(sh, envp);
 		sh->input = readline(prompt_content(sh));
+		if (sh->input == NULL)
+			break ;
 		if (sh->input[0] == '\0')
 			continue ;
 		add_history(sh->input);
@@ -118,6 +121,7 @@ int	main(int ac, char **av, char *envp[])
 	char	*input;
 
 	(void) av;
+	disable_ctrl_c_echo();
 	using_history();
 	write(1, "\n", 1);
 	if (ac == 1)
