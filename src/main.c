@@ -6,11 +6,13 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/04 11:17:43 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/07 16:38:27 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/bashmaster.h"
+
+int g_quit_heredoc = 0;
 
 //to delete at the end
 void	ft_print_tokens(t_bash *sh)
@@ -97,7 +99,12 @@ void	repete_prompt(t_bash *sh, char **envp)
 		init_struct(sh, envp);
 		sh->input = readline(prompt_content(sh));
 		if (sh->input == NULL)
-			break ;
+		{
+			if (g_global.in_cmd || g_global.in_heredoc)
+				putchar('\n');
+			else
+				break ;
+		}
 		if (sh->input[0] == '\0')
 			continue ;
 		add_history(sh->input);
@@ -120,7 +127,11 @@ int	main(int ac, char **av, char *envp[])
 	t_bash	sh;
 	char	*input;
 
+	g_global.stop_heredoc = 0;
+	g_global.in_cmd = 0;
+	g_global.in_heredoc = 0;
 	(void) av;
+	sh.in_heredoc = 0;
 	disable_ctrl_c_echo();
 	using_history();
 	write(1, "\n", 1);

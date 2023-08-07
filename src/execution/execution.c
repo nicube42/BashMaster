@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 19:49:05 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/07 17:50:26 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,39 +37,72 @@ void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
 
 void	child_process(t_list *list, t_bash *sh, char *cmd, char **args)
 {
+	signal(SIGINT, SIG_DFL);
+	signal(SIGQUIT, SIG_DFL);
+	setup_signals();
+	g_global.in_cmd = 1;
 	pipe_and_execute(list, sh, cmd, args);
 	exit(0);
 }
 
-void	execute_cmd(t_list *list, t_bash *sh)
+static void	handle_child_errors(int pid)
 {
-	char	**args;
-	char	*cmd;
-	pid_t	pid;
-	int		status;
+	if (pid < 0)
+		perror("fork");
+}
+
+static void	close_fds(t_list *list)
+{
+	if (list->fd_in != -1 && list->fd_in != STDIN_FILENO)
+		better_close(list->fd_in);
+	if (list->fd_out != STDOUT_FILENO && list->fd_out > 1
+		&& list->next->id != HERE_DOC_TOKEN)
+		better_close(list->fd_out);
+}
+
+static void	reset_fds(void)
+{
+	better_dup2(STDIN_FILENO, 0);
+	better_dup2(STDOUT_FILENO, 1);
+	better_dup2(STDERR_FILENO, 2);
+}
+
+static void	wait_and_handle_status(t_list *list, t_bash *sh, int pid)
+{
+	int	status;
+
+	waitpid(pid, &status, 0);
+	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
+	{
+		write(STDOUT_FILENO, "\n", 1);
+		kill(pid, SIGTERM);
+	}
+	else if (WIFEXITED(status))
+		sh->last_exit_status = WEXITSTATUS(status);
+}
+
+void execute_cmd(t_list *list, t_bash *sh)
+{
+	char **args;
+	char *cmd;
+	pid_t pid;
 
 	prepare_cmd(sh, list, &cmd, &args);
 	pid = fork();
 	if (pid == 0)
 		child_process(list, sh, cmd, args);
-	else if (pid < 0)
-		perror("fork");
 	else
 	{
-		if (list->fd_in != -1 && list->fd_in != STDIN_FILENO)
-			better_close(list->fd_in);
-		if (list->fd_out != STDOUT_FILENO && list->fd_out > 1
-			&& list->next->id != HERE_DOC_TOKEN)
-			better_close(list->fd_out);
-		waitpid(pid, &status, 0);
-		if (WIFEXITED(status))
-			sh->last_exit_status = WEXITSTATUS(status);
+		g_global.in_cmd = 1;
+		handle_child_errors(pid);
+		close_fds(list);
+		wait_and_handle_status(list, sh, pid);
+		g_global.in_cmd = 0;
 	}
+	g_global.in_cmd = 0;
 	free(args);
 	free(cmd);
-	better_dup2(STDIN_FILENO, 0);
-	better_dup2(STDOUT_FILENO, 1);
-	better_dup2(STDERR_FILENO, 2);
+	reset_fds();
 }
 
 void	execution(t_bash *sh)

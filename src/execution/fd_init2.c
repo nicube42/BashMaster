@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:42:02 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 20:23:12 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/07 18:10:37 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,19 @@ static void	write_here_doc(int tmp_fd, t_list *list, char *prompt)
 {
 	char	*line;
 
-	while (1)
+	g_global.in_heredoc = 1;
+	while (g_global.in_heredoc == 1)
 	{
 		line = readline(prompt);
+		if (!line && g_global.in_heredoc == 1)
+			continue ;
+		if (g_global.in_heredoc == 0)
+		{
+			free (line);
+			break ;
+		}
+		if (line[0] == '\0')
+			continue ;
 		if (line && ft_strncmp(line, list->value, ft_strlen(line)) == 0)
 		{
 			free(line);
@@ -41,6 +51,7 @@ static void	write_here_doc(int tmp_fd, t_list *list, char *prompt)
 		better_write(tmp_fd, "\n", 1);
 		free(line);
 	}
+	g_global.in_heredoc = 0;
 }
 
 void	set_here_doc_fd(t_list *list, int *current_fd_in, t_bash *sh)
