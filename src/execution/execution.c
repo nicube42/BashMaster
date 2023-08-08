@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/08 11:27:17 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/08 11:37:38 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,11 @@ void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
 	if (list->next && list->next->id == HERE_DOC_TOKEN)
 	{
 		temp_fd = open("tempfile", O_RDWR | O_CREAT, 0666);
-		while ((bytes_read = read(list->fd_in, buffer, sizeof(buffer))) > 0)
-			write(temp_fd, buffer, bytes_read);
+		if (list->fd_in != 0)
+		{
+			while ((bytes_read = read(list->fd_in, buffer, sizeof(buffer))) > 0)
+				write(temp_fd, buffer, bytes_read);
+		}
 		line = copy_fd_to_str(sh->tmp_fd);
 		better_close(sh->tmp_fd);
 		better_unlink(sh->tmp_filename);
