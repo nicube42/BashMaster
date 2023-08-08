@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/08 11:37:38 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:44:33 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,8 @@ void	execution(t_bash *sh)
 	set_fd(sh);
 	while (list)
 	{
-		if (list->id == CMD_TOK || list->id == BUILTIN_TOK)
+		if ((list->id == CMD_TOK || list->id == BUILTIN_TOK)
+			&& sh->exit_heredoc == 0)
 			execute_cmd(list, sh);
 		list = list->next;
 	}

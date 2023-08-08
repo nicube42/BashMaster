@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:17:10 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 19:26:56 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:42:38 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,4 +50,5 @@ void	init_struct(t_bash *sh, char **envp)
 	sh->splitted_path = ft_parsing_execve(envp, sh);
 	sh->input = 0;
 	sh->heredoc = 0;
+	sh->exit_heredoc = 0;
 }

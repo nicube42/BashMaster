@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:42:02 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/08 11:33:21 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/08 13:50:16 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ static int	create_tmp_file(char *tmp_file_name)
 	return (tmp_fd);
 }
 
-static void	write_here_doc(int tmp_fd, t_list *list, char *prompt)
+static void	write_here_doc(int tmp_fd, t_list *list, char *prompt, t_bash *sh)
 {
 	char	*line;
 
 	g_global.in_heredoc = 1;
 	while (g_global.in_heredoc == 1)
 	{
+		signal(SIGINT, sigint_handler);
+		signal(SIGQUIT, SIG_DFL);
 		line = readline(prompt);
 		if (!line && g_global.in_heredoc == 1)
 			continue ;
@@ -51,6 +53,8 @@ static void	write_here_doc(int tmp_fd, t_list *list, char *prompt)
 		better_write(tmp_fd, "\n", 1);
 		free(line);
 	}
+	if (g_global.in_heredoc == 0)
+		sh->exit_heredoc = 1;
 	g_global.in_heredoc = 0;
 }
 
@@ -63,7 +67,7 @@ void	set_here_doc_fd(t_list *list, int *current_fd_in, t_bash *sh)
 		return ;
 	tmp_file_name = "./here_doc";
 	tmp_fd = create_tmp_file(tmp_file_name);
-	write_here_doc(tmp_fd, list, "heredoc> ");
+	write_here_doc(tmp_fd, list, "heredoc> ", sh);
 	better_close(tmp_fd);
 	tmp_fd = open(tmp_file_name, O_RDONLY);
 	if (tmp_fd == -1)
@@ -85,7 +89,7 @@ int	heredoc_fd_2(t_list *list, t_bash *sh)
 
 	tmp_file_name = "./here_doc";
 	tmp_fd = create_tmp_file(tmp_file_name);
-	write_here_doc(tmp_fd, list, "pipe heredoc> ");
+	write_here_doc(tmp_fd, list, "pipe heredoc> ", sh);
 	close(tmp_fd);
 	sh->heredoc = 1;
 	sh->tmp_filename = tmp_file_name;
