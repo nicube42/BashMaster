@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/07 17:50:26 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/08 11:09:58 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,25 @@
 
 void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
 {
+	int		temp_fd;
+	char	buffer[1024];
+	char	*line;
+	ssize_t	bytes_read;
+
+	if (list->next && list->next->id == HERE_DOC_TOKEN)
+	{
+		temp_fd = open("tempfile", O_RDWR | O_CREAT, 0666);
+		while ((bytes_read = read(list->fd_in, buffer, sizeof(buffer))) > 0)
+			write(temp_fd, buffer, bytes_read);
+		line = copy_fd_to_str(sh->tmp_fd);
+		better_close(sh->tmp_fd);
+		better_unlink(sh->tmp_filename);
+		ft_putstr_fd(line, temp_fd);
+		lseek(temp_fd, 0, SEEK_SET);
+		better_dup2(temp_fd, STDIN_FILENO);
+		better_close(list->fd_in);
+		list->fd_in = temp_fd;
+	}
 	if (list->fd_in != -1 && list->fd_in != STDIN_FILENO)
 	{
 		better_dup2(list->fd_in, STDIN_FILENO);
@@ -22,9 +41,10 @@ void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
 	if (list->fd_out != STDOUT_FILENO && list->fd_out > 1)
 	{
 		better_dup2(list->fd_out, STDOUT_FILENO);
-		if (list->next->id != HERE_DOC_TOKEN)
-			better_close(list->fd_out);
+		better_close(list->fd_out);
 	}
+	if (list->next && list->next->id == HERE_DOC_TOKEN)
+		unlink("tempfile");
 	if (list->id == CMD_TOK)
 	{
 		execve(cmd, args, 0);
@@ -55,8 +75,7 @@ static void	close_fds(t_list *list)
 {
 	if (list->fd_in != -1 && list->fd_in != STDIN_FILENO)
 		better_close(list->fd_in);
-	if (list->fd_out != STDOUT_FILENO && list->fd_out > 1
-		&& list->next->id != HERE_DOC_TOKEN)
+	if (list->fd_out != STDOUT_FILENO && list->fd_out > 1)
 		better_close(list->fd_out);
 }
 
@@ -83,9 +102,9 @@ static void	wait_and_handle_status(t_list *list, t_bash *sh, int pid)
 
 void execute_cmd(t_list *list, t_bash *sh)
 {
-	char **args;
-	char *cmd;
-	pid_t pid;
+	char	**args;
+	char	*cmd;
+	pid_t	pid;
 
 	prepare_cmd(sh, list, &cmd, &args);
 	pid = fork();
@@ -108,8 +127,10 @@ void execute_cmd(t_list *list, t_bash *sh)
 void	execution(t_bash *sh)
 {
 	t_list	*list;
+	t_list	*prev;
 	int		tmp_fd;
 	char	*line;
+	int		fd[2];
 
 	list = sh->first;
 	set_fd(sh);
@@ -117,15 +138,7 @@ void	execution(t_bash *sh)
 	{
 		if (list->id == CMD_TOK || list->id == BUILTIN_TOK)
 			execute_cmd(list, sh);
-		if (list->id == HERE_DOC_TOKEN && list->prev)
-		{
-			line = copy_fd_to_str(sh->tmp_fd);
-			better_close(sh->tmp_fd);
-			better_unlink(sh->tmp_filename);
-			ft_putstr_fd(line, list->prev->fd_out);
-			if (list->prev->fd_out != STDOUT_FILENO && list->prev->fd_out > 1)
-				close(list->prev->fd_out);
-		}
 		list = list->next;
 	}
+	//ft_print_tokens(sh);
 }
