@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/08 11:09:58 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/08 11:27:17 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
 
 void	child_process(t_list *list, t_bash *sh, char *cmd, char **args)
 {
-	signal(SIGINT, SIG_DFL);
+	signal(SIGINT, child_sigint_handler);
 	signal(SIGQUIT, SIG_DFL);
 	setup_signals();
 	g_global.in_cmd = 1;
@@ -94,7 +94,7 @@ static void	wait_and_handle_status(t_list *list, t_bash *sh, int pid)
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
-		kill(pid, SIGTERM);
+		kill(pid, SIGKILL);
 	}
 	else if (WIFEXITED(status))
 		sh->last_exit_status = WEXITSTATUS(status);
