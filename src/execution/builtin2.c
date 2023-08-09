@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 20:19:47 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/09 13:10:13 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/09 15:05:02 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void	execute_buildin(t_list *list, t_bash *sh)
 		execute_export(sh, list);
 	if (!ft_strncmp(list->value, "unset", 6))
 		execute_unset(list);
+	exit (0);
 }
 
 void	execute_unset(t_list *list)
