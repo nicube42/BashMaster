@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/08 11:19:45 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/09 10:56:28 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,13 +90,13 @@ char	*prompt_content(t_bash *sh)
 	return (pwd);
 }
 
-void	repete_prompt(t_bash *sh, char **envp)
+void	repete_prompt(t_bash *sh)
 {
 	sh->last_exit_status = -1;
 	while (1)
 	{
 		setup_signals();
-		init_struct(sh, envp);
+		init_struct(sh, sh->envp);
 		sh->input = readline(prompt_content(sh));
 		if (sh->input == NULL)
 		{
@@ -112,7 +112,7 @@ void	repete_prompt(t_bash *sh, char **envp)
 		lexer_size(sh->input, sh);
 		ft_memset(sh->is_quote, 0, sizeof(int) * sh->lexed_size);
 		lexer(sh->input, sh);
-		expander(sh, envp);
+		expander(sh, sh->envp);
 		parser(sh);
 		set_last_of_list(sh);
 		if (check_syntax(sh))
@@ -125,17 +125,25 @@ int	main(int ac, char **av, char *envp[])
 {
 	t_bash	sh;
 	char	*input;
+	int		i;
 
 	g_global.stop_heredoc = 0;
 	g_global.in_cmd = 0;
 	g_global.in_heredoc = 0;
 	(void) av;
+	i = 0;
+	while (envp[i])
+		i++;
+	sh.envp = malloc (sizeof(char *) * i + 1);
+	i = -1;
+	while (envp[++i])
+		sh.envp[i] = ft_strdup(envp[i]);
 	sh.in_heredoc = 0;
 	disable_ctrl_c_echo();
 	using_history();
 	write(1, "\n", 1);
 	if (ac == 1)
-		repete_prompt(&sh, envp);
+		repete_prompt(&sh);
 	else
 		printf("No args accepted in minishell.\n");
 	return (0);

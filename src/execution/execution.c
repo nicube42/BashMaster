@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/08 13:44:33 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/09 12:49:56 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void	child_process(t_list *list, t_bash *sh, char *cmd, char **args)
 	setup_signals();
 	g_global.in_cmd = 1;
 	pipe_and_execute(list, sh, cmd, args);
-	exit(0);
 }
 
 static void	handle_child_errors(int pid)
@@ -110,9 +109,13 @@ void execute_cmd(t_list *list, t_bash *sh)
 	pid_t	pid;
 
 	prepare_cmd(sh, list, &cmd, &args);
+	if (!ft_strncmp(list->value, "cd", 3))
+		cd_command(sh, list);
 	pid = fork();
 	if (pid == 0)
+	{
 		child_process(list, sh, cmd, args);
+	}
 	else
 	{
 		g_global.in_cmd = 1;
@@ -121,7 +124,6 @@ void execute_cmd(t_list *list, t_bash *sh)
 		wait_and_handle_status(list, sh, pid);
 		g_global.in_cmd = 0;
 	}
-	g_global.in_cmd = 0;
 	free(args);
 	free(cmd);
 	reset_fds();

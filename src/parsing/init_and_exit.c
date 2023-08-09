@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:17:10 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/08 13:42:38 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/08 14:54:29 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ void	init_struct(t_bash *sh, char **envp)
 	sh->lexed_current = 0;
 	sh->dquote_count = 0;
 	sh->quote_count = 0;
-	sh->envp = envp;
 	sh->splitted_path = ft_parsing_execve(envp, sh);
 	sh->input = 0;
 	sh->heredoc = 0;
