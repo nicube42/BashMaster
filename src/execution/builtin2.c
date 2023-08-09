@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 20:19:47 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/09 12:49:32 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/09 13:10:13 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,6 @@ void	execute_buildin(t_list *list, t_bash *sh)
 		execute_echo(list);
 	if (!ft_strncmp(list->value, "env", 4))
 		execute_env(sh);
-	if (!ft_strncmp(list->value, "exit", 5))
-		execute_exit(sh);
 	if (!ft_strncmp(list->value, "export", 5))
 		execute_export(sh, list);
 	if (!ft_strncmp(list->value, "unset", 6))
@@ -85,7 +83,7 @@ void	execute_export(t_bash *sh, t_list *list)
 			printf("%s\n", export[i]);
 }
 
-void	execute_exit(t_bash *sh)
+void	execute_exit(t_bash *sh, t_list *list)
 {
 	destroy_tokens(sh);
 	exit (0);
