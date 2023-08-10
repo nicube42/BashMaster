@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/09 10:56:28 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/10 11:35:26 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	repete_prompt(t_bash *sh)
 		expander(sh, sh->envp);
 		parser(sh);
 		set_last_of_list(sh);
-		if (check_syntax(sh))
+		if (sh->lexed_size > 0 && check_syntax(sh))
 			execution(sh);
 		destroy_tokens(sh);
 	}
