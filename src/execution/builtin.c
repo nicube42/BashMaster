@@ -6,16 +6,21 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:05:08 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 19:26:46 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/10 11:45:18 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bashmaster.h"
 
-void	execute_env(t_bash *sh)
+void	execute_env(t_bash *sh, t_list *list)
 {
 	int	i;
 
+	if (list->arguments)
+	{
+		ft_putstr_fd("env: too many arguments\n", 2);
+		return ;
+	}
 	i = -1;
 	while (sh->envp[++i])
 		printf("%s\n", sh->envp[i]);
@@ -34,12 +39,17 @@ void	execute_echo(t_list *list)
 			printf("\n");
 }
 
-void	execute_pwd(t_bash *sh)
+void	execute_pwd(t_bash *sh, t_list *list)
 {
 	int		i;
 	char	*pwd;
 
 	i = -1;
+	if (list->arguments)
+	{
+		ft_putstr_fd("pwd: too many arguments\n", 2);
+		return ;
+	}
 	while (sh->envp[++i])
 	{
 		if (!ft_strncmp("PWD", sh->envp[i], 3)
