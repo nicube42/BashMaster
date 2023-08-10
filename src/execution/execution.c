@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/09 15:04:36 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/10 21:20:01 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
 
 void	child_process(t_list *list, t_bash *sh, char *cmd, char **args)
 {
-	g_global.in_cmd = 1;
+	g_quit_heredoc = 2;
 	signal(SIGINT, child_sigint_handler);
 	signal(SIGQUIT, SIG_DFL);
 	setup_signals();
 	pipe_and_execute(list, sh, cmd, args);
-	g_global.in_cmd = 0;
+	g_quit_heredoc = 0;
 }
 
 static void	handle_child_errors(int pid)
@@ -123,11 +123,11 @@ void execute_cmd(t_list *list, t_bash *sh)
 		}
 		else
 		{
-			g_global.in_cmd = 1;
+			g_quit_heredoc = 2;
 			handle_child_errors(pid);
 			close_fds(list);
 			wait_and_handle_status(list, sh, pid);
-			g_global.in_cmd = 0;
+			g_quit_heredoc = 0;
 		}
 	}
 	free(args);

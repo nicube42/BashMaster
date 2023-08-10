@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:42:02 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/08 13:50:16 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/10 21:22:52 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,13 @@ static void	write_here_doc(int tmp_fd, t_list *list, char *prompt, t_bash *sh)
 {
 	char	*line;
 
-	g_global.in_heredoc = 1;
-	while (g_global.in_heredoc == 1)
+	g_quit_heredoc = 1;
+	while (g_quit_heredoc == 1)
 	{
 		signal(SIGINT, sigint_handler);
 		signal(SIGQUIT, SIG_DFL);
 		line = readline(prompt);
-		if (!line && g_global.in_heredoc == 1)
+		if (!line && g_quit_heredoc == 1)
 			continue ;
 		if (line[0] == '\0')
 			continue ;
@@ -44,7 +44,7 @@ static void	write_here_doc(int tmp_fd, t_list *list, char *prompt, t_bash *sh)
 			free(line);
 			break ;
 		}
-		if (g_global.in_heredoc == 0)
+		if (g_quit_heredoc == 0)
 		{
 			free (line);
 			break ;
@@ -53,9 +53,9 @@ static void	write_here_doc(int tmp_fd, t_list *list, char *prompt, t_bash *sh)
 		better_write(tmp_fd, "\n", 1);
 		free(line);
 	}
-	if (g_global.in_heredoc == 0)
+	if (g_quit_heredoc == 0)
 		sh->exit_heredoc = 1;
-	g_global.in_heredoc = 0;
+	g_quit_heredoc = 0;
 }
 
 void	set_here_doc_fd(t_list *list, int *current_fd_in, t_bash *sh)

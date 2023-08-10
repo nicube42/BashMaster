@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:02:03 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/08 11:27:24 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/10 21:20:30 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,16 +30,16 @@ void	child_sigint_handler(int sig)
 void	sigint_handler(int sig)
 {
 	(void) sig;
-	if (g_global.in_heredoc == 1)
-		g_global.in_heredoc = 0;
-	if (g_global.in_cmd)
+	if (g_quit_heredoc == 1)
+		g_quit_heredoc = 0;
+	if (g_quit_heredoc == 2)
 	{
-		g_global.in_cmd = 0;
+		g_quit_heredoc = 0;
 		rl_replace_line("", 0);
 		rl_redisplay();
 		return ;
 	}
-	if (g_global.in_heredoc == 0)
+	if (g_quit_heredoc == 0)
 	{
 		write (1, "\n", 1);
 		rl_on_new_line();

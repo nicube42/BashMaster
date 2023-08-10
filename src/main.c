@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/10 11:35:26 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/10 21:21:53 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,8 @@ void	repete_prompt(t_bash *sh)
 		sh->input = readline(prompt_content(sh));
 		if (sh->input == NULL)
 		{
-			if (g_global.in_cmd || g_global.in_heredoc)
-				putchar('\n');
+			if (g_quit_heredoc)
+				write(1, "\n", 1);
 			else
 				break ;
 		}
@@ -127,9 +127,6 @@ int	main(int ac, char **av, char *envp[])
 	char	*input;
 	int		i;
 
-	g_global.stop_heredoc = 0;
-	g_global.in_cmd = 0;
-	g_global.in_heredoc = 0;
 	(void) av;
 	i = 0;
 	while (envp[i])
@@ -138,7 +135,6 @@ int	main(int ac, char **av, char *envp[])
 	i = -1;
 	while (envp[++i])
 		sh.envp[i] = ft_strdup(envp[i]);
-	sh.in_heredoc = 0;
 	disable_ctrl_c_echo();
 	using_history();
 	write(1, "\n", 1);
