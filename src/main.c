@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/11 16:17:02 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 16:22:24 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static void	repete_prompt(t_bash *sh)
 		}
 		handle_input(sh);
 	}
-	free_envp(sh);
 }
 
 int	main(int ac, char **av, char *envp[])
