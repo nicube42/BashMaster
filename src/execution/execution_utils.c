@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:35:42 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 13:54:31 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 10:51:02 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	prepare_cmd(t_bash *sh, t_list *list, char **cmd, char ***args)
 	while (list->arguments && list->arguments[i])
 		i++;
 	*args = (char **)malloc((i + 2) * sizeof(char *));
+	if (!*args)
+		return ;
 	(*args)[0] = list->value;
 	i = -1;
 	while (list->arguments && list->arguments[++i])

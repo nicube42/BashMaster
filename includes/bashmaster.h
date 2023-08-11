@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/10 21:19:02 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 11:00:19 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,8 @@ void	sigint_handler(int sig);
 
 int		ft_cd(char **args);
 int		cd_command(t_bash *bash, t_list *cmd);
+
+void	free_envp(t_bash *sh);
 
 extern void	rl_replace_line(const char *str, int i);
 

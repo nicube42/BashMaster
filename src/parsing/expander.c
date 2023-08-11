@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 20:15:21 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 11:46:42 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	expand_last_exit_status(t_bash *sh, t_exp *exp)
 	tmp = ft_itoa(sh->last_exit_status);
 	if (!tmp)
 		clean_exit("Malloc error", sh);
-	//free(exp->tmp);
+	free(exp->tmp);
 	exp->tmp = tmp;
 	replace_substring(&sh->lexed[exp->i], exp, sh);
 }
@@ -90,22 +90,20 @@ void	expander(t_bash *sh, char **envp)
 void	expander_2(t_bash *sh, t_exp *exp)
 {
 	int		j;
-	char	*tmp;
 
-	tmp = ft_strdup(sh->lexed[exp->i]);
-	exp->tmp = ft_substr(sh->lexed[exp->i], exp->k + 1,
-			ft_strlen(sh->lexed[exp->i]));
-	if (!exp->tmp || !tmp)
+	free(sh->lexed[exp->i]);
+	sh->lexed[exp->i] = ft_strdup(sh->lexed[exp->i]);
+	exp->tmp = ft_substr(sh->lexed[exp->i],
+			exp->k + 1, ft_strlen(sh->lexed[exp->i]));
+	if (!exp->tmp)
 		clean_exit("Malloc error", sh);
-	sh->lexed[exp->i] = ft_strdup(tmp);
-	free (tmp);
 	j = -1;
 	while (sh->envp[++j])
 	{
 		if (!ft_strncmp(exp->tmp, sh->envp[j], ft_strlen(exp->tmp))
 			&& sh->envp[j][ft_strlen(exp->tmp)] == '=')
 		{
-			free (exp->tmp);
+			free(exp->tmp);
 			exp->tmp = ft_substr(sh->envp[j],
 					ft_strlen(exp->tmp) + 1, ft_strlen(sh->envp[j]));
 			if (!exp->tmp)
@@ -115,3 +113,4 @@ void	expander_2(t_bash *sh, t_exp *exp)
 		}
 	}
 }
+

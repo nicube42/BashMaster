@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/10 21:21:53 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 11:50:44 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,24 +54,31 @@ int	ft_random(void)
 
 char	*select_color_prompt(char *pwd)
 {
-	int	random;
+	int		random;
+	char	*prefix;
+	char	*full_prompt;
 
 	random = ft_random();
 	if (random == 0)
-		pwd = ft_strjoin(ft_strjoin("\033[0;32m[", pwd), "] > \033[0m");
+		prefix = "\033[0;32m[";
 	else if (random == 1)
-		pwd = ft_strjoin(ft_strjoin("\033[0;36m[", pwd), "] > \033[0m");
+		prefix = "\033[0;36m[";
 	else if (random == 2)
-		pwd = ft_strjoin(ft_strjoin("\033[0;34m[", pwd), "] > \033[0m");
+		prefix = "\033[0;34m[";
 	else
-		pwd = ft_strjoin(ft_strjoin("\033[0;35m[", pwd), "] > \033[0m");
-	return (pwd);
+		prefix = "\033[0;35m[";
+	prefix = ft_strjoin(prefix, pwd);
+	full_prompt = ft_strjoin(prefix, "] > \033[0m");
+	free(prefix);
+	return (full_prompt);
 }
+
 
 char	*prompt_content(t_bash *sh)
 {
 	int		i;
 	char	*pwd;
+	char	*tmp;
 
 	i = -1;
 	while (sh->envp[++i])
@@ -86,18 +93,25 @@ char	*prompt_content(t_bash *sh)
 			break ;
 		}
 	}
-	pwd = select_color_prompt(pwd);
+	tmp = select_color_prompt(pwd);
+	free (pwd);
+	pwd = tmp;
 	return (pwd);
 }
 
 void	repete_prompt(t_bash *sh)
 {
+	char	*pwd;
+
 	sh->last_exit_status = -1;
-	while (1)
+	int i = -1;
+	while (++i < 1)
 	{
 		setup_signals();
 		init_struct(sh, sh->envp);
-		sh->input = readline(prompt_content(sh));
+		pwd = prompt_content(sh);
+		sh->input = readline(pwd);
+		free (pwd);
 		if (sh->input == NULL)
 		{
 			if (g_quit_heredoc)
@@ -119,6 +133,7 @@ void	repete_prompt(t_bash *sh)
 			execution(sh);
 		destroy_tokens(sh);
 	}
+	free_envp(sh);
 }
 
 int	main(int ac, char **av, char *envp[])

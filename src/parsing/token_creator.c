@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/10 09:34:40 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/03 14:48:54 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 11:46:11 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,21 @@ static void	destroy_tokens_2(t_bash *sh)
 	}
 }
 
+void	free_envp(t_bash *sh)
+{
+	int	i;
+
+	i = -1;
+	if (sh->envp)
+	{
+		while (sh->envp[++i])
+		{
+			free (sh->envp[i]);
+		}
+		free (sh->envp);
+	}
+}
+
 void	destroy_tokens(t_bash *sh)
 {
 	int		i;
@@ -82,10 +97,14 @@ void	destroy_tokens(t_bash *sh)
 	destroy_tokens_2(sh);
 	free_lexed(sh);
 	i = -1;
-	while (sh->splitted_path[++i])
-		free (sh->splitted_path[i]);
-	free (sh->splitted_path);
+	if (sh->splitted_path)
+	{
+		while (sh->splitted_path[++i])
+			free (sh->splitted_path[i]);
+		free (sh->splitted_path);
+	}
 	if (sh->is_quote)
 		free (sh->is_quote);
-	free (sh->input);
+	if (sh->input)
+		free (sh->input);
 }

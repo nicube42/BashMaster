@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:52:18 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/09 12:52:20 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 10:49:37 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static void	update_pwd_in_envp(t_bash *bash, char *new_pwd)
 			if (!new_entry)
 				return ;
 			bash->envp[i] = ft_strdup(new_entry);
+			free (new_entry);
 			break ;
 		}
 		i++;

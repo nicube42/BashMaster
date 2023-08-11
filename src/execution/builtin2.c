@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 20:19:47 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/10 12:03:05 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 11:00:44 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,14 @@ void	execute_export(t_bash *sh, t_list *list)
 	i = -1;
 	sort_environ(export);
 	if (!list->arguments[0])
+	{
 		while (export[++i])
+		{
 			printf("%s\n", export[i]);
+			free (export[i]);
+		}
+		free (export);
+	}
 }
 
 static int	is_all_digits(char *str)
@@ -120,5 +126,6 @@ void	execute_exit(t_bash *sh, t_list *list)
 		exit(err_val);
 	}
 	destroy_tokens(sh);
+	free_envp(sh);
 	exit(0);
 }
