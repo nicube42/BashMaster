@@ -6,13 +6,13 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:44:42 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 15:45:07 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:50:44 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/bashmaster.h"
 
-int	ft_random(void)
+static int	ft_random(void)
 {
 	static unsigned int	seed = 42;
 
@@ -20,7 +20,7 @@ int	ft_random(void)
 	return (seed % 4);
 }
 
-char	*select_color_prompt(char *pwd)
+static char	*select_color_prompt(char *pwd)
 {
 	int		random;
 	char	*prefix;

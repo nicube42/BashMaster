@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/11 15:45:54 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:48:31 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static void	handle_input(t_bash *sh)
 	destroy_tokens(sh);
 }
 
-void	repete_prompt(t_bash *sh)
+static void	repete_prompt(t_bash *sh)
 {
 	char	*pwd;
 
