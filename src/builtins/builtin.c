@@ -6,11 +6,26 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:05:08 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 12:49:22 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:10:33 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bashmaster.h"
+
+void	execute_buildin(t_list *list, t_bash *sh)
+{
+	if (!ft_strncmp(list->value, "pwd", 4))
+		execute_pwd(sh, list);
+	if (!ft_strncmp(list->value, "echo", 5))
+		execute_echo(list);
+	if (!ft_strncmp(list->value, "env", 4))
+		execute_env(sh, list);
+	if (!ft_strncmp(list->value, "export", 5))
+		execute_export(sh, list);
+	if (!ft_strncmp(list->value, "unset", 6))
+		execute_unset(list);
+	exit (0);
+}
 
 void	execute_env(t_bash *sh, t_list *list)
 {

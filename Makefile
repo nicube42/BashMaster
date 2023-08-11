@@ -28,8 +28,9 @@ SRC = main.c \
 	execution/better_syscall.c \
 	\
 	builtins/builtin.c \
-	builtins/builtin2.c \
-	builtins/ft_cd.c \
+	builtins/cd.c \
+	builtins/exit.c \
+	builtins/export+unset.c \
 
 DIRS	= .
 

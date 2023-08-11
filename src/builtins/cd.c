@@ -6,34 +6,11 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:52:18 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 10:49:37 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:11:00 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bashmaster.h"
-
-/*int	ft_cd(char **args)
-{
-    char	*path;
-
-    printf("cc\n");
-    if (args[1] == NULL)
-        path = getenv("HOME");
-    else if (args[2] != NULL)
-    {
-        ft_putendl_fd("cd: too many arguments", STDERR_FILENO);
-        return (1);
-    }
-    else
-        path = args[1];
-    if (chdir(path) == -1)
-    {
-        ft_putstr_fd("cd: ", STDERR_FILENO);
-        perror(path);
-        return (1);
-    }
-    return (0);
-}*/
 
 static void	update_pwd_in_envp(t_bash *bash, char *new_pwd)
 {
