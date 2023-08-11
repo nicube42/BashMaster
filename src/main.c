@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/11 15:48:31 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 16:17:02 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ static void	repete_prompt(t_bash *sh)
 	char	*pwd;
 
 	sh->last_exit_status = -1;
-	int i = -1;
-	while (++i < 1)
+	while (1)
 	{
 		setup_signals();
 		init_struct(sh, sh->envp);
