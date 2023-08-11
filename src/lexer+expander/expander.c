@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 12:44:29 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:04:41 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,26 @@ void	expand_last_exit_status(t_bash *sh, t_exp *exp)
 	tmp = ft_itoa(sh->last_exit_status);
 	if (!tmp)
 		clean_exit("Malloc error", sh);
-	free(exp->tmp);
 	exp->tmp = tmp;
 	replace_substring(&sh->lexed[exp->i], exp, sh);
+}
+
+static void	expand_variable(t_bash *sh, t_exp *exp)
+{
+	if (sh->lexed[exp->i][exp->k] == '$' && sh->is_quote[exp->i] == 0)
+	{
+		if (sh->lexed[exp->i][exp->k + 1] == '?')
+		{
+			exp->l = exp->k + 1;
+			expand_last_exit_status(sh, exp);
+			return ;
+		}
+		exp->l = exp->k;
+		while (!ft_is_blank(sh->lexed[exp->i][exp->l])
+			&& sh->lexed[exp->i][exp->l])
+			exp->l++;
+		expander_2(sh, exp);
+	}
 }
 
 void	expander(t_bash *sh, char **envp)
@@ -66,23 +83,7 @@ void	expander(t_bash *sh, char **envp)
 	{
 		exp->k = -1;
 		while (sh->lexed[exp->i][++exp->k])
-		{
-			if (sh->lexed[exp->i][exp->k] == '$' && sh->is_quote[exp->i] == 0)
-			{
-				if (sh->lexed[exp->i][exp->k + 1] == '?')
-				{
-					exp->l = exp->k + 1;
-					expand_last_exit_status(sh, exp);
-					continue ;
-				}
-
-				exp->l = exp->k;
-				while (!ft_is_blank(sh->lexed[exp->i][exp->l])
-					&& sh->lexed[exp->i][exp->l])
-					exp->l++;
-				expander_2(sh, exp);
-			}
-		}
+			expand_variable(sh, exp);
 	}
 	if (exp)
 		free(exp);
@@ -91,9 +92,8 @@ void	expander(t_bash *sh, char **envp)
 void	expander_2(t_bash *sh, t_exp *exp)
 {
 	int		j;
+	int		tmp_size;
 
-	free(sh->lexed[exp->i]);
-	sh->lexed[exp->i] = ft_strdup(sh->lexed[exp->i]);
 	exp->tmp = ft_substr(sh->lexed[exp->i],
 			exp->k + 1, ft_strlen(sh->lexed[exp->i]));
 	if (!exp->tmp)
@@ -104,9 +104,10 @@ void	expander_2(t_bash *sh, t_exp *exp)
 		if (!ft_strncmp(exp->tmp, sh->envp[j], ft_strlen(exp->tmp))
 			&& sh->envp[j][ft_strlen(exp->tmp)] == '=')
 		{
+			tmp_size = ft_strlen(exp->tmp);
 			free(exp->tmp);
 			exp->tmp = ft_substr(sh->envp[j],
-					ft_strlen(exp->tmp) + 1, ft_strlen(sh->envp[j]));
+					tmp_size + 1, ft_strlen(sh->envp[j]));
 			if (!exp->tmp)
 				clean_exit("Malloc error", sh);
 			replace_substring(&sh->lexed[exp->i], exp, sh);
@@ -114,4 +115,3 @@ void	expander_2(t_bash *sh, t_exp *exp)
 		}
 	}
 }
-
