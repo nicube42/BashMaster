@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:58:58 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 12:48:46 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:38:44 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	set_fd(t_bash *sh)
 			list->fd_out = current_fd_out;
 		}
 		if (!list->prev || (list->prev->id != CMD_TOK
-			&& list->prev->id != BUILTIN_TOK))
+				&& list->prev->id != BUILTIN_TOK))
 			set_here_doc_fd(list, &current_fd_in, sh);
 		else if (list && list->id == HERE_DOC_TOKEN)
 			sh->tmp_fd = heredoc_fd_2(list, sh);

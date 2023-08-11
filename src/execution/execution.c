@@ -6,105 +6,29 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 12:46:54 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:37:56 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bashmaster.h"
 
-void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
+static void	handle_child_execution(t_list *list,
+	t_bash *sh, char *cmd, char **args)
 {
-	int		temp_fd;
-	char	buffer[1024];
-	char	*line;
-	ssize_t	bytes_read;
-
-	if (list->next && list->next->id == HERE_DOC_TOKEN)
-	{
-		temp_fd = open("tempfile", O_RDWR | O_CREAT, 0666);
-		if (list->fd_in != 0)
-		{
-			while ((bytes_read = read(list->fd_in, buffer, sizeof(buffer))) > 0)
-				write(temp_fd, buffer, bytes_read);
-		}
-		line = copy_fd_to_str(sh->tmp_fd);
-		better_close(sh->tmp_fd);
-		better_unlink(sh->tmp_filename);
-		ft_putstr_fd(line, temp_fd);
-		lseek(temp_fd, 0, SEEK_SET);
-		better_dup2(temp_fd, STDIN_FILENO);
-		better_close(list->fd_in);
-		list->fd_in = temp_fd;
-	}
-	if (list->fd_in != -1 && list->fd_in != STDIN_FILENO)
-	{
-		better_dup2(list->fd_in, STDIN_FILENO);
-		better_close(list->fd_in);
-	}
-	if (list->fd_out != STDOUT_FILENO && list->fd_out > 1)
-	{
-		better_dup2(list->fd_out, STDOUT_FILENO);
-		better_close(list->fd_out);
-	}
-	if (list->next && list->next->id == HERE_DOC_TOKEN)
-		unlink("tempfile");
-	if (list->id == CMD_TOK)
-	{
-		execve(cmd, args, 0);
-		perror("execve");
-		exit(EXIT_FAILURE);
-	}
-	else
-		execute_buildin(list, sh);
+	child_process(list, sh, cmd, args);
+	exit(EXIT_SUCCESS);
 }
 
-void	child_process(t_list *list, t_bash *sh, char *cmd, char **args)
+static void	handle_parent_execution(t_list *list, t_bash *sh, pid_t pid)
 {
 	g_quit_heredoc = 2;
-	signal(SIGINT, child_sigint_handler);
-	signal(SIGQUIT, SIG_DFL);
-	setup_signals();
-	pipe_and_execute(list, sh, cmd, args);
+	handle_child_errors(pid);
+	close_fds(list);
+	wait_and_handle_status(list, sh, pid);
 	g_quit_heredoc = 0;
 }
 
-static void	handle_child_errors(int pid)
-{
-	if (pid < 0)
-		perror("fork");
-}
-
-static void	close_fds(t_list *list)
-{
-	if (list->fd_in != -1 && list->fd_in != STDIN_FILENO)
-		better_close(list->fd_in);
-	if (list->fd_out != STDOUT_FILENO && list->fd_out > 1)
-		better_close(list->fd_out);
-}
-
-static void	reset_fds(void)
-{
-	better_dup2(STDIN_FILENO, 0);
-	better_dup2(STDOUT_FILENO, 1);
-	better_dup2(STDERR_FILENO, 2);
-}
-
-static void	wait_and_handle_status(t_list *list, t_bash *sh, int pid)
-{
-	int	status;
-
-	(void) list;
-	waitpid(pid, &status, 0);
-	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
-	{
-		write(STDOUT_FILENO, "\n", 1);
-		kill(pid, SIGKILL);
-	}
-	else if (WIFEXITED(status))
-		sh->last_exit_status = WEXITSTATUS(status);
-}
-
-void execute_cmd(t_list *list, t_bash *sh)
+static void	execute_cmd(t_list *list, t_bash *sh)
 {
 	char	**args;
 	char	*cmd;
@@ -119,17 +43,9 @@ void execute_cmd(t_list *list, t_bash *sh)
 	{
 		pid = fork();
 		if (pid == 0)
-		{
-			child_process(list, sh, cmd, args);
-		}
+			handle_child_execution(list, sh, cmd, args);
 		else
-		{
-			g_quit_heredoc = 2;
-			handle_child_errors(pid);
-			close_fds(list);
-			wait_and_handle_status(list, sh, pid);
-			g_quit_heredoc = 0;
-		}
+			handle_parent_execution(list, sh, pid);
 	}
 	free(args);
 	free(cmd);
@@ -149,5 +65,4 @@ void	execution(t_bash *sh)
 			execute_cmd(list, sh);
 		list = list->next;
 	}
-	//ft_print_tokens(sh);
 }

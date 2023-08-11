@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/11 11:00:19 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 14:37:41 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,7 @@ int		ft_check_cmd(char *tok, t_bash *sh);
 int		is_builtin(char *tmp);
 
 void	execution(t_bash *sh);
+void	child_process(t_list *list, t_bash *sh, char *cmd, char **args);
 void	correct_redir(t_bash *sh);
 
 void	free_lexed(t_bash *sh);
@@ -146,6 +147,11 @@ void	better_write(int fd, char *value, size_t size);
 void	better_unlink(char *name);
 int		heredoc_fd_2(t_list *list, t_bash *sh);
 char	*copy_fd_to_str(int fd);
+
+void	handle_child_errors(int pid);
+void	close_fds(t_list *list);
+void	reset_fds(void);
+void	wait_and_handle_status(t_list *list, t_bash *sh, int pid);
 
 void	setup_signals(void);
 void	disable_ctrl_c_echo(void);

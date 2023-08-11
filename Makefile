@@ -26,6 +26,8 @@ SRC = main.c \
 	execution/fd_init.c \
 	execution/fd_init2.c \
 	execution/better_syscall.c \
+	execution/child.c \
+	execution/parent_control.c \
 	\
 	builtins/builtin.c \
 	builtins/cd.c \
