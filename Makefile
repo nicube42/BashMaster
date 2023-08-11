@@ -1,3 +1,6 @@
+RED = \033[0;31m
+NOCOLOR = \033[0m
+GREEN = \033[0;32m
 NAME = minishell
 
 CC = cc
@@ -40,36 +43,52 @@ LIBFT = libftprintf.a
 all: create_dirs $(LIBFT) $(NAME)
 
 $(LIBFT):
-	$(MAKE) -C ./libft
+	@$(MAKE) -C ./libft
 
 create_dirs:
-	mkdir -p obj/
-	mkdir -p obj/execution
-	mkdir -p obj/parser
-	mkdir -p obj/builtins
-	mkdir -p obj/lexer+expander
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p obj/
+	@mkdir -p obj/execution
+	@mkdir -p obj/parser
+	@mkdir -p obj/builtins
+	@mkdir -p obj/lexer+expander
+	@mkdir -p $(OBJ_DIR)
+
+all: logo $(NAME)
+
+logo :
+	@tput setaf 2; cat ascii_art/42minishell; tput setaf default
 
 $(NAME): $(OBJS)
-	$(CC)  $(CFLAGS) $(OBJS) -o $(NAME) -lreadline -L /opt/homebrew/opt/readline/lib -I /opt/homebrew/opt/readline/include/readline -Llibft/ -lftprintf
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline -L /opt/homebrew/opt/readline/lib -I /opt/homebrew/opt/readline/include/readline -Llibft/ -lftprintf
+	@echo "Assembling $(NAME)"
+	@echo "${GREEN}✓${NOCOLOR}"
+	@echo "$(GREEN)Compilation is done$(NOCOLOR)"
 
 obj/%.o: src/%.c
-	$(CC) $(CFLAGS) -c -o $@ $< -I ./includes
+	@echo "Compiling $^: "
+	@$(CC) $(CFLAGS) -c -o $@ $< -I ./includes
+	@echo "${GREEN}✓${NOCOLOR}"
 
 clean:
-	rm -rf obj/
-	$(MAKE) -C libft/ clean
+	@echo "${RED}Cleaning objects: ${NOCOLOR}"
+	@rm -rf obj/
+	@$(MAKE) -C libft/ clean
+	@echo "${GREEN}✓${NOCOLOR}"
 
 fclean:
-	rm -rf obj/
-	rm -f $(NAME)
-	$(MAKE) -C libft/ fclean
+	@echo "${RED}Cleaning all: ${NOCOLOR}"
+	@rm -rf obj/
+	@rm -f $(NAME)
+	@$(MAKE) -C libft/ fclean
+	@echo "${GREEN}✓${NOCOLOR}"
 
 re: fclean all
 
 fast:
-	$(MAKE) -j -C ./libft
-	$(MAKE) -j$(nproc)
+	@$(MAKE) -j -C ./libft
+	@$(MAKE) -j$(nproc)
 
-.PHONY: all create_dirs clean fclean re fast
+norme: 
+	norminette src/ libft/ ./includes
 
+.PHONY: all create_dirs clean fclean re fast norme
