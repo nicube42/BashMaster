@@ -18,6 +18,7 @@ SRC = main.c \
 	parser/parser2.c \
 	parser/token_creator.c \
 	parser/check_syntax.c \
+	parser/check_syntax2.c \
 	parser/utils_parsing.c \
 	parser/utils_parsing_2.c \
 	\

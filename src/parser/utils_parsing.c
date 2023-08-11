@@ -6,21 +6,38 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:11:19 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 12:52:49 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:34:50 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/bashmaster.h"
+
+static char	**process_split_path(char **split_path, t_bash *sh)
+{
+	int		i;
+	char	*tmp;
+
+	i = 0;
+	while (split_path[i])
+	{
+		tmp = ft_strjoin(split_path[i], "/");
+		if (!tmp)
+			clean_exit("Malloc error", sh);
+		free(split_path[i]);
+		split_path[i] = tmp;
+		i++;
+	}
+	return (split_path);
+}
 
 char	**ft_parsing_execve(char **envp, t_bash *sh)
 {
 	int		i;
 	char	*full_path;
 	char	**split_path;
-	char	*tmp;
 
-	full_path = NULL;
 	i = 0;
+	full_path = NULL;
 	while (envp[i])
 	{
 		if (!ft_strncmp(envp[i], "PATH=", 5))
@@ -32,17 +49,10 @@ char	**ft_parsing_execve(char **envp, t_bash *sh)
 	}
 	if (!full_path)
 		return (NULL);
-	if (!(split_path = ft_split(full_path, ':')))
+	split_path = ft_split(full_path, ':');
+	if (!split_path)
 		clean_exit("Malloc error", sh);
-	i = -1;
-	while (split_path[++i])
-	{
-		if (!(tmp = ft_strjoin(split_path[i], "/")))
-			clean_exit("Malloc error", sh);
-		free(split_path[i]);
-		split_path[i] = tmp;
-	}
-	return (split_path);
+	return (process_split_path(split_path, sh));
 }
 
 void	count_quote(char *input, t_bash *sh)
@@ -58,16 +68,6 @@ void	count_quote(char *input, t_bash *sh)
 			sh->quote_count++;
 		i++;
 	}
-}
-
-void	set_last_of_list(t_bash *sh)
-{
-	t_list	*list;
-
-	list = sh->first;
-	while (list)
-		list = list->next;
-	sh->last = list;
 }
 
 int	is_builtin(char *tmp)

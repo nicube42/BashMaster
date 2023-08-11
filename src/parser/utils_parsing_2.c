@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:15:04 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/07/28 10:18:23 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:34:57 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,14 @@ int	ft_skip_blank(char *line, int i)
 	while (ft_is_blank(line[i]) && line[i])
 		i++;
 	return (i);
+}
+
+void	set_last_of_list(t_bash *sh)
+{
+	t_list	*list;
+
+	list = sh->first;
+	while (list)
+		list = list->next;
+	sh->last = list;
 }

@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:17:10 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 11:41:09 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 15:31:51 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,21 @@ void	clean_exit(char *msg, t_bash *sh)
 	destroy_tokens(sh);
 	free_envp(sh);
 	exit (1);
+}
+
+void	free_envp(t_bash *sh)
+{
+	int	i;
+
+	i = -1;
+	if (sh->envp)
+	{
+		while (sh->envp[++i])
+		{
+			free (sh->envp[i]);
+		}
+		free (sh->envp);
+	}
 }
 
 void	init_struct(t_bash *sh, char **envp)
