@@ -8,6 +8,7 @@ CFLAGS = -fsanitize=address -Wall -Wextra -Werror
 
 SRC = main.c \
 	signals.c \
+	prompt.c \
 	\
 	lexer+expander/lexer.c \
 	lexer+expander/lexer_utils.c \
