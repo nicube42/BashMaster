@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:27:27 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 11:46:30 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:44:03 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	calculate_redir_to_char(char *input, int i, t_bash *sh)
 	int	j;
 
 	j = 0;
+	(void) sh;
 	while ((input[i] == '<' || input[i] == '>') && input[i])
 	{
 		i++;

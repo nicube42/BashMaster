@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/10 21:20:01 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:46:54 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ static void	wait_and_handle_status(t_list *list, t_bash *sh, int pid)
 {
 	int	status;
 
+	(void) list;
 	waitpid(pid, &status, 0);
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
@@ -138,10 +139,6 @@ void execute_cmd(t_list *list, t_bash *sh)
 void	execution(t_bash *sh)
 {
 	t_list	*list;
-	t_list	*prev;
-	int		tmp_fd;
-	char	*line;
-	int		fd[2];
 
 	list = sh->first;
 	set_fd(sh);

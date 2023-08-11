@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 13:58:58 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/07 18:31:09 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:48:46 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	set_pipe_fd(t_list *list, int *current_fd_in, int *current_fd_out)
 {
 	int	pipe_fd[2];
 
+	(void) current_fd_out;
 	if (list->id == PIPE_TOK && list->prev)
 	{
 		if (pipe(pipe_fd) == -1)
@@ -97,8 +98,8 @@ void	set_fd(t_bash *sh)
 			list->fd_in = current_fd_in;
 			list->fd_out = current_fd_out;
 		}
-		if (!list->prev || list->prev->id != CMD_TOK
-			&& list->prev->id != BUILTIN_TOK)
+		if (!list->prev || (list->prev->id != CMD_TOK
+			&& list->prev->id != BUILTIN_TOK))
 			set_here_doc_fd(list, &current_fd_in, sh);
 		else if (list && list->id == HERE_DOC_TOKEN)
 			sh->tmp_fd = heredoc_fd_2(list, sh);

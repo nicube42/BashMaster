@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 03:55:50 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 11:46:23 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:45:45 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static int	create_redirection_token(t_bash *sh, t_list *to_add, int i)
 {
+	to_add = NULL;
 	to_add = ft_init_token(sh);
 	to_add->value = ft_strdup(sh->lexed[i]);
 	if (!to_add->value)
@@ -76,7 +77,6 @@ static int	create_cmd_token_2(t_bash *sh, int i, t_list *to_add)
 static int	create_cmd_token(t_bash *sh, t_list *to_add, int i)
 {
 	int	j;
-	int	k;
 
 	j = i + 1;
 	to_add = ft_init_token(sh);
@@ -106,6 +106,7 @@ void	parser(t_bash *sh)
 	t_list	*to_add;
 
 	i = 0;
+	to_add = NULL;
 	sh->first = 0;
 	while (sh->lexed[i])
 	{

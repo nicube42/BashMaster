@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:05:08 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 10:56:31 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:49:22 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ void	execute_pwd(t_bash *sh, t_list *list)
 	char	*pwd;
 
 	i = -1;
+	pwd = NULL;
 	if (list->arguments[0])
 	{
 		ft_putstr_fd("pwd: too many arguments\n", 2);

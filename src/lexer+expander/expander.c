@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 11:46:42 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:44:29 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	expander(t_bash *sh, char **envp)
 	int		j;
 	t_exp	*exp;
 
+	(void) envp;
 	exp = malloc(sizeof(t_exp));
 	if (!exp)
 		clean_exit("Malloc error", sh);

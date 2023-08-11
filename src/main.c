@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/11 11:50:44 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:57:36 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ char	*prompt_content(t_bash *sh)
 	char	*tmp;
 
 	i = -1;
+	pwd = NULL;
 	while (sh->envp[++i])
 	{
 		if (!ft_strncmp("PWD", sh->envp[i], 3)
@@ -139,14 +140,16 @@ void	repete_prompt(t_bash *sh)
 int	main(int ac, char **av, char *envp[])
 {
 	t_bash	sh;
-	char	*input;
 	int		i;
 
 	(void) av;
 	i = 0;
 	while (envp[i])
 		i++;
-	sh.envp = malloc (sizeof(char *) * i + 1);
+	sh.envp = malloc (sizeof(char *) * (i + 1));
+	if (!sh.envp)
+		return (1);
+	sh.envp[i] = 0;
 	i = -1;
 	while (envp[++i])
 		sh.envp[i] = ft_strdup(envp[i]);

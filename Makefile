@@ -1,9 +1,33 @@
 NAME = minishell
 
 CC = cc
-CFLAGS = #-fsanitize=address #-Wall -Wextra -Werror
+CFLAGS = -fsanitize=address -Wall -Wextra -Werror
 
-SRC = main.c signals.c parsing/lexer.c parsing/lexer_utils.c parsing/expander.c parsing/parser.c parsing/parser2.c parsing/token_creator.c parsing/check_syntax.c parsing/utils_parsing.c parsing/utils_parsing_2.c parsing/init_and_exit.c execution/execution.c execution/execution_utils.c execution/fd_init.c execution/fd_init2.c execution/builtin.c execution/builtin2.c execution/better_syscall.c execution/ft_cd.c
+SRC = main.c \
+	signals.c \
+	\
+	lexer+expander/lexer.c \
+	lexer+expander/lexer_utils.c \
+	lexer+expander/expander.c \
+	lexer+expander/init_and_exit.c \
+	\
+	parser/parser.c \
+	parser/parser2.c \
+	parser/token_creator.c \
+	parser/check_syntax.c \
+	parser/utils_parsing.c \
+	parser/utils_parsing_2.c \
+	\
+	execution/execution.c \
+	execution/execution_utils.c \
+	execution/fd_init.c \
+	execution/fd_init2.c \
+	execution/better_syscall.c \
+	\
+	builtins/builtin.c \
+	builtins/builtin2.c \
+	builtins/ft_cd.c \
+
 DIRS	= .
 
 
@@ -21,7 +45,9 @@ $(LIBFT):
 create_dirs:
 	mkdir -p obj/
 	mkdir -p obj/execution
-	mkdir -p obj/parsing
+	mkdir -p obj/parser
+	mkdir -p obj/builtins
+	mkdir -p obj/lexer+expander
 	mkdir -p $(OBJ_DIR)
 
 $(NAME): $(OBJS)

@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:11:19 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 11:45:58 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/11 12:52:49 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,33 @@ char	**ft_parsing_execve(char **envp, t_bash *sh)
 {
 	int		i;
 	char	*full_path;
-	char	**splitted_path;
+	char	**split_path;
 	char	*tmp;
 
+	full_path = NULL;
 	i = 0;
-	while (envp[++i])
+	while (envp[i])
 	{
 		if (!ft_strncmp(envp[i], "PATH=", 5))
+		{
 			full_path = envp[i] + 5;
+			break ;
+		}
+		i++;
 	}
-	splitted_path = ft_split(full_path, ':');
-	if (!splitted_path)
+	if (!full_path)
+		return (NULL);
+	if (!(split_path = ft_split(full_path, ':')))
 		clean_exit("Malloc error", sh);
 	i = -1;
-	while (splitted_path[++i])
+	while (split_path[++i])
 	{
-		tmp = ft_strjoin(splitted_path[i], "/");
-		if (!tmp)
+		if (!(tmp = ft_strjoin(split_path[i], "/")))
 			clean_exit("Malloc error", sh);
-		if (splitted_path[i])
-			free(splitted_path[i]);
-		splitted_path[i] = tmp;
+		free(split_path[i]);
+		split_path[i] = tmp;
 	}
-	return (splitted_path);
+	return (split_path);
 }
 
 void	count_quote(char *input, t_bash *sh)
