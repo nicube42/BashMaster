@@ -35,6 +35,8 @@ SRC = main.c \
 	builtins/cd.c \
 	builtins/exit.c \
 	builtins/export+unset.c \
+	builtins/export_with_args.c \
+	builtins/unset_with_args.c \
 
 DIRS	= .
 

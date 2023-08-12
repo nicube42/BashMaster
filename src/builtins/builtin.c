@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:05:08 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 14:10:33 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/12 11:50:48 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	execute_env(t_bash *sh, t_list *list)
 {
 	int	i;
 
-	if (list->arguments)
+	if (list->arguments[0])
 	{
 		ft_putstr_fd("env: too many arguments\n", 2);
 		return ;

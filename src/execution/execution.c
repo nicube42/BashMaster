@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 14:37:56 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/12 11:46:15 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ static void	execute_cmd(t_list *list, t_bash *sh)
 		cd_command(sh, list);
 	else if (!ft_strncmp(list->value, "exit", 5))
 		execute_exit(sh, list);
+	else if (!ft_strncmp(list->value, "export", 7) && list->arguments[0])
+		handle_export(sh, list->arguments);
+	else if (!ft_strncmp(list->value, "unset", 6) && list->arguments[0])
+		handle_unset(sh, list->arguments);
 	else
 	{
 		pid = fork();
