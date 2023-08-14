@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   export_with_par.c                                  :+:      :+:    :+:   */
+/*   export_with_args.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:40:59 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/12 11:48:17 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:07:06 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,9 @@ static char	*get_key(char *arg)
 	i = 0;
 	while (arg[i] && arg[i] != '=')
 		i++;
-	if (!arg[i])
-		return (NULL);
-	key = (char *)malloc(i + 1);
-	ft_strlcpy(key, arg, i);
-	key[i] = '\0';
+	key = (char *)malloc(i + 2);
+	ft_strlcpy(key, arg, i + 1);
+	key[i + 1] = '\0';
 	return (key);
 }
 
@@ -73,13 +71,11 @@ void	export_cmd(t_bash *sh, char *arg)
 	if (!key)
 		return ;
 	env_index = find_key(sh, key);
+	printf("%s\n", key);
+	printf("%d\n", env_index);
 	if (env_index >= 0)
-	{
-		free(sh->envp[env_index]);
-		sh->envp[env_index] = ft_strdup(arg);
-	}
-	else
-		add_env(sh, arg);
+		unset_cmd(sh, key);
+	add_env(sh, arg);
 	free(key);
 }
 
