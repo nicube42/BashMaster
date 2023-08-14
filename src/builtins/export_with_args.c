@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:40:59 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/14 18:07:06 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 18:16:36 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,6 @@ void	export_cmd(t_bash *sh, char *arg)
 	if (!key)
 		return ;
 	env_index = find_key(sh, key);
-	printf("%s\n", key);
-	printf("%d\n", env_index);
 	if (env_index >= 0)
 		unset_cmd(sh, key);
 	add_env(sh, arg);
