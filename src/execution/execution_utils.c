@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:35:42 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 14:12:55 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:42:49 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ static char	*add_path(t_bash *sh, t_list *list)
 			return (NULL);
 	}
 	i = -1;
+	if (!sh->splitted_path)
+		return (NULL);
 	while (sh->splitted_path[++i])
 	{
 		cmd = ft_strjoin(sh->splitted_path[i], list->value);

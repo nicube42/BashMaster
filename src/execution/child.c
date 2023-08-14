@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:13:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 14:26:32 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 13:35:21 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,21 @@ static void	handle_here_doc_token(t_list *list, t_bash *sh, int temp_fd)
 	char	buffer[1024];
 	char	*line;
 
-	bytes_read = read(list->fd_in, buffer, sizeof(buffer));
-	while (bytes_read > 0)
+	if (list->fd_in > 2)
 	{
-		write(temp_fd, buffer, bytes_read);
 		bytes_read = read(list->fd_in, buffer, sizeof(buffer));
+		while (bytes_read > 0)
+		{
+			write(temp_fd, buffer, bytes_read);
+			bytes_read = read(list->fd_in, buffer, sizeof(buffer));
+		}
 	}
 	line = copy_fd_to_str(sh->tmp_fd);
 	better_close(sh->tmp_fd);
 	better_unlink(sh->tmp_filename);
 	ft_putstr_fd(line, temp_fd);
-	lseek(temp_fd, 0, SEEK_SET);
+	better_close(temp_fd);
+	temp_fd = open("tempfile", O_RDWR | O_CREAT, 0666);
 	better_dup2(temp_fd, STDIN_FILENO);
 	better_close(list->fd_in);
 	list->fd_in = temp_fd;
