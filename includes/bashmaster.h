@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bashmaster.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/14 14:47:41 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 17:20:50 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ typedef struct s_bash
 	int				last_exit_status;
 	int				in_heredoc;
 	int				exit_heredoc;
+	pid_t			*pids;
+	int				n_pids;
 	struct s_list	*first;
 	struct s_list	*last;
 }	t_bash;

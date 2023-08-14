@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   execution.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/14 14:42:00 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 17:36:26 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,25 @@ static void	handle_child_execution(t_list *list,
 
 static void	handle_parent_execution(t_list *list, t_bash *sh, pid_t pid)
 {
+	pid_t	*new_pids;
+
+	new_pids = (pid_t *)malloc(sizeof(pid_t) * (sh->n_pids + 1));
+	if (!new_pids)
+	{
+		perror("malloc");
+		exit(EXIT_FAILURE);
+	}
+	if (sh->pids)
+	{
+		ft_memcpy(new_pids, sh->pids, sizeof(pid_t) * sh->n_pids);
+		free(sh->pids);
+	}
+	new_pids[sh->n_pids] = pid;
+	sh->pids = new_pids;
+	sh->n_pids++;
 	g_quit_heredoc = 2;
 	handle_child_errors(pid);
 	close_fds(list);
-	wait_and_handle_status(list, sh, pid);
 	g_quit_heredoc = 0;
 }
 
@@ -59,8 +74,11 @@ static void	execute_cmd(t_list *list, t_bash *sh)
 void	execution(t_bash *sh)
 {
 	t_list	*list;
+	int		i;
 
 	list = sh->first;
+	sh->pids = NULL;
+	sh->n_pids = 0;
 	set_fd(sh);
 	while (list)
 	{
@@ -69,4 +87,10 @@ void	execution(t_bash *sh)
 			execute_cmd(list, sh);
 		list = list->next;
 	}
+	i = -1;
+	while (++i < sh->n_pids)
+		wait_and_handle_status(NULL, sh, sh->pids[i]);
+	free(sh->pids);
+	sh->pids = NULL;
+	sh->n_pids = 0;
 }
