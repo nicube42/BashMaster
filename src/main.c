@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/14 19:41:54 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 19:45:53 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,5 +78,6 @@ int	main(int ac, char **av, char *envp[])
 		repete_prompt(&sh);
 	else
 		printf("No args accepted in minishell.\n");
+	free_envp(&sh);
 	return (0);
 }
