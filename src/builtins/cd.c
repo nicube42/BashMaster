@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_cd.c                                            :+:      :+:    :+:   */
+/*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 12:52:18 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 14:11:00 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 23:24:00 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ static void	update_pwd_in_envp(t_bash *bash, char *new_pwd)
 		}
 		i++;
 	}
+	bash->last_exit_status = 0;
 }
 
 int	cd_command(t_bash *bash, t_list *cmd)

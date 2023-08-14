@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:44:34 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/12 11:48:15 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 23:27:06 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,14 @@ void	handle_unset(t_bash *sh, char **args)
 
 	i = 0;
 	if (!args[0])
+	{
+		sh->last_exit_status = 0;
 		return ;
+	}
 	while (args[i])
 	{
 		unset_cmd(sh, args[i]);
 		i++;
 	}
+	sh->last_exit_status = 0;
 }

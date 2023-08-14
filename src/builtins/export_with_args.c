@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:40:59 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/14 18:16:36 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 23:26:14 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,10 +83,14 @@ void	handle_export(t_bash *sh, char **args)
 
 	i = 0;
 	if (!args[0])
+	{
+		sh->last_exit_status = 127;
 		return ;
+	}
 	while (args[i])
 	{
 		export_cmd(sh, args[i]);
 		i++;
 	}
+	sh->last_exit_status = 127;
 }
