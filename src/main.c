@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/14 17:02:35 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 19:41:54 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,8 @@ static void	repete_prompt(t_bash *sh)
 		init_struct(sh, sh->envp);
 		pwd = prompt_content(sh);
 		sh->input = readline(pwd);
-		free(pwd);
+		if (ft_strncmp(pwd, "minishell> ", 13))
+			free(pwd);
 		if (sh->input == NULL)
 		{
 			if (g_quit_heredoc)

@@ -70,14 +70,14 @@ logo :
 #42mac
 #-L /Users/ndiamant/.brew/opt/readline/lib -I /Users/ndiamant/.brew/opt/readline/include/readline
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -lreadline -L /opt/homebrew/opt/readline/lib -I /opt/homebrew/opt/readline/include/readline -Llibft/ -lftprintf
+	@$(CC) $(CFLAGS) $(OBJS) -g -o $(NAME) -lreadline -L /opt/homebrew/opt/readline/lib -I /opt/homebrew/opt/readline/include/readline -Llibft/ -lftprintf
 	@echo "Assembling $(NAME)"
 	@echo "${GREEN}✓${NOCOLOR}"
 	@echo "$(GREEN)Compilation is done$(NOCOLOR)"
 
 obj/%.o: src/%.c
 	@echo "Compiling $^: "
-	@$(CC) $(CFLAGS) -c -o $@ $< -I ./includes
+	@$(CC) $(CFLAGS) -g -c -o $@ $< -I ./includes
 	@echo "${GREEN}✓${NOCOLOR}"
 
 clean:
