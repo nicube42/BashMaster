@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prompt.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 15:44:42 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 15:50:44 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:51:35 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ char	*prompt_content(t_bash *sh)
 			break ;
 		}
 	}
+	if (pwd == NULL)
+		return ("minishell> ");
 	tmp = select_color_prompt(pwd);
 	free (pwd);
 	pwd = tmp;

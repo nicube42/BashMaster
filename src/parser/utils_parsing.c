@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_parsing.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:11:19 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 15:34:50 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 14:40:21 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int	ft_check_cmd(char *tok, t_bash *sh)
 	char	*cmd;
 
 	i = -1;
+	if (!sh->splitted_path)
+		return (1);
 	while (sh->splitted_path[++i])
 	{
 		cmd = ft_strjoin(sh->splitted_path[i], tok);
