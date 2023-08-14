@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:13:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/14 13:35:21 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/14 17:07:41 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
 		unlink("tempfile");
 	if (list->id == CMD_TOK)
 	{
-		execve(cmd, args, 0);
+		execve(cmd, args, sh->envp);
 		perror("execve");
 		exit(EXIT_FAILURE);
 	}
