@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/14 18:44:48 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/15 18:19:24 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	execution(t_bash *sh)
 	t_list	*list;
 	int		i;
 
+	setup_signals();
 	list = sh->first;
 	sh->pids = NULL;
 	sh->n_pids = 0;

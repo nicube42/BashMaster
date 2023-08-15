@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/04 10:02:03 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/10 21:20:30 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/15 18:20:34 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,6 @@ void	sigint_handler(int sig)
 		rl_replace_line("", 0);
 		rl_redisplay();
 		return ;
-	}
-	if (g_quit_heredoc == 0)
-	{
-		write (1, "\n", 1);
-		rl_on_new_line();
-		rl_replace_line("", 0);
-		rl_redisplay();
 	}
 }
 

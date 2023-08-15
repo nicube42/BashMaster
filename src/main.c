@@ -6,13 +6,25 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/14 19:45:53 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/15 18:20:49 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/bashmaster.h"
 
 int	g_quit_heredoc = 0;
+
+static void	sigint_main_handler(int sig)
+{
+	(void) sig;
+	if (g_quit_heredoc == 0)
+	{
+		write (1, "\n", 1);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+}
 
 static void	handle_input(t_bash *sh)
 {
@@ -38,7 +50,8 @@ static void	repete_prompt(t_bash *sh)
 	sh->last_exit_status = -1;
 	while (1)
 	{
-		setup_signals();
+		signal(SIGINT, sigint_main_handler);
+		signal(SIGQUIT, SIG_IGN);
 		init_struct(sh, sh->envp);
 		pwd = prompt_content(sh);
 		sh->input = readline(pwd);
