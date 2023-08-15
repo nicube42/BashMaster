@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 15:04:41 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/15 17:25:53 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,29 +89,12 @@ void	expander(t_bash *sh, char **envp)
 		free(exp);
 }
 
-void	expander_2(t_bash *sh, t_exp *exp)
+int	get_substr_length(char *str, int start_idx)
 {
-	int		j;
-	int		tmp_size;
+	int	len;
 
-	exp->tmp = ft_substr(sh->lexed[exp->i],
-			exp->k + 1, ft_strlen(sh->lexed[exp->i]));
-	if (!exp->tmp)
-		clean_exit("Malloc error", sh);
-	j = -1;
-	while (sh->envp[++j])
-	{
-		if (!ft_strncmp(exp->tmp, sh->envp[j], ft_strlen(exp->tmp))
-			&& sh->envp[j][ft_strlen(exp->tmp)] == '=')
-		{
-			tmp_size = ft_strlen(exp->tmp);
-			free(exp->tmp);
-			exp->tmp = ft_substr(sh->envp[j],
-					tmp_size + 1, ft_strlen(sh->envp[j]));
-			if (!exp->tmp)
-				clean_exit("Malloc error", sh);
-			replace_substring(&sh->lexed[exp->i], exp, sh);
-			break ;
-		}
-	}
+	len = 0;
+	while (str[start_idx + len] && str[start_idx + len] != '\'')
+		len++;
+	return (len);
 }

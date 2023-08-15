@@ -13,6 +13,7 @@ SRC = main.c \
 	lexer+expander/lexer.c \
 	lexer+expander/lexer_utils.c \
 	lexer+expander/expander.c \
+	lexer+expander/expander2.c \
 	lexer+expander/init_and_exit.c \
 	\
 	parser/parser.c \
