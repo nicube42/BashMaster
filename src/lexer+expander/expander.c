@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/15 17:25:53 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 11:31:55 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,11 @@
 void	replace_substring(char **str, t_exp *exp, t_bash *sh)
 {
 	char	*new_str;
-	char	*prefix;
-	char	*suffix;
-	char	*temp_str;
 
-	prefix = ft_substr(*str, 0, exp->k);
-	if (!prefix)
-		clean_exit("Malloc error", sh);
-	suffix = ft_substr(*str, exp->l, ft_strlen(*str) - exp->l);
-	if (!suffix)
-		clean_exit("Malloc error", sh);
-	temp_str = ft_strjoin(prefix, exp->tmp);
-	if (!temp_str)
-		clean_exit("Malloc error", sh);
-	new_str = ft_strjoin(temp_str, suffix);
-	if (!new_str)
-		clean_exit("Malloc error", sh);
-	free(prefix);
-	free(suffix);
-	free(temp_str);
+	new_str = create_new_string(str, exp, sh);
 	free(*str);
 	*str = new_str;
+	exp->k = ft_strlen(*str) - 1;
 }
 
 void	expand_last_exit_status(t_bash *sh, t_exp *exp)

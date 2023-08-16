@@ -3,16 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/15 18:20:49 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 11:41:26 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/bashmaster.h"
 
 int	g_quit_heredoc = 0;
+
+void	ft_increment_shlvl(t_bash *sh)
+{
+	int		i;
+	int		shlvl;
+	char	*new_value;
+	char	*temp;
+
+	i = 0;
+	while (sh->envp[i])
+	{
+		if (ft_strncmp(sh->envp[i], "SHLVL=", 6) == 0)
+		{
+			shlvl = ft_atoi(sh->envp[i] + 6);
+			shlvl++;
+			new_value = ft_itoa(shlvl);
+			temp = ft_strjoin("SHLVL=", new_value);
+			free(sh->envp[i]);
+			sh->envp[i] = temp;
+			free(new_value);
+			break ;
+		}
+		i++;
+	}
+}
 
 static void	sigint_main_handler(int sig)
 {
@@ -84,6 +109,7 @@ int	main(int ac, char **av, char *envp[])
 	i = -1;
 	while (envp[++i])
 		sh.envp[i] = ft_strdup(envp[i]);
+	ft_increment_shlvl(&sh);
 	disable_ctrl_c_echo();
 	using_history();
 	write(1, "\n", 1);

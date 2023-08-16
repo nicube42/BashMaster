@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bashmaster.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/15 18:20:53 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 11:32:17 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void		replace_substring(char **str, t_exp *exp, t_bash *sh);
 void		expand_last_exit_status(t_bash *sh, t_exp *exp);
 void		expander(t_bash *sh, char **envp);
 void		expander_2(t_bash *sh, t_exp *exp);
+char		*create_new_string(char **str, t_exp *exp, t_bash *sh);
 int			get_substr_length(char *str, int start_idx);
 void		init_lexed_malloc(t_bash *sh);
 void		free_lexed(t_bash *sh);

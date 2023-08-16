@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander2.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 17:25:34 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/15 17:34:15 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 11:32:07 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,26 @@ static int	process_env(t_bash *sh, t_exp *exp, int len_to_end)
 	return (0);
 }
 
+static void	replace_with_empty(t_bash *sh, t_exp *exp)
+{
+	free(exp->tmp);
+	exp->tmp = NULL;
+	replace_substring(&sh->lexed[exp->i], exp, sh);
+}
+
 void	expander_2(t_bash *sh, t_exp *exp)
 {
 	int		len_to_end;
 	int		n_quotes;
 	int		ret;
 
+	if (sh->lexed[exp->i][exp->k + 1] == '\0')
+	{
+		exp->tmp = ft_strdup("$");
+		if (!exp->tmp)
+			clean_exit("Malloc error", sh);
+		return ;
+	}
 	exp->tmp = ft_substr(sh->lexed[exp->i],
 			exp->k + 1, ft_strlen(sh->lexed[exp->i]));
 	len_to_end = get_substr_length(sh->lexed[exp->i], exp->k + 1);
@@ -69,6 +83,36 @@ void	expander_2(t_bash *sh, t_exp *exp)
 	if (!exp->tmp)
 		clean_exit("Malloc error", sh);
 	ret = process_env(sh, exp, len_to_end);
+	if (!ret)
+		replace_with_empty(sh, exp);
 	if (n_quotes && ret == 1)
 		append_quotes_to_string(&sh->lexed[exp->i], n_quotes);
+}
+
+char	*create_new_string(char **str, t_exp *exp, t_bash *sh)
+{
+	char	*new_str;
+	char	*prefix;
+	char	*suffix;
+	char	*temp_str;
+
+	prefix = ft_substr(*str, 0, exp->k);
+	if (!prefix)
+		clean_exit("Malloc error", sh);
+	suffix = ft_substr(*str, exp->l, ft_strlen(*str) - exp->l);
+	if (!suffix)
+		clean_exit("Malloc error", sh);
+	if (exp->tmp)
+		temp_str = ft_strjoin(prefix, exp->tmp);
+	else
+		temp_str = ft_strdup(prefix);
+	if (!temp_str)
+		clean_exit("Malloc error", sh);
+	new_str = ft_strjoin(temp_str, suffix);
+	free(prefix);
+	free(suffix);
+	free(temp_str);
+	if (!new_str)
+		clean_exit("Malloc error", sh);
+	return (new_str);
 }
