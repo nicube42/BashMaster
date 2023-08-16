@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_and_exit.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:17:10 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 15:31:51 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 17:10:20 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ void	init_lexed_malloc(t_bash *sh)
 	if (!sh->lexed)
 		clean_exit("Malloc error", sh);
 	sh->is_quote = malloc(sizeof(int) * (sh->lexed_size));
+	if (sh->lexed_size == 0)
+		sh->is_quote = malloc(sizeof(int) * (1));
 	if (!sh->is_quote)
 		clean_exit("Malloc error", sh);
 }
