@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:08:57 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/12 11:48:16 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 21:29:10 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,20 @@ void	execute_unset(t_list *list)
 		ft_putstr_fd("unset: not enough arguments\n", 2);
 		return ;
 	}
+}
+
+int	is_valid_format(char *arg)
+{
+	int	i;
+
+	if (!arg || arg[0] == '\0' || arg[0] == '=')
+		return (0);
+	i = 0;
+	while (arg[i] && arg[i] != '=')
+		i++;
+	if (arg[i] == '=')
+		return (1);
+	return (0);
 }
 
 void	sort_environ(char **environ)

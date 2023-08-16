@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/12 11:40:59 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/16 21:27:09 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 21:29:00 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,21 +61,6 @@ static void	add_env(t_bash *sh, char *arg)
 	free(sh->envp);
 	sh->envp = new_envp;
 }
-
-int	is_valid_format(char *arg)
-{
-	int	i;
-
-	if (!arg || arg[0] == '\0' || arg[0] == '=')
-		return (0);
-	i = 0;
-	while (arg[i] && arg[i] != '=')
-		i++;
-	if (arg[i] == '=')
-		return (1);
-	return (0);
-}
-
 
 void	export_cmd(t_bash *sh, char *arg)
 {

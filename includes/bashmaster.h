@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bashmaster.h                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/16 15:44:54 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 21:29:24 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ int			cd_command(t_bash *bash, t_list *cmd);
 void		execute_unset(t_list *list);
 void		sort_environ(char **environ);
 void		execute_export(t_bash *sh, t_list *list);
+int			is_valid_format(char *arg);
 void		execute_exit(t_bash *sh, t_list *list);
 int			find_key(t_bash *sh, char *key);
 void		unset_cmd(t_bash *sh, char *arg);
