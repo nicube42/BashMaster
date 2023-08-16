@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/16 11:31:55 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 12:36:27 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	expand_variable(t_bash *sh, t_exp *exp)
 	{
 		if (sh->lexed[exp->i][exp->k + 1] == '?')
 		{
-			exp->l = exp->k + 1;
+			exp->l = exp->k + 2;
 			expand_last_exit_status(sh, exp);
 			return ;
 		}
