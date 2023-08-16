@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:27:44 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/14 14:20:58 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 09:56:33 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,9 @@ static int	check_cmd_error(t_list *list, t_bash *sh)
 	{
 		if (list->id == CMD_TOK)
 		{
-			if (list->value[0] == '/'
-				|| (list->value[0] == '.' && list->value[1] == '/'))
+			if (list->value[0] == '/' || (list->value[0] == '.'
+					&& (list->value[1] == '/' || (list->value[1] == '.'
+							&& list->value[2] == '/'))))
 			{
 				if (access(list->value, F_OK | X_OK) != 0)
 					return (1);

@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/03 13:35:42 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/14 14:42:49 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 09:57:45 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@ static char	*add_path(t_bash *sh, t_list *list)
 	char	*cmd;
 	int		i;
 
-	if (list->value[0] == '/'
-		|| (list->value[0] == '.' && list->value[1] == '/'))
+	if (list->value[0] == '/' || (list->value[0] == '.'
+			&& (list->value[1] == '/' || (list->value[1] == '.'
+					&& list->value[2] == '/'))))
 	{
 		if (access(list->value, F_OK) == 0)
 			return (ft_strdup(list->value));
