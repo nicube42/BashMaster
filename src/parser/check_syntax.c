@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 09:27:44 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/16 09:56:33 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:48:59 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 int	check_syntax(t_bash *sh)
 {	
 	if (unclosed_quote_error(sh))
+		return (0);
+	if (sh->lexed_size <= 0)
 		return (0);
 	if (pipe_syntax_error(sh))
 		return (0);

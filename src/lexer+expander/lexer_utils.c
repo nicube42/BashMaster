@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/15 17:30:38 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:49:18 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,30 +80,6 @@ int	word_to_char(char *input, int i, t_bash *sh, int only_count)
 	return (i);
 }
 
-// int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
-// {
-// 	char	*word;
-// 	int		j;
-// 	int		i_save;
-
-// 	j = 0;
-// 	if (ft_is_quote(input[i]) == 2 && only_count == 0)
-// 		sh->is_quote[sh->lexed_current] = 1;
-// 	i++;
-// 	i_save = i;
-// 	while (!ft_is_quote(input[i]) && input[i])
-// 		i++;
-// 	word = malloc (sizeof(char) * ((i - i_save) + 1));
-// 	if (!word)
-// 		clean_exit("Malloc error", sh);
-// 	i = i_save;
-// 	while (!ft_is_quote(input[i]) && input[i])
-// 		word[j++] = input[i++];
-// 	word[j] = 0;
-// 	stock_in_struct(sh, word, j, only_count);
-// 	return (i);
-// }
-
 int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
 {
 	char	*word;
@@ -119,6 +95,8 @@ int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
 	i_save = i;
 	while (input[i] && input[i] != starting_quote)
 		i++;
+	if (!input[i])
+		return (i);
 	word = malloc(sizeof(char) * ((i - i_save) + 1));
 	if (!word)
 		clean_exit("Malloc error", sh);
@@ -127,5 +105,6 @@ int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
 		word[j++] = input[i++];
 	word[j] = 0;
 	stock_in_struct(sh, word, j, only_count);
+	i++;
 	return (i);
 }

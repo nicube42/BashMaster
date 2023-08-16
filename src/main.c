@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 15:48:01 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/16 11:41:26 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:51:36 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	handle_input(t_bash *sh)
 	expander(sh, sh->envp);
 	parser(sh);
 	set_last_of_list(sh);
-	if (sh->lexed_size > 0 && check_syntax(sh))
+	if (check_syntax(sh) && sh->lexed_size > 0)
 		execution(sh);
 	destroy_tokens(sh);
 }

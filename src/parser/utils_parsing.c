@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/28 10:11:19 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/14 14:40:21 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 16:44:27 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	count_quote(char *input, t_bash *sh)
 	while (input[i])
 	{
 		if (ft_is_quote(input[i]) == 1)
-			sh->dquote_count ++;
+			sh->dquote_count++;
 		if (ft_is_quote(input[i]) == 2)
 			sh->quote_count++;
 		i++;
