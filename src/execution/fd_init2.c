@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:42:02 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/14 13:29:17 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 12:39:20 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	write_here_doc(int tmp_fd, t_list *list, char *prompt, t_bash *sh)
 	char	*line;
 
 	signal(SIGINT, sigint_handler);
-	signal(SIGQUIT, SIG_DFL);
+	signal(SIGQUIT, SIG_IGN);
 	g_quit_heredoc = 1;
 	while (g_quit_heredoc == 1)
 	{
