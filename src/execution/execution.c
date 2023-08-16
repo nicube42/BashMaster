@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 09:45:13 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/16 10:21:13 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:54:30 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,19 @@ static void	handle_child_execution(t_list *list,
 {
 	child_process(list, sh, cmd, args);
 	exit(EXIT_SUCCESS);
+}
+
+void	close_all_fd(t_bash *sh)
+{
+	t_list	*list;
+
+	list = sh->first;
+	while (list)
+	{
+		if (list->id == CMD_TOK || list->id == BUILTIN_TOK)
+			close_fds(list);
+		list = list->next;
+	}
 }
 
 static void	handle_parent_execution(t_list *list, t_bash *sh, pid_t pid)
@@ -39,7 +52,7 @@ static void	handle_parent_execution(t_list *list, t_bash *sh, pid_t pid)
 	sh->n_pids++;
 	g_quit_heredoc = 2;
 	handle_child_errors(pid);
-	close_fds(list);
+	(void) list;
 	g_quit_heredoc = 0;
 }
 
@@ -89,6 +102,7 @@ void	execution(t_bash *sh)
 		list = list->next;
 	}
 	i = -1;
+	close_all_fd(sh);
 	while (++i < sh->n_pids)
 		wait_and_handle_status(NULL, sh, sh->pids[i]);
 	free(sh->pids);

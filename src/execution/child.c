@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:13:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/14 18:33:37 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:44:08 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,15 +41,9 @@ static void	handle_here_doc_token(t_list *list, t_bash *sh, int temp_fd)
 static void	redirect_fd(t_list *list)
 {
 	if (list->fd_in != -1 && list->fd_in != STDIN_FILENO)
-	{
 		better_dup2(list->fd_in, STDIN_FILENO);
-		better_close(list->fd_in);
-	}
 	if (list->fd_out != STDOUT_FILENO && list->fd_out > 1)
-	{
 		better_dup2(list->fd_out, STDOUT_FILENO);
-		better_close(list->fd_out);
-	}
 }
 
 void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
@@ -62,6 +56,7 @@ void	pipe_and_execute(t_list *list, t_bash *sh, char *cmd, char **args)
 		handle_here_doc_token(list, sh, temp_fd);
 	}
 	redirect_fd(list);
+	close_all_fd(sh);
 	if (list->next && list->next->id == HERE_DOC_TOKEN)
 		unlink("tempfile");
 	if (list->id == CMD_TOK)

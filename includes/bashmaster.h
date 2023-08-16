@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/16 11:32:17 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:44:54 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ void		child_process(t_list *list, t_bash *sh, char *cmd, char **args);
 void		prepare_cmd(t_bash *sh, t_list *list, char **cmd, char ***args);
 char		*append_buffer(char *result, char *buffer, size_t bytes_read,
 				size_t *total_bytes);
+void		close_all_fd(t_bash *sh);
 char		*copy_fd_to_str(int fd);
 void		execution(t_bash *sh);
 void		set_red_exit_fd(t_list *list, int *current_fd_out);

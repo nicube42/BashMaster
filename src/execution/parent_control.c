@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parent_control.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/11 14:29:21 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/11 14:38:35 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 15:18:22 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@ void	handle_child_errors(int pid)
 
 void	close_fds(t_list *list)
 {
-	if (list->fd_in != -1 && list->fd_in != STDIN_FILENO)
+	if (list->fd_in > 2)
 		better_close(list->fd_in);
-	if (list->fd_out != STDOUT_FILENO && list->fd_out > 1)
+	if (list->fd_out > 2)
 		better_close(list->fd_out);
 }
 
@@ -42,6 +42,7 @@ void	wait_and_handle_status(t_list *list, t_bash *sh, int pid)
 	if (WIFSIGNALED(status) && WTERMSIG(status) == SIGINT)
 	{
 		write(STDOUT_FILENO, "\n", 1);
+		sh->last_exit_status = 128 + sh->last_exit_status;
 		kill(pid, SIGKILL);
 	}
 	else if (WIFEXITED(status))
