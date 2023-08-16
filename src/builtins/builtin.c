@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ndiamant <ndiamant@student.42lausanne.c    +#+  +:+       +#+        */
+/*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 15:05:08 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/12 11:50:48 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/16 09:22:10 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,11 @@ void	execute_echo(t_list *list)
 	int	i;
 
 	i = -1;
+	if (!list->arguments[0])
+	{
+		printf("\n");
+		return ;
+	}
 	while (list->arguments[++i])
 		if (ft_strncmp(list->arguments[i], "-n", 2) || i != 0)
 			printf("%s ", list->arguments[i]);
