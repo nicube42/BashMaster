@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/17 10:02:27 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:44:47 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ typedef struct s_bash
 {
 	char			*input;
 	char			**lexed;
+	char			*word;
 	int				lexed_size;
 	int				lexed_current;
 	int				*is_quote;
@@ -102,8 +103,13 @@ void		expand_last_exit_status(t_bash *sh, t_exp *exp);
 void		expander(t_bash *sh, char **envp);
 void		expander_2(t_bash *sh, t_exp *exp);
 char		*create_new_string(char **str, t_exp *exp, t_bash *sh);
+int			fill_word(char *input, int i_save, int only_count, t_bash *sh);
+char		*allocate_word(int length, t_bash *sh);
+int			compute_word_len(char *input, int *i);
+int			ft_is_separator(char c);
 void		replace_with_empty(t_bash *sh, t_exp *exp);
 int			get_substr_length(char *str, int start_idx);
+int			get_substr_reallength(char *str, int start_idx);
 void		init_lexed_malloc(t_bash *sh);
 void		free_lexed(t_bash *sh);
 void		clean_exit(char *msg, t_bash *sh);

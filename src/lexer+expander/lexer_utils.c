@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/17 10:01:42 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/17 13:43:34 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,54 @@ int	pipe_to_char(char *input, int i, t_bash *sh, int only_count)
 int	word_to_char(char *input, int i, t_bash *sh, int only_count)
 {
 	char	*word;
-	int		j;
 	int		i_save;
 
-	j = 0;
 	i_save = i;
-	while (input[i] != '|' && input[i] != '<' && input[i] != '>'
-		&& !ft_is_blank(input[i]) && input[i])
-	{
-		i++;
-	}
-	word = malloc(sizeof(char) * ((i - i_save) + 1));
-	if (!word)
-		clean_exit("Malloc error", sh);
-	i = i_save;
-	while (input[i] != '|' && input[i] != '<' && input[i] != '>'
-		&& !ft_is_blank(input[i]) && input[i])
-	{
-		word[j++] = input[i++];
-	}
-	word[j] = '\0';
-	stock_in_struct(sh, word, j, only_count);
-	return (i);
+	word = allocate_word(compute_word_len(input, &i), sh);
+	sh->word = word;
+	return (fill_word(input, i_save, only_count, sh));
 }
+
+// int	word_to_char(char *input, int i, t_bash *sh, int only_count)
+// {
+// 	char	*word;
+// 	int		j;
+// 	int		i_save;
+// 	int		in_quotes;
+
+// 	j = 0;
+// 	in_quotes = 0;
+// 	i_save = i;
+// 	while (input[i] && (in_quotes || (!ft_is_separator(input[i])
+// 				&& !ft_is_blank(input[i]))))
+// 	{
+// 		if (input[i] == '"' && in_quotes == 0)
+// 			in_quotes = 1;
+// 		else if (input[i] == '"' && in_quotes == 1)
+// 			in_quotes = 0;
+// 		i++;
+// 	}
+// 	word = malloc(sizeof(char) * ((i - i_save) + 1));
+// 	if (!word)
+// 		clean_exit("Malloc error", sh);
+// 	i = i_save;
+// 	while (input[i] && (in_quotes || (!ft_is_separator(input[i])
+// 				&& !ft_is_blank(input[i]))))
+// 	{
+// 		if (ft_is_quote(input[i]) == 2 && only_count == 0 && input[i] != '"')
+// 			sh->is_quote[sh->lexed_current] = 1;
+// 		if (ft_is_quote(input[i]) > 0 && in_quotes == 0)
+// 			in_quotes = 1;
+// 		else if (ft_is_quote(input[i]) > 0 && in_quotes == 1)
+// 			in_quotes = 0;
+// 		else
+// 			word[j++] = input[i];
+// 		i++;
+// 	}
+// 	word[j] = '\0';
+// 	stock_in_struct(sh, word, j, only_count);
+// 	return (i);
+// }
 
 int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
 {

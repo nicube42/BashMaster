@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/18 18:27:27 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/16 16:54:06 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:21:52 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,14 @@ void	stock_in_struct(t_bash *sh, char *word, int j, int only_count)
 		sh->lexed[sh->lexed_current][j] = '\0';
 		sh->lexed_current++;
 	}
+}
+
+int	get_substr_reallength(char *str, int start_idx)
+{
+	int	len;
+
+	len = 0;
+	while (str[start_idx + len] && str[start_idx + len] != '\'')
+		len++;
+	return (len);
 }

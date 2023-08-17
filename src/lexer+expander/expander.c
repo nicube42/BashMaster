@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/16 12:36:27 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:31:19 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int	get_substr_length(char *str, int start_idx)
 	int	len;
 
 	len = 0;
-	while (str[start_idx + len] && str[start_idx + len] != '\'')
+	while (str[start_idx + len] && str[start_idx + len] != '\''
+		&& str[start_idx + len] != ' ')
 		len++;
 	return (len);
 }

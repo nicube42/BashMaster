@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 17:25:34 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/17 10:01:07 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:25:43 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static int	process_env(t_bash *sh, t_exp *exp, int len_to_end)
 void	expander_2(t_bash *sh, t_exp *exp)
 {
 	int		len_to_end;
+	int		len_to_real_end;
 	int		n_quotes;
 	int		ret;
 
@@ -72,7 +73,8 @@ void	expander_2(t_bash *sh, t_exp *exp)
 	exp->tmp = ft_substr(sh->lexed[exp->i],
 			exp->k + 1, ft_strlen(sh->lexed[exp->i]));
 	len_to_end = get_substr_length(sh->lexed[exp->i], exp->k + 1);
-	n_quotes = ft_strlen(exp->tmp) - len_to_end;
+	len_to_real_end = get_substr_reallength(sh->lexed[exp->i], exp->k + 1);
+	n_quotes = ft_strlen(exp->tmp) - len_to_real_end;
 	if (!exp->tmp)
 		clean_exit("Malloc error", sh);
 	ret = process_env(sh, exp, len_to_end);
