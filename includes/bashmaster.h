@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/04 14:01:49 by ivautrav          #+#    #+#             */
-/*   Updated: 2023/08/17 13:44:47 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:20:15 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ typedef struct s_exp
 	int				i;
 	int				l;
 	int				k;
+	int				m;
 	char			*tmp;
 }	t_exp;
 

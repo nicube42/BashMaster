@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 01:16:51 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/17 12:31:19 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:20:06 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,9 +65,13 @@ void	expander(t_bash *sh, char **envp)
 	sh->lexed[sh->lexed_size] = 0;
 	while (sh->lexed[++exp->i])
 	{
+		exp->m = -1;
 		exp->k = -1;
-		while (sh->lexed[exp->i][++exp->k])
+		while (sh->lexed[exp->i][++exp->m])
+		{
+			exp->k = exp->m;
 			expand_variable(sh, exp);
+		}
 	}
 	if (exp)
 		free(exp);
