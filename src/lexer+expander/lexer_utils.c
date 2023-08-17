@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 00:36:30 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/16 17:07:13 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/17 10:01:42 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,4 +107,11 @@ int	quote_to_char(char *input, int i, t_bash *sh, int only_count)
 	stock_in_struct(sh, word, j, only_count);
 	i++;
 	return (i);
+}
+
+void	replace_with_empty(t_bash *sh, t_exp *exp)
+{
+	free(exp->tmp);
+	exp->tmp = NULL;
+	replace_substring(&sh->lexed[exp->i], exp, sh);
 }

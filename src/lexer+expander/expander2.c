@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 17:25:34 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/16 11:32:07 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/17 10:01:07 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,6 @@ static int	process_env(t_bash *sh, t_exp *exp, int len_to_end)
 	return (0);
 }
 
-static void	replace_with_empty(t_bash *sh, t_exp *exp)
-{
-	free(exp->tmp);
-	exp->tmp = NULL;
-	replace_substring(&sh->lexed[exp->i], exp, sh);
-}
-
 void	expander_2(t_bash *sh, t_exp *exp)
 {
 	int		len_to_end;
@@ -89,6 +82,22 @@ void	expander_2(t_bash *sh, t_exp *exp)
 		append_quotes_to_string(&sh->lexed[exp->i], n_quotes);
 }
 
+char	*create_new_string2(char *prefix, t_exp *exp, char *temp_str)
+{
+	char	*tmp;
+
+	if (exp->tmp)
+	{
+		tmp = ft_strdup(exp->tmp);
+		free (exp->tmp);
+		temp_str = ft_strjoin(prefix, tmp);
+		free (tmp);
+	}
+	else
+		temp_str = ft_strdup(prefix);
+	return (temp_str);
+}
+
 char	*create_new_string(char **str, t_exp *exp, t_bash *sh)
 {
 	char	*new_str;
@@ -96,16 +105,14 @@ char	*create_new_string(char **str, t_exp *exp, t_bash *sh)
 	char	*suffix;
 	char	*temp_str;
 
+	temp_str = NULL;
 	prefix = ft_substr(*str, 0, exp->k);
 	if (!prefix)
 		clean_exit("Malloc error", sh);
 	suffix = ft_substr(*str, exp->l, ft_strlen(*str) - exp->l);
 	if (!suffix)
 		clean_exit("Malloc error", sh);
-	if (exp->tmp)
-		temp_str = ft_strjoin(prefix, exp->tmp);
-	else
-		temp_str = ft_strdup(prefix);
+	temp_str = create_new_string2(prefix, exp, temp_str);
 	if (!temp_str)
 		clean_exit("Malloc error", sh);
 	new_str = ft_strjoin(temp_str, suffix);
