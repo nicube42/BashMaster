@@ -6,7 +6,7 @@
 /*   By: ndiamant <ndiamant@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/31 14:42:02 by ndiamant          #+#    #+#             */
-/*   Updated: 2023/08/16 12:39:20 by ndiamant         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:33:01 by ndiamant         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,10 @@ static void	write_here_doc(int tmp_fd, t_list *list, char *prompt, t_bash *sh)
 			break ;
 	}
 	if (g_quit_heredoc == 0)
+	{
 		sh->exit_heredoc = 1;
+		sh->last_exit_status = 130;
+	}
 	g_quit_heredoc = 0;
 }
 
